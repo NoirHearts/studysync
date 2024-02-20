@@ -1,0 +1,20 @@
+{
+  "name": "studysync",
+  "version": "1.0.0",
+  "description": "StudySync is a student productivity browser extension that helps students maximize their productivity on their browsers. The extension has four main features, namely a Dictionary, a Pomodoro Timer, a To-Do List, and a Note-taking feature. This extension has a sidebar interface/panel for ease of use.",
+  "main": "background.js",
+  "scripts": {
+    "format": "npx prettier . --write",
+    "test": "jest",
+    "test:e2e": "xvfb-run npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.41.2",
+    "@types/node": "^20.11.19",
+    "jest": "^29.7.0",
+    "prettier": "3.2.5"
+  }
+}

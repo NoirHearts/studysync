@@ -11,6 +11,8 @@
   },
   "permissions": ["sidePanel"],
   "background": {
-    "service_worker": "background.js"
-  }
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "minimum_chrome_version": "92"
 }
