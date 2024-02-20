@@ -1,6 +1,6 @@
-import { test, expect } from './fixtures';
+import { test, expect } from '../fixtures';
 
-test.describe('sidebar', () => {
+test.describe('sidepanel', () => {
   test.beforeEach(async ({ page, extensionId }) => {
     await page.goto(`chrome-extension://${extensionId}/sidepanel.html`)
   });

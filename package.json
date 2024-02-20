@@ -4,7 +4,7 @@
   "description": "StudySync is a student productivity browser extension that helps students maximize their productivity on their browsers. The extension has four main features, namely a Dictionary, a Pomodoro Timer, a To-Do List, and a Note-taking feature. This extension has a sidebar interface/panel for ease of use.",
   "main": "background.js",
   "scripts": {
-    "test": "xvfb-run npx playwright test"
+    "test:e2e": "xvfb-run npx playwright test"
   },
   "keywords": [],
   "author": "",
