@@ -160,9 +160,7 @@ const config = {
   // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: [
-    "/tests/e2e/*"
-  ],
+  testPathIgnorePatterns: ["/tests/e2e/*"],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
