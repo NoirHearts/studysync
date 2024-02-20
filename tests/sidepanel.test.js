@@ -1,4 +1,4 @@
-const sum = require("../js/sidepanel");
+import sum from "../js/sidepanel";
 
 test("adds 1 + 2 to equal 3", () => {
   expect(sum(1, 2)).toBe(3);

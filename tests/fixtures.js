@@ -3,7 +3,8 @@ import path from "path";
 
 export const test = base.extend({
   context: async ({}, use) => {
-    const pathToExtension = path.join(__dirname, "../");
+    const __dirname = path.resolve();
+    const pathToExtension = path.join(__dirname, "./");
     const context = await chromium.launchPersistentContext("", {
       headless: false,
       args: [
@@ -23,4 +24,4 @@ export const test = base.extend({
   },
 });
 
-exports.expect = test.expect;
+export const expect = test.expect;
