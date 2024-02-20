@@ -1,10 +1,10 @@
-import { test as base, chromium } from '@playwright/test';
-import path from 'path';
+import { test as base, chromium } from "@playwright/test";
+import path from "path";
 
 export const test = base.extend({
-  context: async ({ }, use) => {
-    const pathToExtension = path.join(__dirname, '../');
-    const context = await chromium.launchPersistentContext('', {
+  context: async ({}, use) => {
+    const pathToExtension = path.join(__dirname, "../");
+    const context = await chromium.launchPersistentContext("", {
       headless: false,
       args: [
         `--disable-extensions-except=${pathToExtension}`,
@@ -16,10 +16,9 @@ export const test = base.extend({
   },
   extensionId: async ({ context }, use) => {
     let [background] = context.serviceWorkers();
-    if (!background)
-      background = await context.waitForEvent('serviceworker');
+    if (!background) background = await context.waitForEvent("serviceworker");
 
-    const extensionId = background.url().split('/')[2];
+    const extensionId = background.url().split("/")[2];
     await use(extensionId);
   },
 });
