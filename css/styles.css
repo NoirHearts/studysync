@@ -13,8 +13,7 @@ body {
 .timer-container {
     background-color: #202833;
     width: 100vw;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
+    padding: 12px 0px;
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
@@ -55,10 +54,14 @@ body {
 .timer {
     border: 4px solid #F1ECE9;
     border-radius: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 5px 20px;
     display: block;
     color: #F1ECE9;
+}
+
+.timer-header {
+    font-weight: 700;
+    font-size: 48px;
 }
 
 .other-features {
@@ -90,6 +93,7 @@ button {
     font-size: 12px;
 }
 
+
 .dictionary-container, .notes-container, .tasks-container {
     background-color: #F1ECE9;
     margin-top: 10px;
@@ -104,6 +108,7 @@ button {
         font-size: 14px;
         text-align: center;
         position: relative;
+        font-weight: bolder;
         margin: 0;
     }
 
