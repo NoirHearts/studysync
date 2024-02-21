@@ -20,6 +20,36 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .buttons {
+
+        #start-btn{
+            background: url(/images/play-idle.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        #pause-btn{
+            background: url(/images/pause-idle.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+        #stop-btn{
+            background: url(/images/stop-idle.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        .pomodoro-button{
+            border: none;
+            width: 12.5px;
+            height: 12.5px;
+        }
+    }
+
 }
 
 .timer {
