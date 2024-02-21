@@ -1,7 +1,60 @@
 <html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
   <body>
-    <h1>StudySync</h1>
-    <p>Hello world!</p>
+    <h3 class="name-header">StudySync</h3>
+    <div class="timer-container">
+      <div class="timer">
+        <div class="timer-header">
+          25:00
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="start-btn">Start</button>
+        <button id="pause-btn">Pause</button>
+        <button id="stop-btn">Skip</button>
+      </div>
+    </div>
+
+    <div class="other-features">
+      
+      <div class="dictionary-container">
+        <!-- <button id="dict-btn">Dictionary</button> -->
+        <input id="dict-btn" type="checkbox" name="feat1" />
+        <label for="dict-btn">Dictionary</label>
+        <div class="dictionary-content">
+          Dictionary content here <br>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacus felis, venenatis in viverra nec, ultrices sit amet dui. Sed fermentum vel diam ac luctus. Etiam ullamcorper, purus vel iaculis consectetur, enim enim interdum nunc, at venenatis elit massa consequat dui. Cras vel libero odio. Curabitur sit amet lorem arcu. Praesent porta odio leo, vitae egestas ex dapibus nec. Mauris congue mi non turpis porta, tincidunt pharetra massa finibus. Cras vitae metus ut est fermentum vulputate euismod quis urna. Quisque accumsan augue rhoncus diam iaculis convallis. Aenean nec mauris eget sapien elementum hendrerit. Ut eget dui lacus.
+        </div>
+      </div>
+      
+      <div class="notes-container">
+        <!-- <button id="notes-btn">Notes</button> -->
+        <input id="notes-btn" type="checkbox" name="feat2" />
+        <label for="notes-btn">Notes</label>
+          <div class="notes-content">
+            Notes content here <br>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacus felis, venenatis in viverra nec, ultrices sit amet dui. Sed fermentum vel diam ac luctus. Etiam ullamcorper, purus vel iaculis consectetur, enim enim interdum nunc, at venenatis elit massa consequat dui. Cras vel libero odio. Curabitur sit amet lorem arcu. Praesent porta odio leo, vitae egestas ex dapibus nec. Mauris congue mi non turpis porta, tincidunt pharetra massa finibus. Cras vitae metus ut est fermentum vulputate euismod quis urna. Quisque accumsan augue rhoncus diam iaculis convallis. Aenean nec mauris eget sapien elementum hendrerit. Ut eget dui lacus.
+          </div>
+        </div>
+        
+      <div class="tasks-container">
+        <!-- <button id="tasks-btn">Tasks</button> -->
+        <input id="tasks-btn" type="checkbox" name="feat3" />
+        <label for="tasks-btn">Tasks</label>
+        <div class="tasks-content">
+          Tasks content here <br>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacus felis, venenatis in viverra nec, ultrices sit amet dui. Sed fermentum vel diam ac luctus. Etiam ullamcorper, purus vel iaculis consectetur, enim enim interdum nunc, at venenatis elit massa consequat dui. Cras vel libero odio. Curabitur sit amet lorem arcu. Praesent porta odio leo, vitae egestas ex dapibus nec. Mauris congue mi non turpis porta, tincidunt pharetra massa finibus. Cras vitae metus ut est fermentum vulputate euismod quis urna. Quisque accumsan augue rhoncus diam iaculis convallis. Aenean nec mauris eget sapien elementum hendrerit. Ut eget dui lacus.
+        </div>
+      </div>
+    </div>
+
+
     <script src="js/sidepanel.js" type="module"></script>
   </body>
 </html>
