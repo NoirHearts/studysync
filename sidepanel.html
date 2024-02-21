@@ -1,7 +1,34 @@
 <html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
   <body>
     <h1>StudySync</h1>
-    <p>Hello world!</p>
+
+    <div class="timer-container">
+      <div class="timer">25:00:00</div>
+      <div class="buttons">
+        <button id="start-btn">Start</button>
+        <button id="pause-btn">Pause</button>
+        <button id="stop-btn">Skip</button>
+      </div>
+    </div>
+
+    <div class="other-features">
+      <div class="dictionary-container">
+        <button id="dict-btn">Dictionary</button>
+      </div>
+  
+      <div class="notes-container">
+        <button id="notes-btn">Notes</button>
+      </div>
+  
+      <div class="tasks-container">
+        <button id="tasks-btn">Tasks</button>
+      </div>
+    </div>
+
+
     <script src="js/sidepanel.js" type="module"></script>
   </body>
 </html>
