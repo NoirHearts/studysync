@@ -1,0 +1,152 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  height: 100vh;
+  font-family: 'Nunito', 'Open Sans', sans-serif;
+  background-color: #ccd4df;
+}
+
+.timer-container {
+  background-color: #202833;
+  width: 100vw;
+  padding: 12px 0px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .buttons {
+    #start-btn {
+      background: url(./img/play.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    #pause-btn {
+      background: url(./img/pause.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    #stop-btn {
+      background: url(./img/stop.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    .pomodoro-button {
+      border: none;
+      width: 12.5px;
+      height: 12.5px;
+    }
+  }
+}
+
+.timer {
+  border: 4px solid #f1ece9;
+  border-radius: 20px;
+  padding: 5px 20px;
+  display: block;
+  color: #f1ece9;
+}
+
+.timer-header {
+  font-weight: 700;
+  font-size: 48px;
+}
+
+.other-features {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons {
+  width: 14px;
+  border: 0;
+}
+.other-features button {
+  margin-top: 10px;
+}
+
+h1,
+h2,
+p {
+  text-align: center;
+}
+
+.buttons {
+  padding-top: 10px;
+}
+
+button {
+  background-color: #f1ece9;
+  color: #202833;
+  padding: 5px 10px;
+  margin: 0px 2px;
+  font-size: 12px;
+}
+
+.dictionary-container,
+.notes-container,
+.tasks-container {
+  background-color: #f1ece9;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  label {
+    background-color: #202833;
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+    color: #f1ece9;
+    font-size: 14px;
+    text-align: center;
+    position: relative;
+    font-weight: bolder;
+    margin: 0;
+  }
+
+  .dictionary-content,
+  .notes-content,
+  .tasks-content {
+    color: #202833;
+    max-height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: all 0.5s ease;
+    opacity: 0;
+    color: #5f7a92;
+    * {
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+  }
+
+  #dict-btn,
+  #notes-btn,
+  #tasks-btn {
+    display: none;
+    &:checked + label + div {
+      max-height: 100vh;
+      visibility: visible;
+      opacity: 1;
+      padding: 20px;
+      * {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+label:hover {
+  color: #ccd4df;
+  transition: all 0.3s ease;
+}

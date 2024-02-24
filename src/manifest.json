@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "StudySync",
+  "description": "StudySync is a student productivity browser extension that helps students maximize their productivity on their browsers. The extension has four main features, namely a Dictionary, a Pomodoro Timer, a To-Do List, and a Note-taking feature. This extension has a sidebar interface/panel for ease of use.",
+  "options_page": "options.html",
+  "background": { "service_worker": "background.bundle.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon-32.png"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "permissions": ["sidePanel"],
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "js": ["contentScript.bundle.js"],
+      "css": ["content.styles.css"]
+    }
+  ],
+  "devtools_page": "devtools.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["content.styles.css", "icon-128.png", "icon-32.png"],
+      "matches": []
+    }
+  ]
+}
