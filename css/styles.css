@@ -23,20 +23,20 @@ body {
     .buttons {
 
         #start-btn{
-            background: url(/images/play-idle.png);
+            background: url(/images/play.png);
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
         }
 
         #pause-btn{
-            background: url(/images/pause-idle.png);
+            background: url(/images/pause.png);
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
         }
         #stop-btn{
-            background: url(/images/stop-idle.png);
+            background: url(/images/stop.png);
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -71,6 +71,10 @@ body {
     align-items: center;
 }
 
+.icons {
+    width: 14px;
+    border: 0;
+}
 .other-features button {
     margin-top: 10px;
 }
@@ -140,4 +144,10 @@ button {
         }
     }
 
+}
+
+
+label:hover {
+    color: #CCD4DF;
+    transition: all .3s ease;
 }
