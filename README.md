@@ -8,3 +8,29 @@ This is a course requirement for CS 191/192 Software Engineering Courses of the 
 - Alvarado, Enrique Luis
 - Marquez, Ellian Fitzgerald
 - Serrano, Nuan Patricia
+
+## Installation
+
+Install all required dependencies
+
+```shell
+npm install
+```
+
+## Building the source code
+
+```shell
+npm run build
+```
+
+Then go to `chrome://extensions/`, click the "Load unpacked" button and point to the generated `build` folder.
+
+## Development
+
+To actively see changes while working on the code:
+
+```shell
+npm run start
+```
+
+Then go to `localhost:3000/panel.html`.
