@@ -31,7 +31,7 @@ const Panel: React.FC = () => {
             <img className="icons" src={dictionaryImg} /> Dictionary
           </label>
           <div className="dictionary-content">
-            {SubpanelDict()}
+            <SubpanelDict />
           </div>
         </div>
 
@@ -42,7 +42,7 @@ const Panel: React.FC = () => {
             <img className="icons" src={notesImg} /> Notes
           </label>
           <div className="notes-content">
-            {SubpanelNotes()}
+            <SubpanelNotes />
           </div>
         </div>
 
@@ -53,7 +53,7 @@ const Panel: React.FC = () => {
             <img className="icons" src={tasksImg} /> To-Do List
           </label>
           <div className="tasks-content">
-            {SubpanelTodo()}
+            <SubpanelTodo />
           </div>
         </div>
       </div>
