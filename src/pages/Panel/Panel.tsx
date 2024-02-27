@@ -24,35 +24,35 @@ const Panel: React.FC = () => {
       </div>
 
       <div className="other-features">
-        <div className="dictionary-container">
+        <div id="dictionary-container" className="feature-container">
           {/* <!-- <button id="dict-btn">Dictionary</button> --> */}
-          <input id="dict-btn" type="checkbox" name="feat1" />
+          <input id="dict-btn" className="feature-button" type="checkbox" name="feat1" />
           <label htmlFor="dict-btn">
             <img className="icons" src={dictionaryImg} /> Dictionary
           </label>
-          <div className="dictionary-content">
+          <div id="dictionary-content" className="feature-content">
             <SubpanelDict />
           </div>
         </div>
 
-        <div className="notes-container">
+        <div id="notes-container" className="feature-container">
           {/* <!-- <button id="notes-btn">Notes</button> --> */}
-          <input id="notes-btn" type="checkbox" name="feat2" />
+          <input id="notes-btn" className="feature-button" type="checkbox" name="feat2" />
           <label htmlFor="notes-btn">
             <img className="icons" src={notesImg} /> Notes
           </label>
-          <div className="notes-content">
+          <div id="notes-content" className="feature-content">
             <SubpanelNotes />
           </div>
         </div>
 
-        <div className="tasks-container">
+        <div id="tasks-container" className="feature-container">
           {/* <!-- <button id="tasks-btn" />Tasks</button> --> */}
-          <input id="tasks-btn" type="checkbox" name="feat3" />
+          <input id="tasks-btn" className="feature-button" type="checkbox" name="feat3" />
           <label htmlFor="tasks-btn">
             <img className="icons" src={tasksImg} /> To-Do List
           </label>
-          <div className="tasks-content">
+          <div id="tasks-content" className="feature-content">
             <SubpanelTodo />
           </div>
         </div>

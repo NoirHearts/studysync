@@ -32,6 +32,7 @@
       background-size: contain;
       background-position: center;
     }
+
     #stop-btn {
       background: url(./img/stop.png);
       background-repeat: no-repeat;
@@ -71,6 +72,7 @@
   width: 14px;
   border: 0;
 }
+
 .other-features button {
   margin-top: 10px;
 }
@@ -93,13 +95,14 @@ button {
   font-size: 12px;
 }
 
-.dictionary-container,
-.notes-container,
-.tasks-container {
+.feature-container {
   background-color: #f1ece9;
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
+  width: 98%;
+  border-radius: 5px;
+
   label {
     background-color: #202833;
     cursor: pointer;
@@ -107,15 +110,15 @@ button {
     padding: 10px;
     color: #f1ece9;
     font-size: 14px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     text-align: center;
     position: relative;
     font-weight: bolder;
     margin: 0;
   }
 
-  .dictionary-content,
-  .notes-content,
-  .tasks-content {
+  .feature-content {
     color: #202833;
     max-height: 0;
     visibility: hidden;
@@ -124,21 +127,52 @@ button {
     transition: all 0.5s ease;
     opacity: 0;
     color: #5f7a92;
+
     * {
       opacity: 0;
       transition: all 0.5s ease;
     }
   }
 
-  #dict-btn,
-  #notes-btn,
-  #tasks-btn {
+  #dictionary-content {
+    * {
+      margin: 0 0;
+    }
+
+    p {
+      text-align: left;
+
+      .word-speechpart {
+        font-size: 0.8em;
+        line-height: 2em;
+      }
+    }
+
+    .word-meaning {
+      margin-bottom: 20px;
+    }
+
+    .word {
+      font-size: 3em;
+      margin-bottom: 1%;
+
+      .word-phonetic {
+        font-size: 0.3em;
+      }
+
+    }
+
+  }
+
+  .feature-button {
     display: none;
-    &:checked + label + div {
+
+    &:checked+label+div {
       max-height: 100vh;
       visibility: visible;
       opacity: 1;
       padding: 20px;
+
       * {
         opacity: 1;
       }
