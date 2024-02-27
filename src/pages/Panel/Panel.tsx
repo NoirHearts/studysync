@@ -11,6 +11,7 @@ import SubpanelNotes from './subpanel/notes';
 
 const Panel: React.FC = () => {
   return (
+    <div className='outer-container'>
     <div className="container">
       <h3 className="name-header">StudySync</h3>
       
@@ -50,6 +51,7 @@ const Panel: React.FC = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

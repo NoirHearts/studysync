@@ -1,9 +1,13 @@
+.outer-container {
+  height: 100vh;
+  background-color: #ccd4df;
+}
 .container {
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   font-family: 'Nunito', 'Open Sans', sans-serif;
   background-color: #ccd4df;
 }
@@ -97,7 +101,6 @@
   border: 0;
 }
 
-
 .other-features button {
   margin-top: 10px;
 }
@@ -128,7 +131,6 @@ button {
   width: 98%;
   border-radius: 5px;
 
-
   label {
     background-color: #202833;
     cursor: pointer;
@@ -140,7 +142,7 @@ button {
     border-top-right-radius: 5px;
     text-align: center;
     position: relative;
-    font-weight: bolder;
+    font-weight: bold;
     margin: 0;
   }
 
@@ -153,7 +155,6 @@ button {
     transition: all 0.5s ease;
     opacity: 0;
     color: #5f7a92;
-
 
     * {
       opacity: 0;
@@ -170,36 +171,34 @@ button {
       text-align: left;
 
       .word-speechpart {
-        font-size: 0.8em;
+        font-size: 0.2em;
         line-height: 2em;
       }
     }
 
     .word-meaning {
       margin-bottom: 20px;
+      font-size: 0.8em;
     }
 
     .word {
-      font-size: 3em;
+      font-size: 1.5em;
       margin-bottom: 1%;
 
       .word-phonetic {
         font-size: 0.3em;
       }
-
     }
-
   }
 
   .feature-button {
     display: none;
 
-    &:checked+label+div {
+    &:checked + label + div {
       max-height: 100vh;
       visibility: visible;
       opacity: 1;
       padding: 20px;
-
 
       * {
         opacity: 1;
@@ -207,7 +206,6 @@ button {
     }
   }
 }
-
 
 label:hover {
   color: #ccd4df;
