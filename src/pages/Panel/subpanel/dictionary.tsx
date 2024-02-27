@@ -45,6 +45,7 @@ const SubpanelDict: React.FC = () => {
     isValidating,
   } = useSWR('https://api.dictionaryapi.dev/api/v2/entries/en/dictionary', fetcher);
   
+  // add initial "Search a word to get its definition"
   // add error prompt when invalid word
 
   if (error) {

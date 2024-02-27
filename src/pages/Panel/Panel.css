@@ -208,6 +208,8 @@ button {
 }
 
 label:hover {
-  color: #ccd4df;
+  background-color: #5f7a92;
+  /* background-color: #6d7d95; */
+  /* color: #202833; */
   transition: all 0.3s ease;
 }
