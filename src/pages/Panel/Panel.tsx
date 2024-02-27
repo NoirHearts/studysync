@@ -3,21 +3,14 @@ import './Panel.css';
 import dictionaryImg from './img/dictionary.png';
 import notesImg from './img/notes.png';
 import tasksImg from './img/tasks.png';
+import Pomodoro from './pomodoro.tsx';
 
 const Panel: React.FC = () => {
   return (
     <div className="container">
       <h3 className="name-header">StudySync</h3>
-      <div className="timer-container">
-        <div className="timer">
-          <div className="timer-header">25:00</div>
-        </div>
-        <div className="buttons">
-          <button id="start-btn" className="pomodoro-button"></button>
-          <button id="pause-btn" className="pomodoro-button"></button>
-          <button id="stop-btn" className="pomodoro-button"></button>
-        </div>
-      </div>
+      
+      <Pomodoro />
 
       <div className="other-features">
         <div className="dictionary-container">

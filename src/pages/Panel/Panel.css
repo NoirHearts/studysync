@@ -24,6 +24,7 @@
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+      cursor: pointer;
     }
 
     #pause-btn {
@@ -31,9 +32,33 @@
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+      cursor: pointer;
     }
-    #stop-btn {
-      background: url(./img/stop.png);
+
+    #skip-btn {
+      background: url(./img/skip.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      cursor: pointer;
+    }
+
+    #start-btn:hover {
+      background: url(./img/play-hover.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    #skip-btn:hover {
+      background: url(./img/skip-hover.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    #pause-btn:hover {
+      background: url(./img/pause-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
@@ -71,6 +96,7 @@
   width: 14px;
   border: 0;
 }
+
 .other-features button {
   margin-top: 10px;
 }
@@ -100,6 +126,7 @@ button {
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
+
   label {
     background-color: #202833;
     cursor: pointer;
@@ -124,6 +151,7 @@ button {
     transition: all 0.5s ease;
     opacity: 0;
     color: #5f7a92;
+
     * {
       opacity: 0;
       transition: all 0.5s ease;
@@ -134,11 +162,13 @@ button {
   #notes-btn,
   #tasks-btn {
     display: none;
-    &:checked + label + div {
+
+    &:checked+label+div {
       max-height: 100vh;
       visibility: visible;
       opacity: 1;
       padding: 20px;
+
       * {
         opacity: 1;
       }
