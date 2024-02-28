@@ -18,14 +18,15 @@ const Panel: React.FC = () => {
       <Pomodoro />
 
       <div className="other-features">
-        <div id="dictionary-container" className="feature-container">
-          {/* <!-- <button id="dict-btn">Dictionary</button> --> */}
-          <input id="dict-btn" className="feature-button" type="checkbox" name="feat1" />
-          <label htmlFor="dict-btn">
-            <img className="icons" src={dictionaryImg} /> Dictionary
+
+        <div id="tasks-container" className="feature-container">
+          {/* <!-- <button id="tasks-btn" />Tasks</button> --> */}
+          <input id="tasks-btn" className="feature-button" type="checkbox" name="feat3" />
+          <label htmlFor="tasks-btn">
+            <img className="icons" src={tasksImg} /> To-Do List
           </label>
-          <div id="dictionary-content" className="feature-content">
-            <SubpanelDict />
+          <div id="tasks-content" className="feature-content">
+            <SubpanelTodo />
           </div>
         </div>
 
@@ -40,16 +41,17 @@ const Panel: React.FC = () => {
           </div>
         </div>
 
-        <div id="tasks-container" className="feature-container">
-          {/* <!-- <button id="tasks-btn" />Tasks</button> --> */}
-          <input id="tasks-btn" className="feature-button" type="checkbox" name="feat3" />
-          <label htmlFor="tasks-btn">
-            <img className="icons" src={tasksImg} /> To-Do List
+        <div id="dictionary-container" className="feature-container">
+          {/* <!-- <button id="dict-btn">Dictionary</button> --> */}
+          <input id="dict-btn" className="feature-button" type="checkbox" name="feat1" />
+          <label htmlFor="dict-btn">
+            <img className="icons" src={dictionaryImg} /> Dictionary
           </label>
-          <div id="tasks-content" className="feature-content">
-            <SubpanelTodo />
+          <div id="dictionary-content" className="feature-content">
+            <SubpanelDict />
           </div>
         </div>
+
       </div>
     </div>
     </div>
