@@ -4,9 +4,9 @@ import dictionaryImg from './img/dictionary.png';
 import notesImg from './img/notes.png';
 import tasksImg from './img/tasks.png';
 
-import Dictionary from './subpanel/Dictionary';
-import Tasks from './subpanel/Tasks';
-import Notes from './subpanel/Notes';
+import Dictionary from './components/Dictionary';
+import Tasks from './components/Tasks';
+import Notes from './components/Notes';
 
 const Panel: React.FC = () => {
   return (
