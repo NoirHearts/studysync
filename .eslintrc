@@ -32,7 +32,8 @@
         "varsIgnorePattern": "^_",
         "caughtErrorsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "no-empty-pattern": "off"
   },
   "ignorePatterns": ["build"]
 }
