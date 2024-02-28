@@ -19,21 +19,21 @@
   align-items: center;
 
   .buttons {
-    #start-btn {
+    #start-button {
       background: url(./img/play.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
     }
 
-    #pause-btn {
+    #pause-button {
       background: url(./img/pause.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
     }
 
-    #stop-btn {
+    #stop-button {
       background: url(./img/stop.png);
       background-repeat: no-repeat;
       background-size: contain;

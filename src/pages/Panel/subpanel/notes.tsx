@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SubpanelNotes: React.FC = () => {
+const Notes: React.FC = () => {
   return (
     <div>
       Notes content here <br />
@@ -23,4 +23,4 @@ const SubpanelNotes: React.FC = () => {
   );
 }
 
-export default SubpanelNotes;
+export default Notes;

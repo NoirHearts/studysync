@@ -37,7 +37,7 @@ const fetcher = (...args: any) => fetch(args).then(res => res.json())
 
 let searchword = 'dictionary'
 
-const SubpanelDict: React.FC = () => {
+const Dictionary: React.FC = () => {
 
   const {
     data,
@@ -70,4 +70,4 @@ const SubpanelDict: React.FC = () => {
 
 }
 
-export default SubpanelDict;
+export default Dictionary;
