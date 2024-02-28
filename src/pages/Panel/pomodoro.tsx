@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+// add sound effects import audio here
 
 function Pomodoro() {
   const [isPaused, setIsPaused] = useState(true);
@@ -47,6 +48,7 @@ function Pomodoro() {
       }
       tick();
     }, 1000);
+    // if secondsleft === 0 => (new Audio(alarm).play())
 
     return () => clearInterval(interval);
   }, []);

@@ -148,6 +148,7 @@ button {
 
   .feature-content {
     color: #202833;
+    font-size: 14px;
     max-height: 0;
     visibility: hidden;
     overflow: hidden;
@@ -171,22 +172,25 @@ button {
       text-align: left;
 
       .word-speechpart {
-        font-size: 0.2em;
+        /* font-size: 0.2em; */
+        font-size: 12px;
         line-height: 2em;
       }
     }
 
     .word-meaning {
-      margin-bottom: 20px;
-      font-size: 0.8em;
+      margin-bottom: 10px;
+      /* font-size: 0.8em; */
+      font-size: 14px;
     }
 
     .word {
-      font-size: 1.5em;
+      font-size: 18px;
       margin-bottom: 1%;
+      font-weight: bold;
 
       .word-phonetic {
-        font-size: 0.3em;
+        font-size: 12px;
       }
     }
   }
