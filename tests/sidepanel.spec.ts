@@ -10,4 +10,14 @@ test.describe('sidepanel', () => {
       'StudySync'
     );
   });
+
+  test('click buttons', async ({ page }) => {
+    await page.getByText('Dictionary', { exact: true }).click();
+    await page.getByText('Dictionary', { exact: true }).click();
+    await page.getByText('Notes', { exact: true }).click();
+    await page.getByText('To-Do List').click();
+    await page.locator('#start-btn').click();
+    await page.locator('#pause-btn').click();
+    await page.locator('#stop-btn').click();
+  })
 });
