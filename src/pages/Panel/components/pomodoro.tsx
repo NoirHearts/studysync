@@ -20,8 +20,8 @@ function Pomodoro() {
   }
 
   function switchMode() {
-    const nextMode : string = modeRef.current === 'work' ? 'break' : 'work';
-    const nextSeconds : number = (nextMode === 'work' ? 25 : 5) * 60;
+    const nextMode: string = modeRef.current === 'work' ? 'break' : 'work';
+    const nextSeconds: number = (nextMode === 'work' ? 25 : 5) * 60;
 
     setMode(nextMode);
     modeRef.current = nextMode;

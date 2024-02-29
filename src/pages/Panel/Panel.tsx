@@ -4,7 +4,7 @@ import dictionaryImg from './img/dictionary.png';
 import notesImg from './img/notes.png';
 import tasksImg from './img/tasks.png';
 
-import Pomodoro from './components/pomodoro';
+import Pomodoro from './components/Pomodoro';
 import Dictionary from './components/Dictionary';
 import Tasks from './components/Tasks';
 import Notes from './components/Notes';
