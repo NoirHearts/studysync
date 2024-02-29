@@ -3,8 +3,8 @@ import './Panel.css';
 import dictionaryImg from './img/dictionary.png';
 import notesImg from './img/notes.png';
 import tasksImg from './img/tasks.png';
-import Pomodoro from './pomodoro.tsx';
 
+import Pomodoro from './components/pomodoro';
 import Dictionary from './components/Dictionary';
 import Tasks from './components/Tasks';
 import Notes from './components/Notes';
