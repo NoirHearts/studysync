@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SubpanelTodo: React.FC = () => {
+const Tasks: React.FC = () => {
   return (
     <div>
       Tasks content here <br />
@@ -19,4 +19,4 @@ const SubpanelTodo: React.FC = () => {
   );
 }
 
-export default SubpanelTodo;
+export default Tasks;

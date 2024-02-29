@@ -35,16 +35,14 @@ type WordMeaning = {
 // https://www.freecodecamp.org/news/how-to-fetch-api-data-in-react/
 const fetcher = (...args: any) => fetch(args).then(res => res.json())
 
-let searchword = 'dictionary'
-
-const SubpanelDict: React.FC = () => {
+const Dictionary: React.FC = () => {
 
   const {
     data,
     error,
     isValidating,
   } = useSWR('https://api.dictionaryapi.dev/api/v2/entries/en/dictionary', fetcher);
-  
+
   // add initial "Search a word to get its definition"
   // add error prompt when invalid word
 
@@ -59,8 +57,8 @@ const SubpanelDict: React.FC = () => {
   let wdef = data[definition_index]
   return (
     <div>
-    <div className='dictionary-container'>
-    </div>
+      <div className='dictionary-container'>
+      </div>
       <p className="word">{wdef.word} <span className="word-phonetic">{wdef.phonetic && (<em>({wdef.phonetic})</em>) || (<></>)}</span></p>
       <p className="word-origin">{wdef.origin}</p>
       {wdef.meanings.map((m: WordMeaning) => (
@@ -74,4 +72,4 @@ const SubpanelDict: React.FC = () => {
 
 }
 
-export default SubpanelDict;
+export default Dictionary;
