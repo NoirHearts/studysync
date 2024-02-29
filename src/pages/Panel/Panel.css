@@ -24,6 +24,7 @@
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+      cursor: pointer;
     }
 
     #pause-btn {
@@ -31,12 +32,14 @@
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+      cursor: pointer;
     }
     #stop-btn {
       background: url(./img/stop.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+      cursor: pointer;
     }
 
     .pomodoro-button {
