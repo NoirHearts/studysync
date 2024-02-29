@@ -18,6 +18,7 @@ const Panel: React.FC = () => {
         <Pomodoro />
 
         <div className="other-features">
+
           <div id="dictionary-container" className="feature-container">
             {/* <!-- <button id="dict-btn">Dictionary</button> --> */}
             <input id="dict-button" className="feature-button" type="checkbox" name="feat1" />
@@ -50,6 +51,7 @@ const Panel: React.FC = () => {
               <Tasks />
             </div>
           </div>
+
         </div>
       </div>
     </div>
