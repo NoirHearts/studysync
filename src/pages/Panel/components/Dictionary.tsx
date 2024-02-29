@@ -44,19 +44,23 @@ const Dictionary: React.FC = () => {
     error,
     isValidating,
   } = useSWR('https://api.dictionaryapi.dev/api/v2/entries/en/dictionary', fetcher);
+  
+  // add initial "Search a word to get its definition"
+  // add error prompt when invalid word
 
   if (error) {
-    return <div>failed to load</div>;
+    return <div>Failed to Load</div>;
   }
 
   if (isValidating) {
     return <div>Loading...</div>;
   }
-
   let definition_index: number = 0
   let wdef = data[definition_index]
   return (
     <div>
+    <div className='dictionary-container'>
+    </div>
       <p className="word">{wdef.word} <span className="word-phonetic">{wdef.phonetic && (<em>({wdef.phonetic})</em>) || (<></>)}</span></p>
       <p className="word-origin">{wdef.origin}</p>
       {wdef.meanings.map((m: WordMeaning) => (
