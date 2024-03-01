@@ -34,8 +34,31 @@
       background-position: center;
       cursor: pointer;
     }
-    #stop-btn {
-      background: url(./img/stop.png);
+    
+    #skip-btn {
+      background: url(./img/skip.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      cursor: pointer;
+    }
+
+    #start-btn:hover {
+      background: url(./img/play-hover.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    #skip-btn:hover {
+      background: url(./img/skip-hover.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    #pause-btn:hover {
+      background: url(./img/pause-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
