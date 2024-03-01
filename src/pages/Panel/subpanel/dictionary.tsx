@@ -20,28 +20,26 @@ fetch('https://jsonplaceholder.typicode.com/comments')
 */
 
 type WordDefinition = {
-  definition: String;
-  synonyms: Array<String>;
-  antonyms: Array<String>;
-}
+  definition: string;
+  synonyms: Array<string>;
+  antonyms: Array<string>;
+};
 
 type WordMeaning = {
-  partOfSpeech: String;
+  partOfSpeech: string;
   definitions: Array<WordDefinition>;
-  synonyms: Array<String>;
-  antonyms: Array<String>;
-}
+  synonyms: Array<string>;
+  antonyms: Array<string>;
+};
 
 // https://www.freecodecamp.org/news/how-to-fetch-api-data-in-react/
-const fetcher = (...args: any) => fetch(args).then(res => res.json())
+const fetcher = (...args: any) => fetch(args).then((res) => res.json());
 
 const Dictionary: React.FC = () => {
-
-  const {
-    data,
-    error,
-    isValidating,
-  } = useSWR('https://api.dictionaryapi.dev/api/v2/entries/en/dictionary', fetcher);
+  const { data, error, isValidating } = useSWR(
+    'https://api.dictionaryapi.dev/api/v2/entries/en/dictionary',
+    fetcher
+  );
 
   // add initial "Search a word to get its definition"
   // add error prompt when invalid word
@@ -53,23 +51,28 @@ const Dictionary: React.FC = () => {
   if (isValidating) {
     return <div>Loading...</div>;
   }
-  let definition_index: number = 0
-  let wdef = data[definition_index]
+  const definition_index: number = 0;
+  const wdef = data[definition_index];
   return (
     <div>
-      <div className='dictionary-container'>
-      </div>
-      <p className="word">{wdef.word} <span className="word-phonetic">{wdef.phonetic && (<em>({wdef.phonetic})</em>) || (<></>)}</span></p>
+      <div className="dictionary-container"></div>
+      <p className="word">
+        {wdef.word}{' '}
+        <span className="word-phonetic">
+          {(wdef.phonetic && <em>({wdef.phonetic})</em>) || <></>}
+        </span>
+      </p>
       <p className="word-origin">{wdef.origin}</p>
-      {wdef.meanings.map((m: WordMeaning) => (
-        m.definitions.map((d: WordDefinition) => (
-          <p className="word-meaning"><em className="word-speechpart">({m.partOfSpeech})</em> {d.definition}</p>
+      {wdef.meanings.map((m: WordMeaning) =>
+        m.definitions.map((d: WordDefinition, index) => (
+          <p key={index} className="word-meaning">
+            <em className="word-speechpart">({m.partOfSpeech})</em>{' '}
+            {d.definition}
+          </p>
         ))
-      ))
-      }
-    </div >
+      )}
+    </div>
   );
-
-}
+};
 
 export default Dictionary;

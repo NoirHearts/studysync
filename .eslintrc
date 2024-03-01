@@ -25,6 +25,7 @@
   },
   "rules": {
     "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
@@ -33,7 +34,8 @@
         "caughtErrorsIgnorePattern": "^_"
       }
     ],
-    "no-empty-pattern": "off"
+    "no-empty-pattern": "off",
+    "react/no-unescaped-entities": "off"
   },
   "ignorePatterns": ["build"]
 }
