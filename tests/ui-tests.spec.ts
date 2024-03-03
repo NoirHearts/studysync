@@ -13,59 +13,58 @@ test.describe('testing initial UI', () => {
 
   test.describe('dictionary content', () => {
     test('is hidden by default', async ({ page }) => {
-      await expect(page.locator('.dictionary-content')).toBeHidden();
+      await expect(page.locator('#dictionary-content')).toBeHidden();
     });
 
     test('becomes visible when button clicked', async ({ page }) => {
-      await page.getByText('Dictionary', { exact: true }).click();
-      await expect(page.locator('.dictionary-content')).toBeVisible();
+      await page.locator('label[for=dict-btn]').click();
+      await expect(page.locator('#dictionary-content')).toBeVisible();
     });
 
     test('becomes hidden when button clicked while content is visible', async ({
       page,
     }) => {
-      await page.getByText('Dictionary', { exact: true }).click();
-      await page.getByText('Dictionary', { exact: true }).click();
-      await expect(page.locator('.dictionary-content')).toBeHidden();
+      await page.locator('label[for=dict-btn]').click();
+      await page.locator('label[for=dict-btn]').click();
+      await expect(page.locator('#dictionary-content')).toBeHidden();
     });
   });
 
   test.describe('notes content', () => {
     test('is hidden by default', async ({ page }) => {
-      await expect(page.locator('.notes-content')).toBeHidden();
+      await expect(page.locator('#notes-content')).toBeHidden();
     });
 
     test('becomes visible when button clicked', async ({ page }) => {
-      await page.getByText('Notes', { exact: true }).click();
-      await expect(page.locator('.notes-content')).toBeVisible();
+      await page.locator('label[for=notes-btn]').click();
+      await expect(page.locator('#notes-content')).toBeVisible();
     });
 
     test('becomes hidden when button clicked while content is visible', async ({
       page,
     }) => {
-      await page.getByText('Notes', { exact: true }).click();
-      await page.getByText('Notes', { exact: true }).click();
-      await expect(page.locator('.notes-content')).toBeHidden();
+      await page.locator('label[for=notes-btn]').click();
+      await page.locator('label[for=notes-btn]').click();
+      await expect(page.locator('#notes-content')).toBeHidden();
     });
   });
 
   test.describe('to-do list content', () => {
     test('is hidden by default', async ({ page }) => {
-      await expect(page.locator('.tasks-content')).toBeHidden();
+      await expect(page.locator('#tasks-content')).toBeHidden();
     });
 
     test('becomes visible when button clicked', async ({ page }) => {
-      await page.getByText('To-Do List', { exact: true }).click();
-      await expect(page.locator('.tasks-content')).toBeVisible();
+      await page.locator('label[for=tasks-btn]').click();
+      await expect(page.locator('#tasks-content')).toBeVisible();
     });
 
     test('becomes hidden when button clicked while content is visible', async ({
       page,
     }) => {
-      await page.getByText('To-Do List', { exact: true }).click();
-      await page.getByText('To-Do List', { exact: true }).click();
-      await expect(page.locator('.tasks-content')).toBeHidden();
+      await page.locator('label[for=tasks-btn]').click();
+      await page.locator('label[for=tasks-btn]').click();
+      await expect(page.locator('#tasks-content')).toBeHidden();
     });
   });
 });
-
