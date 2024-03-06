@@ -218,3 +218,34 @@ label:hover {
   /* color: #202833; */
   transition: all 0.3s ease;
 }
+
+.search-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.search-box input {
+  padding: 10px 10px;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background-color: #202833;
+  color: #ccd4df;
+}
+
+.search-box button {
+  padding: 10px 0px;
+  padding-right: 10px;
+  width: 50px;
+  background-color: #202833;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.result {
+  position: relative;
+}

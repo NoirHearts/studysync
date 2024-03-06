@@ -3,6 +3,8 @@ import './Panel.css';
 import dictionaryImg from './img/dictionary.png';
 import notesImg from './img/notes.png';
 import tasksImg from './img/tasks.png';
+import searchImg from './img/search.png';
+
 
 import Dictionary from './subpanel/Dictionary';
 import Tasks from './subpanel/Tasks';
@@ -19,7 +21,6 @@ const Panel: React.FC = () => {
 
         <div className="other-features">
           <div id="tasks-container" className="feature-container">
-            {/* <!-- <button id="tasks-btn" />Tasks</button> --> */}
             <input
               id="tasks-btn"
               className="feature-button"
@@ -35,7 +36,6 @@ const Panel: React.FC = () => {
           </div>
 
           <div id="notes-container" className="feature-container">
-            {/* <!-- <button id="notes-btn">Notes</button> --> */}
             <input
               id="notes-btn"
               className="feature-button"
@@ -51,7 +51,6 @@ const Panel: React.FC = () => {
           </div>
 
           <div id="dictionary-container" className="feature-container">
-            {/* <!-- <button id="dict-btn">Dictionary</button> --> */}
             <input
               id="dict-btn"
               className="feature-button"
@@ -62,6 +61,12 @@ const Panel: React.FC = () => {
               <img className="icons" src={dictionaryImg} /> Dictionary
             </label>
             <div id="dictionary-content" className="feature-content">
+            <div className="search-box">
+              <input type="text" placeholder="Type a word to search..." id="search-word" />
+              <button id="search-btn"><img className="icons" src={searchImg} /></button>
+            </div>
+            <div className="result" id="result">
+            </div>              
               <Dictionary />
             </div>
           </div>
