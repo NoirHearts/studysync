@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import searchImg from '../img/search.png';
 
 const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
@@ -63,6 +63,23 @@ const Dictionary: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const keyDownHandler = event => {
+      console.log('User pressed: ', event.key);
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleClick();
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+  
   return (
     <div>
       <div className="search-box">
