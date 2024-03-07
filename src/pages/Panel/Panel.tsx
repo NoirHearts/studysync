@@ -3,8 +3,6 @@ import './Panel.css';
 import dictionaryImg from './img/dictionary.png';
 import notesImg from './img/notes.png';
 import tasksImg from './img/tasks.png';
-import searchImg from './img/search.png';
-
 
 import Dictionary from './subpanel/Dictionary';
 import Tasks from './subpanel/Tasks';
@@ -61,10 +59,6 @@ const Panel: React.FC = () => {
               <img className="icons" src={dictionaryImg} /> Dictionary
             </label>
             <div id="dictionary-content" className="feature-content">
-            <div className="search-box">
-              <input type="text" placeholder="Type a word to search..." id="search-word" />
-              <button id="search-btn"><img className="icons" src={searchImg} /></button>
-            </div>
               <Dictionary />
             </div>
           </div>

@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
-import useSWR from 'swr';
+import React, { useState } from 'react';
+import searchImg from '../img/search.png';
 
-const url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
-const searchBtn = document.getElementById("search-btn");
-const fetcher = (...args: any) => fetch(args).then((res) => res.json());
+const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
 function getSearchWord() {
-  const searchInput = document.getElementById("search-word");
-  return searchInput ? searchInput.value : "";
+  const searchInput = document.getElementById(
+    'search-word'
+  ) as HTMLInputElement;
+  return searchInput ? searchInput.value : '';
 }
 
-searchBtn?.addEventListener("click", () => {
-  const searchWord = getSearchWord();
-});
+type DictionaryEntry = {
+  word: string;
+  phonetic: string;
+  phonetics: Array<object>;
+  origin: string;
+  meanings: Array<WordMeaning>;
+};
 
 type WordDefinition = {
   definition: string;
@@ -28,39 +32,77 @@ type WordMeaning = {
 };
 
 const Dictionary: React.FC = () => {
-  const { data, error, isValidating } = useSWR(
-    `${url}${getSearchWord()}`,
-    fetcher
-  );
+  const [_data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [definition, setDefinition] = useState<DictionaryEntry | null>(null);
 
-  if (error) {
-    return <div>Can't find the word.</div>;
-  }
+  const handleClick = async () => {
+    setIsLoading(true);
+    setError('');
 
-  if (isValidating) {
-    return <div>Loading...</div>;
-  }
-  const definition_index: number = 0;
-  const wdef = data[definition_index];
+    try {
+      const response = await fetch(url + getSearchWord());
+      if (!response.ok) {
+        throw new Error(`An error occurred. Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      setData(result);
+      const definition_index: number = 0;
+      setDefinition(result[definition_index]);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(`Something went wrong.`);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div>
-      <div className="dictionary-container">
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Type a word to search..."
+          id="search-word"
+        />
+        <button id="search-btn" onClick={handleClick}>
+          <img className="icons" src={searchImg} />
+        </button>
       </div>
-      
-      <p className="word">
-        {wdef.word}{' '}
-        <span className="word-phonetic">
-          {(wdef.phonetic && <em>({wdef.phonetic})</em>) || <></>}
-        </span>
-      </p>
-      <p className="word-origin">{wdef.origin}</p>
-      {wdef.meanings.map((m: WordMeaning) =>
-        m.definitions.map((d: WordDefinition, index) => (
-          <p key={index} className="word-meaning">
-            <em className="word-speechpart">({m.partOfSpeech})</em>{' '}
-            {d.definition}
+      <div className="dictionary-container"></div>
+
+      {error ? (
+        <div>Can't find the word.</div>
+      ) : isLoading ? (
+        <div>Loading...</div>
+      ) : definition != null ? (
+        <>
+          <p className="word">
+            {definition.word}{' '}
+            <span className="word-phonetic">
+              {(definition.phonetic && <em>({definition.phonetic})</em>) || (
+                <></>
+              )}
+            </span>
           </p>
-        ))
+          <p className="word-origin">{definition.origin}</p>
+          {definition.meanings.map((m: WordMeaning) =>
+            m.definitions.map((d: WordDefinition, index) => (
+              <p key={index} className="word-meaning">
+                <em className="word-speechpart">({m.partOfSpeech})</em>{' '}
+                {d.definition}
+              </p>
+            ))
+          )}
+        </>
+      ) : (
+        <></>
       )}
     </div>
   );
