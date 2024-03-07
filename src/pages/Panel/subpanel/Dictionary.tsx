@@ -1,23 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useSWR from 'swr';
 
-// https://stackoverflow.com/questions/50642662/how-to-get-json-data-from-url-and-save-it-to-the-const-variable-typescript
-/*
-let data  = ''
+const url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+const searchBtn = document.getElementById("search-btn");
+const fetcher = (...args: any) => fetch(args).then((res) => res.json());
 
-fetch('https://jsonplaceholder.typicode.com/comments')
-  .then(
-    function(response) {
-    return response.json();
-    }
-  ).then(
-    function(myJson){
-      data=myJson
-      console.log(data)
-    }
-  );
+function getSearchWord() {
+  const searchInput = document.getElementById("search-word");
+  return searchInput ? searchInput.value : "";
+}
 
-*/
+searchBtn?.addEventListener("click", () => {
+  const searchWord = getSearchWord();
+});
 
 type WordDefinition = {
   definition: string;
@@ -32,20 +27,14 @@ type WordMeaning = {
   antonyms: Array<string>;
 };
 
-// https://www.freecodecamp.org/news/how-to-fetch-api-data-in-react/
-const fetcher = (...args: any) => fetch(args).then((res) => res.json());
-
 const Dictionary: React.FC = () => {
   const { data, error, isValidating } = useSWR(
-    'https://api.dictionaryapi.dev/api/v2/entries/en/dictionary',
+    `${url}${getSearchWord()}`,
     fetcher
   );
 
-  // add initial "Search a word to get its definition"
-  // add error prompt when invalid word
-
   if (error) {
-    return <div>Failed to Load</div>;
+    return <div>Can't find the word.</div>;
   }
 
   if (isValidating) {
@@ -55,7 +44,9 @@ const Dictionary: React.FC = () => {
   const wdef = data[definition_index];
   return (
     <div>
-      <div className="dictionary-container"></div>
+      <div className="dictionary-container">
+      </div>
+      
       <p className="word">
         {wdef.word}{' '}
         <span className="word-phonetic">

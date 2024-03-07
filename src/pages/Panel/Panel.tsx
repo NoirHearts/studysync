@@ -65,8 +65,6 @@ const Panel: React.FC = () => {
               <input type="text" placeholder="Type a word to search..." id="search-word" />
               <button id="search-btn"><img className="icons" src={searchImg} /></button>
             </div>
-            <div className="result" id="result">
-            </div>              
               <Dictionary />
             </div>
           </div>
