@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, {useEffect, useState, useRef } from 'react';
 import searchImg from '../img/search.png';
 
 const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
@@ -36,6 +36,7 @@ const Dictionary: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [definition, setDefinition] = useState<DictionaryEntry | null>(null);
+  const inputFieldRef = useRef(null);
 
   const handleClick = async () => {
     setIsLoading(true);
@@ -65,13 +66,12 @@ const Dictionary: React.FC = () => {
 
   useEffect(() => {
     const keyDownHandler = event => {
-      console.log('User pressed: ', event.key);
-
+    if (event.target === inputFieldRef.current) {
       if (event.key === 'Enter') {
         event.preventDefault();
         handleClick();
       }
-    };
+    }};
 
     document.addEventListener('keydown', keyDownHandler);
 
@@ -87,6 +87,7 @@ const Dictionary: React.FC = () => {
           type="text"
           placeholder="Type a word to search..."
           id="search-word"
+          ref={inputFieldRef}
         />
         <button id="search-btn" onClick={handleClick}>
           <img className="icons" src={searchImg} />
