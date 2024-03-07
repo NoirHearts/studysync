@@ -96,7 +96,7 @@ const Dictionary: React.FC = () => {
       <div className="dictionary-container"></div>
 
       {error ? (
-        <div>Can't find the word.</div>
+        <div>No definitions found. </div>
       ) : isLoading ? (
         <div>Loading...</div>
       ) : definition != null ? (
@@ -118,7 +118,7 @@ const Dictionary: React.FC = () => {
               </p>
             ))
           )}
-        </>
+          </>
       ) : (
         <></>
       )}
