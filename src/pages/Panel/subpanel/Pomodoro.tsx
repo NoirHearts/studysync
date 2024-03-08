@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 // add sound effects import audio here
 
 const Pomodoro: React.FC = () => {
+  const [isInitialized, setIsInitialized] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [mode, setMode] = useState('work');
   const [secondsLeft, setSecondsLeft] = useState(0);
@@ -72,6 +73,7 @@ const Pomodoro: React.FC = () => {
             id="start-btn"
             className="pomodoro-button"
             onClick={() => {
+              if (!isInitialized) setIsInitialized(true);
               setIsPaused(false);
               isPausedRef.current = false;
             }}
@@ -90,6 +92,7 @@ const Pomodoro: React.FC = () => {
           id="skip-btn"
           className="pomodoro-button"
           onClick={() => {
+            if (!isInitialized) return;
             setIsPaused(true);
             isPausedRef.current = true;
             switchMode();
