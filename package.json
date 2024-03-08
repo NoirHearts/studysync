@@ -12,7 +12,9 @@
     "start": "node utils/webserver.js",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "test": "xvfb-run npx playwright test",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "type-check": "tsc --noEmit",
+    "prep": "npm run lint && npm run type-check && npm run format && npm run build && npm run test && npm run start"
   },
   "dependencies": {
     "react": "^18.2.0",
