@@ -19,6 +19,8 @@ jobs:
         run: npm ci && npx playwright install --with-deps
       - name: Lint
         run: npm run lint
+      - name: Check types
+        run: npm run type-check
       - name: Format code
         run: npm run format
       - name: Build extension
