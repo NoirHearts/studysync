@@ -13,7 +13,7 @@
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "test": "xvfb-run npx playwright test",
     "lint": "npx eslint .",
-    "type-check": "tsc",
+    "type-check": "tsc --noEmit",
     "prep": "npm run lint && npm run type-check && npm run format && npm run build && npm run test && npm run start"
   },
   "dependencies": {
