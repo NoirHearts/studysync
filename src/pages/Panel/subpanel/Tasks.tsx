@@ -5,6 +5,10 @@ type TaskData = {
   taskCompleted: boolean;
 }
 
+// TODO: https://stackoverflow.com/questions/5364062/how-can-i-save-information-locally-in-my-chrome-extension
+// Chrome storage: https://developer.chrome.com/docs/extensions/reference/api/storage
+// Firefox storage: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage
+
 function getNewTask(): [string, boolean] {
   const taskString = document.getElementById(
     'new-task-string'
