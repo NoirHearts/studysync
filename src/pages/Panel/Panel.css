@@ -10,6 +10,7 @@
   min-height: 100vh;
   font-family: 'Nunito', 'Open Sans', sans-serif;
   background-color: #ccd4df;
+  padding-bottom: 30px;
 }
 
 .timer-container {
@@ -191,6 +192,7 @@ button {
       font-weight: bold;
       padding-top: 10px;
       color: #5f7a92;
+      overflow-wrap: anywhere;
 
       .word-phonetic {
         font-size: 12px;
