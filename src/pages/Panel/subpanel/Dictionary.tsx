@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import searchImg from '../img/search.png';
 
 const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
@@ -65,13 +65,14 @@ const Dictionary: React.FC = () => {
   };
 
   useEffect(() => {
-    const keyDownHandler = event => {
-    if (event.target === inputFieldRef.current) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        handleClick();
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.target === inputFieldRef.current) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          handleClick();
+        }
       }
-    }};
+    };
 
     document.addEventListener('keydown', keyDownHandler);
 
@@ -79,7 +80,7 @@ const Dictionary: React.FC = () => {
       document.removeEventListener('keydown', keyDownHandler);
     };
   }, []);
-  
+
   return (
     <div>
       <div className="search-box">
@@ -118,7 +119,7 @@ const Dictionary: React.FC = () => {
               </p>
             ))
           )}
-          </>
+        </>
       ) : (
         <></>
       )}
