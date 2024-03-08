@@ -1,23 +1,22 @@
-import React from 'react';
-import useSWR from 'swr';
+import React, { useEffect, useState, useRef } from 'react';
+import searchImg from '../img/search.png';
 
-// https://stackoverflow.com/questions/50642662/how-to-get-json-data-from-url-and-save-it-to-the-const-variable-typescript
-/*
-let data  = ''
+const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
-fetch('https://jsonplaceholder.typicode.com/comments')
-  .then(
-    function(response) {
-    return response.json();
-    }
-  ).then(
-    function(myJson){
-      data=myJson
-      console.log(data)
-    }
-  );
+function getSearchWord() {
+  const searchInput = document.getElementById(
+    'search-word'
+  ) as HTMLInputElement;
+  return searchInput ? searchInput.value : '';
+}
 
-*/
+type DictionaryEntry = {
+  word: string;
+  phonetic: string;
+  phonetics: Array<object>;
+  origin: string;
+  meanings: Array<WordMeaning>;
+};
 
 type WordDefinition = {
   definition: string;
@@ -32,44 +31,97 @@ type WordMeaning = {
   antonyms: Array<string>;
 };
 
-// https://www.freecodecamp.org/news/how-to-fetch-api-data-in-react/
-const fetcher = (...args: any) => fetch(args).then((res) => res.json());
-
 const Dictionary: React.FC = () => {
-  const { data, error, isValidating } = useSWR(
-    'https://api.dictionaryapi.dev/api/v2/entries/en/dictionary',
-    fetcher
-  );
+  const [_data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [definition, setDefinition] = useState<DictionaryEntry | null>(null);
+  const inputFieldRef = useRef(null);
 
-  // add initial "Search a word to get its definition"
-  // add error prompt when invalid word
+  const handleClick = async () => {
+    setIsLoading(true);
+    setError('');
 
-  if (error) {
-    return <div>Failed to Load</div>;
-  }
+    try {
+      const response = await fetch(url + getSearchWord());
+      if (!response.ok) {
+        throw new Error(`An error occurred. Status: ${response.status}`);
+      }
 
-  if (isValidating) {
-    return <div>Loading...</div>;
-  }
-  const definition_index: number = 0;
-  const wdef = data[definition_index];
+      const result = await response.json();
+
+      setData(result);
+      const definition_index: number = 0;
+      setDefinition(result[definition_index]);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(`Something went wrong.`);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.target === inputFieldRef.current) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          handleClick();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
   return (
     <div>
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Type a word to search..."
+          id="search-word"
+          ref={inputFieldRef}
+        />
+        <button id="search-btn" onClick={handleClick}>
+          <img className="icons" src={searchImg} />
+        </button>
+      </div>
       <div className="dictionary-container"></div>
-      <p className="word">
-        {wdef.word}{' '}
-        <span className="word-phonetic">
-          {(wdef.phonetic && <em>({wdef.phonetic})</em>) || <></>}
-        </span>
-      </p>
-      <p className="word-origin">{wdef.origin}</p>
-      {wdef.meanings.map((m: WordMeaning) =>
-        m.definitions.map((d: WordDefinition, index) => (
-          <p key={index} className="word-meaning">
-            <em className="word-speechpart">({m.partOfSpeech})</em>{' '}
-            {d.definition}
+
+      {error ? (
+        <div>No definitions found. </div>
+      ) : isLoading ? (
+        <div>Loading...</div>
+      ) : definition != null ? (
+        <>
+          <p className="word">
+            {definition.word}{' '}
+            <span className="word-phonetic">
+              {(definition.phonetic && <em>({definition.phonetic})</em>) || (
+                <></>
+              )}
+            </span>
           </p>
-        ))
+          <p className="word-origin">{definition.origin}</p>
+          {definition.meanings.map((m: WordMeaning) =>
+            m.definitions.map((d: WordDefinition, index) => (
+              <p key={index} className="word-meaning">
+                <em className="word-speechpart">({m.partOfSpeech})</em>{' '}
+                {d.definition}
+              </p>
+            ))
+          )}
+        </>
+      ) : (
+        <></>
       )}
     </div>
   );
