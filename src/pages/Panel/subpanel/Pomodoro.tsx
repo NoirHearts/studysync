@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 // add sound effects import audio here
 
-function Pomodoro() {
+const Pomodoro: React.FC = () => {
   const [isPaused, setIsPaused] = useState(true);
   const [mode, setMode] = useState('work');
   const [secondsLeft, setSecondsLeft] = useState(0);
@@ -99,6 +99,6 @@ function Pomodoro() {
       </div>
     </div>
   );
-}
+};
 
 export default Pomodoro;
