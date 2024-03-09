@@ -43,9 +43,19 @@ const Dictionary: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch(url + getSearchWord());
+      const wordToSearch = getSearchWord();
+
+      if (wordToSearch.includes(' ')) {
+        throw new Error(`Please only search one word at a time.`);
+      }
+
+      const response = await fetch(url + wordToSearch);
       if (!response.ok) {
-        throw new Error(`An error occurred. Status: ${response.status}`);
+        if (response.status == 404) {
+          throw new Error(`Word does not have a dictionary entry.`);
+        } else {
+          throw new Error(`An error occurred. Status: ${response.status}`);
+        }
       }
 
       const result = await response.json();
@@ -58,6 +68,7 @@ const Dictionary: React.FC = () => {
         setError(err.message);
       } else {
         setError(`Something went wrong.`);
+        console.error(err);
       }
     } finally {
       setIsLoading(false);
@@ -97,9 +108,9 @@ const Dictionary: React.FC = () => {
       <div className="dictionary-container"></div>
 
       {error ? (
-        <div>No definitions found. </div>
+        <div className="error-msg">{error}</div>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <div className="loading">Loading...</div>
       ) : definition != null ? (
         <>
           <p className="word">
