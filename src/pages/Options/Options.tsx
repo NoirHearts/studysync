@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Settings, defaultSettings } from '../../../utils/settings';
+import { defaultSettings } from '../../services/settings';
+import { Settings } from '../../types';
+import settingsService from '../../services/settings';
 import './Options.css';
 
 interface Props {
@@ -13,8 +15,8 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
   useEffect(() => {
     try {
-      chrome.storage.sync.get(defaultSettings, (storedSettings) => {
-        setSettings({ ...storedSettings } as Settings);
+      settingsService.get(defaultSettings, (storedSettings) => {
+        setSettings({ ...storedSettings });
       });
     } catch (error) {
       console.error(error);
@@ -44,7 +46,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
   const saveSettings = () => {
     try {
-      chrome.storage.sync.set(
+      settingsService.update(
         {
           ...settings,
         },
