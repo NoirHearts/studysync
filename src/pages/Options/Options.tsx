@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { defaultSettings } from '../../services/settings';
 import { Settings } from '../../types';
-import settingsService from '../../services/settings';
+import dataService, { defaultSettings } from '../../services/data';
 import './Options.css';
 
 interface Props {
@@ -15,8 +14,8 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
   useEffect(() => {
     try {
-      settingsService.get(defaultSettings, (storedSettings) => {
-        setSettings({ ...storedSettings });
+      dataService.retrieve('settings', (items) => {
+        setSettings({ ...(items.settings as Settings) });
       });
     } catch (error) {
       console.error(error);
@@ -46,9 +45,9 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
   const saveSettings = () => {
     try {
-      settingsService.update(
+      dataService.update(
         {
-          ...settings,
+          settings: settings,
         },
         () => {
           displayStatus('Options saved.', 1000);
@@ -64,11 +63,10 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     }
   };
 
-  const importSettings = () => {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.json';
-    fileInput.style.display = 'none';
+  const importData = () => {
+    const fileInput = document.getElementById(
+      'import-input'
+    ) as HTMLInputElement;
 
     fileInput.onchange = function (event) {
       const target = event.target as HTMLInputElement;
@@ -79,13 +77,13 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       const reader = new FileReader();
 
       reader.onload = function (e: ProgressEvent<FileReader>) {
-        const settingsJSON = e.target?.result as string;
-        const settings = JSON.parse(settingsJSON) as Settings;
+        const dataJSON = e.target?.result as string;
+        const data = JSON.parse(dataJSON);
 
         try {
-          chrome.storage.sync.set(settings, () => {
-            displayStatus('Settings imported successfully.', 3000);
-            setSettings({ ...settings } as Settings);
+          dataService.update(data, () => {
+            displayStatus('Data imported successfully.', 3000);
+            setSettings({ ...data.settings } as Settings);
           });
         } catch (error) {
           console.error(error);
@@ -104,16 +102,17 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     fileInput.click();
   };
 
-  const exportSettings = () => {
+  const exportData = () => {
     try {
-      chrome.storage.sync.get(null, function (items) {
-        const settingsJSON = JSON.stringify(items);
-        const blob = new Blob([settingsJSON], { type: 'application/json' });
+      dataService.retrieve(null, (items) => {
+        const dataJSON = JSON.stringify(items);
+        const blob = new Blob([dataJSON], { type: 'application/json' });
 
         const downloadLink = document.createElement('a');
-        downloadLink.download = 'studysync_settings.json';
+        downloadLink.download = 'studysync_data.json';
         downloadLink.href = URL.createObjectURL(blob);
         downloadLink.click();
+        downloadLink.remove();
       });
     } catch (error) {
       console.error(error);
@@ -168,8 +167,14 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       <div className="status-message">{status}</div>
       <button onClick={saveSettings}>Save</button>
       <div>
-        <button onClick={importSettings}>Import Settings</button>{' '}
-        <button onClick={exportSettings}>Export Settings</button>
+        <input
+          type="file"
+          id="import-input"
+          accept=".json"
+          style={{ display: 'none' }}
+        />
+        <button onClick={importData}>Import Data</button>{' '}
+        <button onClick={exportData}>Export Data</button>
       </div>
     </div>
   );

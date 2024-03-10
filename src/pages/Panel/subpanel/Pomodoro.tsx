@@ -1,8 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { defaultSettings } from '../../../services/settings';
+import dataService, { defaultSettings } from '../../../services/data';
 import { Settings } from '../../../types';
-import settingsService from '../../../services/settings';
 // add sound effects import audio here
 
 const Pomodoro: React.FC = () => {
@@ -20,15 +19,17 @@ const Pomodoro: React.FC = () => {
 
   useEffect(() => {
     try {
-      settingsService.get('pomodoro', (storedSettings) => {
-        setSettings({ ...storedSettings.pomodoro });
+      dataService.retrieve('settings', (items) => {
+        setSettings({ ...(items.settings.pomodoro as Settings['pomodoro']) });
       });
 
       // Add listener to update pomodoro whenever settings are changed
       chrome.storage.onChanged.addListener((changes) => {
         for (const [] of Object.entries(changes)) {
-          settingsService.get('pomodoro', (storedSettings) => {
-            setSettings({ ...storedSettings.pomodoro });
+          dataService.retrieve('settings', (items) => {
+            setSettings({
+              ...(items.settings.pomodoro as Settings['pomodoro']),
+            });
           });
         }
       });

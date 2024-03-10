@@ -3,7 +3,6 @@ export interface Settings {
     workTime: number;
     breakTime: number;
   };
-  notes: Note[];
 }
 
 export interface Note {
@@ -11,4 +10,9 @@ export interface Note {
   content: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ExtensionData {
+  settings: Settings;
+  notes: Note[];
 }
