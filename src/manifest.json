@@ -10,7 +10,7 @@
   "side_panel": {
     "default_path": "panel.html"
   },
-  "permissions": ["sidePanel"],
+  "permissions": ["sidePanel", "storage"],
   "icons": {
     "128": "icon-128.png"
   },
