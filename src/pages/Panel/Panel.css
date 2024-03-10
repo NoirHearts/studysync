@@ -10,6 +10,7 @@
   min-height: 100vh;
   font-family: 'Nunito', 'Open Sans', sans-serif;
   background-color: #ccd4df;
+  padding-bottom: 30px;
 }
 
 .timer-container {
@@ -186,9 +187,12 @@ button {
     }
 
     .word {
-      font-size: 18px;
+      font-size: 24px;
       margin-bottom: 1%;
       font-weight: bold;
+      padding-top: 10px;
+      color: #5f7a92;
+      overflow-wrap: anywhere;
 
       .word-phonetic {
         font-size: 12px;
@@ -200,7 +204,7 @@ button {
     display: none;
 
     &:checked + label + div {
-      max-height: 100vh;
+      max-height: 100%;
       visibility: visible;
       opacity: 1;
       padding: 20px;
@@ -223,7 +227,7 @@ label:hover {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 20px;
+  padding-bottom: 2px;
 }
 
 .search-box input {
@@ -243,8 +247,4 @@ label:hover {
   border: none;
   outline: none;
   cursor: pointer;
-}
-
-.result {
-  position: relative;
 }
