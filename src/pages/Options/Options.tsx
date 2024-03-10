@@ -11,6 +11,21 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   const [status, setStatus] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
+  useEffect(() => {
+    try {
+      chrome.storage.sync.get(defaultSettings, (storedSettings) => {
+        setSettings({ ...storedSettings } as Settings);
+      });
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        displayError(`Error: ${error.message}`, 5000);
+      } else {
+        displayError('Something went wrong.', 5000);
+      }
+    }
+  }, []);
+
   const displayStatus = (message: string, ms: number) => {
     setStatus(message);
     const id = setTimeout(() => {
@@ -26,21 +41,6 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     }, ms);
     return () => clearTimeout(id);
   };
-
-  useEffect(() => {
-    try {
-      chrome.storage.sync.get(defaultSettings, (storedSettings) => {
-        setSettings({ ...storedSettings } as Settings);
-      });
-    } catch (error) {
-      console.error(error);
-      if (error instanceof Error) {
-        displayError(`Error: ${error.message}`, 5000);
-      } else {
-        displayError('Something went wrong.', 5000);
-      }
-    }
-  }, []);
 
   const saveSettings = () => {
     try {
@@ -103,15 +103,24 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   };
 
   const exportSettings = () => {
-    chrome.storage.sync.get(null, function (items) {
-      const settingsJSON = JSON.stringify(items);
-      const blob = new Blob([settingsJSON], { type: 'application/json' });
+    try {
+      chrome.storage.sync.get(null, function (items) {
+        const settingsJSON = JSON.stringify(items);
+        const blob = new Blob([settingsJSON], { type: 'application/json' });
 
-      const downloadLink = document.createElement('a');
-      downloadLink.download = 'studysync_settings.json';
-      downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.click();
-    });
+        const downloadLink = document.createElement('a');
+        downloadLink.download = 'studysync_settings.json';
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.click();
+      });
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        displayError(`Error: ${error.message}`, 5000);
+      } else {
+        displayError('Something went wrong.', 5000);
+      }
+    }
   };
 
   return (

@@ -14,27 +14,6 @@ const Pomodoro: React.FC = () => {
   const modeRef = useRef(mode);
   const secondsLeftRef = useRef(secondsLeft);
 
-  function initTimer() {
-    setSecondsLeft(settings.workTime * 60);
-  }
-
-  function tick() {
-    secondsLeftRef.current--;
-    setSecondsLeft(secondsLeftRef.current);
-  }
-
-  function switchMode() {
-    const nextMode: string = modeRef.current === 'work' ? 'break' : 'work';
-    const nextSeconds: number =
-      (nextMode === 'work' ? settings.workTime : settings.breakTime) * 60;
-
-    setMode(nextMode);
-    modeRef.current = nextMode;
-
-    setSecondsLeft(nextSeconds);
-    secondsLeftRef.current = nextSeconds;
-  }
-
   useEffect(() => {
     try {
       // Get existing settings from storage
@@ -82,6 +61,27 @@ const Pomodoro: React.FC = () => {
     secondsLeftRef.current = settings.workTime * 60;
     setSecondsLeft(secondsLeftRef.current);
   }, [settings]);
+
+  function initTimer() {
+    setSecondsLeft(settings.workTime * 60);
+  }
+
+  function tick() {
+    secondsLeftRef.current--;
+    setSecondsLeft(secondsLeftRef.current);
+  }
+
+  function switchMode() {
+    const nextMode: string = modeRef.current === 'work' ? 'break' : 'work';
+    const nextSeconds: number =
+      (nextMode === 'work' ? settings.workTime : settings.breakTime) * 60;
+
+    setMode(nextMode);
+    modeRef.current = nextMode;
+
+    setSecondsLeft(nextSeconds);
+    secondsLeftRef.current = nextSeconds;
+  }
 
   let minutes: string = String(Math.floor(secondsLeft / 60));
   let seconds: string = String(secondsLeft % 60);
