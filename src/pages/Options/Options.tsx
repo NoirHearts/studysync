@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Settings } from '../../types';
+import { Settings, defaultSettings } from '../../../utils/settings';
 import './Options.css';
 
 interface Props {
@@ -7,11 +7,6 @@ interface Props {
 }
 
 const Options: React.FC<Props> = ({ title }: Props) => {
-  const defaultSettings = {
-    workTime: 25,
-    breakTime: 5,
-  };
-
   const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [status, setStatus] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');

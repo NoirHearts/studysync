@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { Settings, defaultSettings } from '../../../../utils/settings';
 // add sound effects import audio here
 
 const Pomodoro: React.FC = () => {
+  const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [isInitialized, setIsInitialized] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [mode, setMode] = useState('work');
@@ -13,7 +15,7 @@ const Pomodoro: React.FC = () => {
   const secondsLeftRef = useRef(secondsLeft);
 
   function initTimer() {
-    setSecondsLeft(25 * 60); //25 mins * 60 secs
+    setSecondsLeft(settings.workTime * 60);
   }
 
   function tick() {
@@ -23,7 +25,8 @@ const Pomodoro: React.FC = () => {
 
   function switchMode() {
     const nextMode: string = modeRef.current === 'work' ? 'break' : 'work';
-    const nextSeconds: number = (nextMode === 'work' ? 25 : 5) * 60;
+    const nextSeconds: number =
+      (nextMode === 'work' ? settings.workTime : settings.breakTime) * 60;
 
     setMode(nextMode);
     modeRef.current = nextMode;
@@ -33,9 +36,26 @@ const Pomodoro: React.FC = () => {
   }
 
   useEffect(() => {
+    try {
+      // Get existing settings from storage
+      chrome.storage.sync.get(defaultSettings, (storedSettings) => {
+        setSettings({ ...storedSettings } as Settings);
+      });
+      // Add listener to update pomodoro whenever settings are changed
+      chrome.storage.onChanged.addListener((changes) => {
+        for (const [] of Object.entries(changes)) {
+          chrome.storage.sync.get(defaultSettings, (storedSettings) => {
+            setSettings({ ...storedSettings } as Settings);
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
     initTimer();
 
-    secondsLeftRef.current = 25 * 60;
+    secondsLeftRef.current = settings.workTime * 60;
     setSecondsLeft(secondsLeftRef.current);
 
     const interval = setInterval(() => {
@@ -53,6 +73,15 @@ const Pomodoro: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Reset timer whenever settings state is updated
+  useEffect(() => {
+    setIsPaused(true);
+    isPausedRef.current = true;
+    initTimer();
+    secondsLeftRef.current = settings.workTime * 60;
+    setSecondsLeft(secondsLeftRef.current);
+  }, [settings]);
 
   let minutes: string = String(Math.floor(secondsLeft / 60));
   let seconds: string = String(secondsLeft % 60);
