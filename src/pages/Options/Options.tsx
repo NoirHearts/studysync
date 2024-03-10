@@ -132,9 +132,15 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           type="number"
           name="work-time"
           min={1}
-          value={settings.workTime}
+          value={settings.pomodoro.workTime}
           onChange={(event) =>
-            setSettings({ ...settings, workTime: Number(event.target.value) })
+            setSettings({
+              ...settings,
+              pomodoro: {
+                ...settings.pomodoro,
+                workTime: Number(event.target.value),
+              },
+            })
           }
         ></input>
       </div>
@@ -144,9 +150,15 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           type="number"
           name="break-time"
           min={1}
-          value={settings.breakTime}
+          value={settings.pomodoro.breakTime}
           onChange={(event) =>
-            setSettings({ ...settings, breakTime: Number(event.target.value) })
+            setSettings({
+              ...settings,
+              pomodoro: {
+                ...settings.pomodoro,
+                breakTime: Number(event.target.value),
+              },
+            })
           }
         ></input>
       </div>

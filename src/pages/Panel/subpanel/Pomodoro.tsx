@@ -34,7 +34,7 @@ const Pomodoro: React.FC = () => {
 
     initTimer();
 
-    secondsLeftRef.current = settings.workTime * 60;
+    secondsLeftRef.current = settings.pomodoro.workTime * 60;
     setSecondsLeft(secondsLeftRef.current);
 
     const interval = setInterval(() => {
@@ -58,12 +58,12 @@ const Pomodoro: React.FC = () => {
     setIsPaused(true);
     isPausedRef.current = true;
     initTimer();
-    secondsLeftRef.current = settings.workTime * 60;
+    secondsLeftRef.current = settings.pomodoro.workTime * 60;
     setSecondsLeft(secondsLeftRef.current);
   }, [settings]);
 
   function initTimer() {
-    setSecondsLeft(settings.workTime * 60);
+    setSecondsLeft(settings.pomodoro.workTime * 60);
   }
 
   function tick() {
@@ -74,7 +74,9 @@ const Pomodoro: React.FC = () => {
   function switchMode() {
     const nextMode: string = modeRef.current === 'work' ? 'break' : 'work';
     const nextSeconds: number =
-      (nextMode === 'work' ? settings.workTime : settings.breakTime) * 60;
+      (nextMode === 'work'
+        ? settings.pomodoro.workTime
+        : settings.pomodoro.breakTime) * 60;
 
     setMode(nextMode);
     modeRef.current = nextMode;

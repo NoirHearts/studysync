@@ -1,9 +1,13 @@
 export interface Settings {
-  workTime: number;
-  breakTime: number;
+  pomodoro: {
+    workTime: number;
+    breakTime: number;
+  };
 }
 
 export const defaultSettings = {
-  workTime: 25,
-  breakTime: 5,
+  pomodoro: {
+    workTime: 25,
+    breakTime: 5,
+  },
 };

@@ -1,5 +1,7 @@
 console.log('This is the background page.');
 console.log('Put the background scripts here.');
+import { defaultSettings } from '../../../utils/settings';
+
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error));
@@ -11,4 +13,8 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
       `Old value was "${oldValue}", new value is "${newValue}".`
     );
   }
+});
+
+chrome.storage.sync.set({
+  ...defaultSettings,
 });
