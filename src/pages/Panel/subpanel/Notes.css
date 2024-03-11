@@ -10,6 +10,15 @@
   border: 1px solid;
   border-radius: 0.5rem;
   padding: 0.5rem;
+
+  * {
+    transition: none !important;
+  }
+
+  textarea {
+    resize: vertical;
+    font-family: inherit;
+  }
 }
 
 button#create-note {
@@ -32,4 +41,8 @@ button#create-note {
   border: 1px solid;
   border-radius: 0.5rem;
   padding: 0.5rem;
+}
+
+button {
+  cursor: pointer;
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Notes.css';
 import noteService from '../../../services/note';
 import { Note } from '../../../types';
+import NoteItem from './NoteItem';
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -67,27 +68,14 @@ const Notes: React.FC = () => {
         <h2>List of notes</h2>
         {notes.length > 0 ? (
           notes.map((note) => (
-            <div key={note.id} className="note-item">
-              <h3>{note.title}</h3>
-              <p>
-                {note.content.split('\n').map((paragraph, index) => (
-                  <span key={index}>
-                    {paragraph}
-                    <br />
-                  </span>
-                ))}
-              </p>
-
-              <button
-                className="note-item-delete"
-                onClick={() => {
-                  noteService.remove(note.id);
-                  setNotes(notes.filter((el) => el.id !== note.id));
-                }}
-              >
-                Delete
-              </button>
-            </div>
+            <NoteItem
+              key={note.id}
+              note={note}
+              handleDelete={() => {
+                noteService.remove(note.id);
+                setNotes(notes.filter((el) => el.id !== note.id));
+              }}
+            ></NoteItem>
           ))
         ) : (
           <p>No notes yet. Try creating one.</p>
