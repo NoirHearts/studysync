@@ -108,9 +108,16 @@ const Options: React.FC<Props> = ({ title }: Props) => {
         const data = items as ExtensionData;
         const dataJSON = JSON.stringify(data, null, 2);
         const blob = new Blob([dataJSON], { type: 'application/json' });
+        const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+        const localISOTime = new Date(Date.now() - tzoffset)
+          .toISOString()
+          .slice(0, -1);
+        const timestamp = localISOTime.replace(/[:.TZ]/g, '-').slice(0, -4);
+
+        const filename = `studysync_data_${timestamp}.json`;
 
         const downloadLink = document.createElement('a');
-        downloadLink.download = 'studysync_data.json';
+        downloadLink.download = filename;
         downloadLink.href = URL.createObjectURL(blob);
         downloadLink.click();
         downloadLink.remove();
