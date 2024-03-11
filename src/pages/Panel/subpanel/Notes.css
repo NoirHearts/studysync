@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.create-note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+button#create-note {
+  margin-bottom: 0.5rem;
+}
+
+.note-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.note-list * {
+  text-align: left;
+  margin: 0;
+}
+
+.note-item {
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
