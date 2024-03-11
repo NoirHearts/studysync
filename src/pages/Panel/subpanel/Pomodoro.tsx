@@ -25,12 +25,14 @@ const Pomodoro: React.FC = () => {
 
       // Add listener to update pomodoro whenever settings are changed
       chrome.storage.onChanged.addListener((changes) => {
-        for (const [] of Object.entries(changes)) {
-          dataService.retrieve('settings', (items) => {
-            setSettings({
-              ...(items.settings.pomodoro as Settings['pomodoro']),
+        for (const [key] of Object.entries(changes)) {
+          if (key === 'settings') {
+            dataService.retrieve('settings', (items) => {
+              setSettings({
+                ...(items.settings.pomodoro as Settings['pomodoro']),
+              });
             });
-          });
+          }
         }
       });
     } catch (error) {
