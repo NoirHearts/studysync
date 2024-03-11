@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Settings } from '../../types';
+import { ExtensionData, Settings } from '../../types';
 import dataService, { defaultSettings } from '../../services/data';
 import './Options.css';
 
@@ -105,7 +105,8 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   const exportData = () => {
     try {
       dataService.retrieve(null, (items) => {
-        const dataJSON = JSON.stringify(items);
+        const data = items as ExtensionData;
+        const dataJSON = JSON.stringify(data, null, 2);
         const blob = new Blob([dataJSON], { type: 'application/json' });
 
         const downloadLink = document.createElement('a');
