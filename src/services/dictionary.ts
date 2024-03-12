@@ -1,6 +1,13 @@
 import { dictionaryApiUrl } from '../constants';
 import { DictionaryEntry } from '../types';
 
+/**
+ * Searches for a dictionary entry for a given word.
+ *
+ * @param {string} query - The word to search for in the dictionary.
+ * @returns A promise that resolves with the dictionary entry for the word.
+ *
+ */
 const search = async (query: string): Promise<DictionaryEntry> => {
   if (query.includes(' ')) {
     throw new Error(`Please only search one word at a time.`);
