@@ -1,13 +1,10 @@
-.outer-container {
+.panel-container {
   height: 100vh;
   background-color: #ccd4df;
-}
-.container {
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  min-height: 100vh;
   font-family: 'Nunito', 'Open Sans', sans-serif;
   background-color: #ccd4df;
   padding-bottom: 30px;

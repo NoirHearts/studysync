@@ -12,27 +12,23 @@ import FeatureContainer from '../../components/FeatureContainer';
 
 const Panel: React.FC = () => {
   return (
-    <div className="outer-container">
-      <div className="container">
-        <h3 className="name-header">StudySync</h3>
-
-        <Pomodoro />
-
-        <div className="other-features">
-          <FeatureContainer prefix="tasks" title="To-Do List" icon={tasksImg}>
-            <Tasks />
-          </FeatureContainer>
-          <FeatureContainer prefix="notes" title="Notes" icon={notesImg}>
-            <Notes />
-          </FeatureContainer>
-          <FeatureContainer
-            prefix="dictionary"
-            title="Dictionary"
-            icon={dictionaryImg}
-          >
-            <Dictionary />
-          </FeatureContainer>
-        </div>
+    <div className="panel-container">
+      <h3 className="name-header">StudySync</h3>
+      <Pomodoro />
+      <div className="other-features">
+        <FeatureContainer prefix="tasks" title="To-Do List" icon={tasksImg}>
+          <Tasks />
+        </FeatureContainer>
+        <FeatureContainer prefix="notes" title="Notes" icon={notesImg}>
+          <Notes />
+        </FeatureContainer>
+        <FeatureContainer
+          prefix="dictionary"
+          title="Dictionary"
+          icon={dictionaryImg}
+        >
+          <Dictionary />
+        </FeatureContainer>
       </div>
     </div>
   );
