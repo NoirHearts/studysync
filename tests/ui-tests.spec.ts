@@ -17,15 +17,15 @@ test.describe('testing initial UI', () => {
     });
 
     test('becomes visible when button clicked', async ({ page }) => {
-      await page.locator('label[for=dict-btn]').click();
+      await page.locator('label[for=dictionary-button]').click();
       await expect(page.locator('#dictionary-content')).toBeVisible();
     });
 
     test('becomes hidden when button clicked while content is visible', async ({
       page,
     }) => {
-      await page.locator('label[for=dict-btn]').click();
-      await page.locator('label[for=dict-btn]').click();
+      await page.locator('label[for=dictionary-button]').click();
+      await page.locator('label[for=dictionary-button]').click();
       await expect(page.locator('#dictionary-content')).toBeHidden();
     });
   });
@@ -36,15 +36,15 @@ test.describe('testing initial UI', () => {
     });
 
     test('becomes visible when button clicked', async ({ page }) => {
-      await page.locator('label[for=notes-btn]').click();
+      await page.locator('label[for=notes-button]').click();
       await expect(page.locator('#notes-content')).toBeVisible();
     });
 
     test('becomes hidden when button clicked while content is visible', async ({
       page,
     }) => {
-      await page.locator('label[for=notes-btn]').click();
-      await page.locator('label[for=notes-btn]').click();
+      await page.locator('label[for=notes-button]').click();
+      await page.locator('label[for=notes-button]').click();
       await expect(page.locator('#notes-content')).toBeHidden();
     });
   });
@@ -55,15 +55,15 @@ test.describe('testing initial UI', () => {
     });
 
     test('becomes visible when button clicked', async ({ page }) => {
-      await page.locator('label[for=tasks-btn]').click();
+      await page.locator('label[for=tasks-button]').click();
       await expect(page.locator('#tasks-content')).toBeVisible();
     });
 
     test('becomes hidden when button clicked while content is visible', async ({
       page,
     }) => {
-      await page.locator('label[for=tasks-btn]').click();
-      await page.locator('label[for=tasks-btn]').click();
+      await page.locator('label[for=tasks-button]').click();
+      await page.locator('label[for=tasks-button]').click();
       await expect(page.locator('#tasks-content')).toBeHidden();
     });
   });

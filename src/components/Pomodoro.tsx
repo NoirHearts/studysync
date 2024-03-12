@@ -107,7 +107,7 @@ const Pomodoro: React.FC = () => {
       <div className="buttons">
         {isPaused ? (
           <button
-            id="start-btn"
+            id="start-button"
             className="pomodoro-button"
             onClick={() => {
               if (!isInitialized) setIsInitialized(true);
@@ -117,7 +117,7 @@ const Pomodoro: React.FC = () => {
           ></button>
         ) : (
           <button
-            id="pause-btn"
+            id="pause-button"
             className="pomodoro-button"
             onClick={() => {
               setIsPaused(true);
@@ -126,7 +126,7 @@ const Pomodoro: React.FC = () => {
           ></button>
         )}
         <button
-          id="skip-btn"
+          id="skip-button"
           className="pomodoro-button"
           onClick={() => {
             if (!isInitialized) return;

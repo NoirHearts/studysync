@@ -101,7 +101,7 @@ const Dictionary: React.FC = () => {
           id="search-word"
           ref={inputFieldRef}
         />
-        <button id="search-btn" onClick={handleClick}>
+        <button id="search-button" onClick={handleClick}>
           <img className="icons" src={searchImg} />
         </button>
       </div>
