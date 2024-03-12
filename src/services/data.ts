@@ -14,22 +14,32 @@ export const initialData: ExtensionData = {
   notes: [],
 };
 
+function isValidKey(
+  key: string | string[]
+): key is keyof ExtensionData | (keyof ExtensionData)[] {
+  if (typeof key === 'string') {
+    return key in initialData;
+  } else if (Array.isArray(key)) {
+    return key.every((el) => el in initialData);
+  } else {
+    return false;
+  }
+}
+
 /**
  * Retrieves data from storage.
  *
- * @param {string | string[] | { [key: string]: any; } | null} keys - The key(s) of the data to retrieve.
+ * @param {string | string[] | null} keys - The key(s) of the data to retrieve.
  * @param {(items: { [key: string]: any }) => void} callback - Callback function to handle retrieved data.
  */
 const retrieve = (
-  keys:
-    | string
-    | string[]
-    | {
-        [key: string]: any;
-      }
-    | null,
+  keys: string | string[] | null,
   callback: (items: { [key: string]: any }) => void
 ) => {
+  if (keys !== null && !isValidKey(keys)) {
+    throw new Error(`Invalid key(s): ${keys}`);
+  }
+
   chrome.storage.sync.get(keys, (items) => {
     callback(items);
   });
@@ -38,10 +48,14 @@ const retrieve = (
 /**
  * Updates data in storage.
  *
- * @param { [key: string]: any } items - New data to be saved.
+ * @param {Object.<string, any>} items - New data to be saved.
  * @param {() => void} callback - Callback function to be called after data is updated.
  */
 const update = (items: { [key: string]: any }, callback: () => void) => {
+  if (!isValidKey(Object.keys(items))) {
+    throw new Error(`Invalid key(s): ${Object.keys(items)}`);
+  }
+
   chrome.storage.sync.set(
     {
       ...items,
