@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import dataService, { defaultSettings } from '../../../services/data';
+import dataService from '../../../services/data';
+import { defaultSettings } from '../../../constants';
 import { Settings } from '../../../types';
 // add sound effects import audio here
 
