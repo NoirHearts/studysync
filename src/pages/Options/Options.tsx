@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Settings, defaultSettings } from '../../../utils/settings';
+import { ExtensionData, Settings } from '../../types';
+import dataService, { defaultSettings } from '../../services/data';
 import './Options.css';
 
 interface Props {
@@ -13,8 +14,8 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
   useEffect(() => {
     try {
-      chrome.storage.sync.get(defaultSettings, (storedSettings) => {
-        setSettings({ ...storedSettings } as Settings);
+      dataService.retrieve('settings', (items) => {
+        setSettings({ ...(items.settings as Settings) });
       });
     } catch (error) {
       console.error(error);
@@ -44,9 +45,9 @@ const Options: React.FC<Props> = ({ title }: Props) => {
 
   const saveSettings = () => {
     try {
-      chrome.storage.sync.set(
+      dataService.update(
         {
-          ...settings,
+          settings: settings,
         },
         () => {
           displayStatus('Options saved.', 1000);
@@ -62,11 +63,10 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     }
   };
 
-  const importSettings = () => {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.json';
-    fileInput.style.display = 'none';
+  const importData = () => {
+    const fileInput = document.getElementById(
+      'import-input'
+    ) as HTMLInputElement;
 
     fileInput.onchange = function (event) {
       const target = event.target as HTMLInputElement;
@@ -77,13 +77,13 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       const reader = new FileReader();
 
       reader.onload = function (e: ProgressEvent<FileReader>) {
-        const settingsJSON = e.target?.result as string;
-        const settings = JSON.parse(settingsJSON) as Settings;
+        const dataJSON = e.target?.result as string;
+        const data = JSON.parse(dataJSON);
 
         try {
-          chrome.storage.sync.set(settings, () => {
-            displayStatus('Settings imported successfully.', 3000);
-            setSettings({ ...settings } as Settings);
+          dataService.update(data, () => {
+            displayStatus('Data imported successfully.', 3000);
+            setSettings({ ...data.settings } as Settings);
           });
         } catch (error) {
           console.error(error);
@@ -102,16 +102,25 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     fileInput.click();
   };
 
-  const exportSettings = () => {
+  const exportData = () => {
     try {
-      chrome.storage.sync.get(null, function (items) {
-        const settingsJSON = JSON.stringify(items);
-        const blob = new Blob([settingsJSON], { type: 'application/json' });
+      dataService.retrieve(null, (items) => {
+        const data = items as ExtensionData;
+        const dataJSON = JSON.stringify(data, null, 2);
+        const blob = new Blob([dataJSON], { type: 'application/json' });
+        const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+        const localISOTime = new Date(Date.now() - tzoffset)
+          .toISOString()
+          .slice(0, -1);
+        const timestamp = localISOTime.replace(/[:.TZ]/g, '-').slice(0, -4);
+
+        const filename = `studysync_data_${timestamp}.json`;
 
         const downloadLink = document.createElement('a');
-        downloadLink.download = 'studysync_settings.json';
+        downloadLink.download = filename;
         downloadLink.href = URL.createObjectURL(blob);
         downloadLink.click();
+        downloadLink.remove();
       });
     } catch (error) {
       console.error(error);
@@ -166,8 +175,14 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       <div className="status-message">{status}</div>
       <button onClick={saveSettings}>Save</button>
       <div>
-        <button onClick={importSettings}>Import Settings</button>{' '}
-        <button onClick={exportSettings}>Export Settings</button>
+        <input
+          type="file"
+          id="import-input"
+          accept=".json"
+          style={{ display: 'none' }}
+        />
+        <button onClick={importData}>Import Data</button>{' '}
+        <button onClick={exportData}>Export Data</button>
       </div>
     </div>
   );
