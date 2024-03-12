@@ -1,13 +1,13 @@
 import React from 'react';
 import './Panel.css';
-import dictionaryImg from './img/dictionary.png';
-import notesImg from './img/notes.png';
-import tasksImg from './img/tasks.png';
+import dictionaryImg from '../../assets/img/dictionary.png';
+import notesImg from '../../assets/img/notes.png';
+import tasksImg from '../../assets/img/tasks.png';
 
-import Dictionary from './subpanel/Dictionary';
-import Tasks from './subpanel/Tasks';
-import Notes from './subpanel/Notes';
-import Pomodoro from './subpanel/Pomodoro';
+import Dictionary from '../../components/Dictionary';
+import Tasks from '../../components/Tasks';
+import Notes from '../../components/Notes';
+import Pomodoro from '../../components/Pomodoro';
 
 const Panel: React.FC = () => {
   return (

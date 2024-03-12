@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ExtensionData, Settings } from '../../types';
-import dataService, { defaultSettings } from '../../services/data';
+import dataService from '../../services/data';
+import { defaultSettings } from '../../constants';
 import './Options.css';
 
 interface Props {

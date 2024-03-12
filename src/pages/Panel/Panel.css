@@ -25,7 +25,7 @@
 
   .buttons {
     #start-btn {
-      background: url(./img/play.png);
+      background: url(../../assets/img/play.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
@@ -33,7 +33,7 @@
     }
 
     #pause-btn {
-      background: url(./img/pause.png);
+      background: url(../../assets/img/pause.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
@@ -41,7 +41,7 @@
     }
 
     #skip-btn {
-      background: url(./img/skip.png);
+      background: url(../../assets/img/skip.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
@@ -49,21 +49,21 @@
     }
 
     #start-btn:hover {
-      background: url(./img/play-hover.png);
+      background: url(../../assets/img/play-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
     }
 
     #skip-btn:hover {
-      background: url(./img/skip-hover.png);
+      background: url(../../assets/img/skip-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
     }
 
     #pause-btn:hover {
-      background: url(./img/pause-hover.png);
+      background: url(../../assets/img/pause-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;

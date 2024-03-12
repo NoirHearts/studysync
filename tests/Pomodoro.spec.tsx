@@ -1,5 +1,5 @@
 import { test, expect, MountResult } from '@playwright/experimental-ct-react';
-import Pomodoro from '../src/pages/Panel/subpanel/Pomodoro';
+import Pomodoro from '../src/components/Pomodoro';
 import React from 'react';
 
 test.use({ viewport: { width: 400, height: 876 } });

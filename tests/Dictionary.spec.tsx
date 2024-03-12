@@ -1,5 +1,5 @@
 import { test, expect, MountResult } from '@playwright/experimental-ct-react';
-import Dictionary from '../src/pages/Panel/subpanel/Dictionary';
+import Dictionary from '../src/components/Dictionary';
 import React from 'react';
 
 test.use({ viewport: { width: 400, height: 876 } });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import searchImg from '../img/search.png';
+import searchImg from '../assets/img/search.png';
 
 const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
