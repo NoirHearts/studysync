@@ -6,8 +6,13 @@ chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error));
 
-chrome.storage.sync.set({
-  ...initialData,
+chrome.storage.sync.get('initialized', ({ initialized }) => {
+  if (!initialized) {
+    chrome.storage.sync.set({
+      ...initialData,
+      initialized: true,
+    });
+  }
 });
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
