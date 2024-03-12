@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import searchImg from '../assets/img/search.png';
-
-const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+import { DictionaryEntry, WordDefinition, WordMeaning } from '../types';
+import dictionaryService from '../services/dictionary';
 
 function getSearchWord() {
   const searchInput = document.getElementById(
@@ -10,29 +10,7 @@ function getSearchWord() {
   return searchInput ? searchInput.value : '';
 }
 
-type DictionaryEntry = {
-  word: string;
-  phonetic: string;
-  phonetics: Array<object>;
-  origin: string;
-  meanings: Array<WordMeaning>;
-};
-
-type WordDefinition = {
-  definition: string;
-  synonyms: Array<string>;
-  antonyms: Array<string>;
-};
-
-type WordMeaning = {
-  partOfSpeech: string;
-  definitions: Array<WordDefinition>;
-  synonyms: Array<string>;
-  antonyms: Array<string>;
-};
-
 const Dictionary: React.FC = () => {
-  const [_data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [definition, setDefinition] = useState<DictionaryEntry | null>(null);
@@ -44,31 +22,15 @@ const Dictionary: React.FC = () => {
 
     try {
       const wordToSearch = getSearchWord();
+      const result = await dictionaryService.search(wordToSearch);
 
-      if (wordToSearch.includes(' ')) {
-        throw new Error(`Please only search one word at a time.`);
-      }
-
-      const response = await fetch(url + wordToSearch);
-      if (!response.ok) {
-        if (response.status == 404) {
-          throw new Error(`Word does not have a dictionary entry.`);
-        } else {
-          throw new Error(`An error occurred. Status: ${response.status}`);
-        }
-      }
-
-      const result = await response.json();
-
-      setData(result);
-      const definition_index: number = 0;
-      setDefinition(result[definition_index]);
+      setDefinition(result);
     } catch (err) {
+      console.error(err);
       if (err instanceof Error) {
         setError(err.message);
       } else {
         setError(`Something went wrong.`);
-        console.error(err);
       }
     } finally {
       setIsLoading(false);

@@ -13,3 +13,6 @@ export const initialData: ExtensionData = {
   },
   notes: [],
 };
+
+export const dictionaryApiUrl =
+  'https://api.dictionaryapi.dev/api/v2/entries/en/';
