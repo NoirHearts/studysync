@@ -1,6 +1,12 @@
 import { ExtensionData } from '../types';
 import { initialData } from '../constants';
 
+/**
+ * Checks if the provided key(s) are valid keys in the initial data.
+ *
+ * @param {string | string[]} key - The key(s) to validate.
+ * @returns {boolean} Whether the key(s) are valid.
+ */
 function isValidKey(
   key: string | string[]
 ): key is keyof ExtensionData | (keyof ExtensionData)[] {
@@ -53,7 +59,30 @@ const update = (items: { [key: string]: any }, callback: () => void) => {
   );
 };
 
+/**
+ * Adds a listener for changes to the storage.
+ *
+ * @param {string | null} key - The key to listen for changes. If null, listens to changes for all keys.
+ * @param {(args: [string, { oldValue: any; newValue: any }]) => void} callback - Callback function to handle changes.
+ */
+const addListener = (
+  key: string | null,
+  callback: (args: [string, { oldValue: any; newValue: any }]) => void
+) => {
+  chrome.storage.onChanged.addListener((changes) => {
+    for (const [
+      keyChanged,
+      { oldValue: oldVal, newValue: newVal },
+    ] of Object.entries(changes)) {
+      if (key === null || key === keyChanged) {
+        callback([keyChanged, { oldValue: oldVal, newValue: newVal }]);
+      }
+    }
+  });
+};
+
 export default {
   retrieve,
   update,
+  addListener,
 };
