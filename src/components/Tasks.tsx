@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import deleteImage from '../assets/img/delete.png';
+// import './Tasks.css'
 
 type TaskData = {
   taskName: string;
   taskCompleted: boolean;
+  taskID: string;
 }
 
 // TODO: https://stackoverflow.com/questions/5364062/how-can-i-save-information-locally-in-my-chrome-extension
@@ -39,23 +42,27 @@ function clearTask() {
   }
 }
 
-function Task({ taskName, taskCompleted }: TaskData) {
+function Task({ taskName, taskCompleted, taskID }: TaskData) {
+
+  const handleClick = () => {
+
+  }
+
+  const handleOnChange = () => {
+
+  }
 
   return (
     <div className="task-item">
-      {taskCompleted ? <input type="checkbox" checked></input> : <input type="checkbox"></input>}
-      {/* taskCompleted ? <span style={{ textDecoration: "line-through" }}>{taskName}</span> : <span>{taskName}</span> */}
-      {taskName}
+      {
+        taskCompleted
+          ? <input type="checkbox" className="task-completed" onChange={handleOnChange} checked></input>
+          : <input type="checkbox" className="task-completed" onChange={handleOnChange} ></input>}
+      <span className={taskCompleted ? "task-name task-done" : "task-name"}>{taskName}</span>
+      <button className="delete-task-button" onClick={handleClick}>{/* <img src={deleteImage} /> */}D</button>
     </div >
   )
 }
-
-let savedTasks: Array<TaskData> = [
-  { taskName: "lorem ipsum dolor sit amet 1", taskCompleted: false },
-  { taskName: "lorem ipsum dolor sit amet 2", taskCompleted: true },
-  { taskName: "lorem ipsum dolor sit amet 3", taskCompleted: false },
-  { taskName: "lorem ipsum dolor sit amet 4", taskCompleted: false }
-]
 
 const Tasks: React.FC = () => {
 
@@ -68,19 +75,20 @@ const Tasks: React.FC = () => {
     if (tString != '') {
       taskList.push({
         taskName: tString,
-        taskCompleted: tCompleted
+        taskCompleted: tCompleted,
+        taskID: "135"
       });
       clearTask();
       setTaskList(taskList);
       setTaskListRender(
-        taskList.map((task: { taskName: string, taskCompleted: boolean }) => {
-          return (<Task taskName={task.taskName} taskCompleted={task.taskCompleted} />)
+        taskList.map((task: TaskData) => {
+          return (<Task taskName={task.taskName} taskCompleted={task.taskCompleted} taskID={task.taskID} />)
         })
       )
     }
   };
 
-  // Triggers add stask on press enter while empty task in focus
+  // Triggers add task on press enter while empty task in focus
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {
       if (event.target === inputFieldRef.current) {

@@ -1,0 +1,30 @@
+.task-item {
+  display: flex;
+  width: 300px;
+  height: 30px;
+
+  .task-done {
+    text-decoration: line-through;
+  }
+
+  .delete-task-button {
+    background: gray;
+    transition: all 0s !important;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  .delete-task-button:hover {
+    background: darkgrey;
+
+    transition: all 0s !important;
+  }
+
+  .delete-task-button:active {
+    background: black;
+
+    transition: all 0s !important;
+  }
+}
