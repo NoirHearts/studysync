@@ -4,6 +4,7 @@ export const defaultSettings: Settings = {
   pomodoro: {
     workTime: 25,
     breakTime: 5,
+    volume: 100,
   },
 };
 

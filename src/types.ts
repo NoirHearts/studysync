@@ -7,6 +7,7 @@ export interface Settings {
   pomodoro: {
     workTime: number;
     breakTime: number;
+    volume: number;
   };
 }
 

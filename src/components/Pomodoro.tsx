@@ -6,8 +6,6 @@ import { Settings } from '../types';
 import click from '../assets/sounds/click.mp3';
 import ring from '../assets/sounds/ring.mp3';
 
-// add sound effects import audio here
-
 const Pomodoro: React.FC = () => {
   const [settings, setSettings] = useState<Settings['pomodoro']>(
     defaultSettings.pomodoro
@@ -52,7 +50,7 @@ const Pomodoro: React.FC = () => {
         return;
       }
       if (secondsLeftRef.current === 0) {
-        ringSound.play();
+        playSound(ringSound);
         setIsPaused(true);
         isPausedRef.current = true;
         return switchMode();
@@ -97,6 +95,11 @@ const Pomodoro: React.FC = () => {
     timerDiv.style.border = '4px solid #f1ece9';
   }
 
+  function playSound(sound: HTMLAudioElement) {
+    sound.volume = settings.volume / 100;
+    sound.play();
+  }
+
   let minutes: string = String(Math.floor(secondsLeft / 60));
   let seconds: string = String(secondsLeft % 60);
 
@@ -116,7 +119,7 @@ const Pomodoro: React.FC = () => {
             id="start-button"
             className="pomodoro-button"
             onClick={() => {
-              clickSound.play();
+              playSound(clickSound);
               if (!isInitialized) setIsInitialized(true);
               setIsPaused(false);
               isPausedRef.current = false;
@@ -132,7 +135,7 @@ const Pomodoro: React.FC = () => {
             id="pause-button"
             className="pomodoro-button"
             onClick={() => {
-              clickSound.play();
+              playSound(clickSound);
               setIsPaused(true);
               isPausedRef.current = true;
             }}
@@ -142,7 +145,7 @@ const Pomodoro: React.FC = () => {
           id="skip-button"
           className="pomodoro-button"
           onClick={() => {
-            clickSound.play();
+            playSound(clickSound);
             if (!isInitialized) return;
             setIsPaused(true);
             isPausedRef.current = true;
