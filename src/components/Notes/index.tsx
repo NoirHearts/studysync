@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Notes.css';
-import noteService from '../../../services/note';
-import { Note } from '../../../types';
-import NoteItem from './NoteItem';
+import noteService from '../../services/note';
+import { Note } from '../../types';
+import NoteItem from '../NoteItem';
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);

@@ -16,6 +16,6 @@
     "jsx": "react"
   },
   "types": ["node"],
-  "include": ["src"],
+  "include": ["src", "audio.d.ts"],
   "exclude": ["build", "node_modules"]
 }
