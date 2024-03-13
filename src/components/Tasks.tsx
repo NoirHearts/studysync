@@ -42,7 +42,7 @@ function clearTask() {
   }
 }
 
-function Task({ taskName, taskCompleted, taskID }: TaskData) {
+function Task({ taskName, taskCompleted, taskListRef }: { taskName: string; taskCompleted: boolean; taskListRef: any }) {
 
   const handleClick = () => {
 
@@ -82,7 +82,7 @@ const Tasks: React.FC = () => {
       setTaskList(taskList);
       setTaskListRender(
         taskList.map((task: TaskData) => {
-          return (<Task taskName={task.taskName} taskCompleted={task.taskCompleted} taskID={task.taskID} />)
+          return (<Task taskName={task.taskName} taskCompleted={task.taskCompleted} taskListRef={taskList} />)
         })
       )
     }
