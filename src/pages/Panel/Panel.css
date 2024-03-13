@@ -1,6 +1,9 @@
-.panel-container {
-  height: 100vh;
+:root {
   background-color: #ccd4df;
+}
+
+.panel-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -12,7 +15,7 @@
 
 .timer-container {
   background-color: #202833;
-  width: 100vw;
+  width: 100%;
   padding: 12px 0px;
   margin-bottom: 10px;
   display: flex;
