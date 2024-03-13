@@ -1,13 +1,10 @@
-.outer-container {
+.panel-container {
   height: 100vh;
   background-color: #ccd4df;
-}
-.container {
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  min-height: 100vh;
   font-family: 'Nunito', 'Open Sans', sans-serif;
   background-color: #ccd4df;
   padding-bottom: 30px;
@@ -24,46 +21,46 @@
   align-items: center;
 
   .buttons {
-    #start-btn {
-      background: url(./img/play.png);
+    #start-button {
+      background: url(../../assets/img/play.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
       cursor: pointer;
     }
 
-    #pause-btn {
-      background: url(./img/pause.png);
+    #pause-button {
+      background: url(../../assets/img/pause.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
       cursor: pointer;
     }
 
-    #skip-btn {
-      background: url(./img/skip.png);
+    #skip-button {
+      background: url(../../assets/img/skip.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
       cursor: pointer;
     }
 
-    #start-btn:hover {
-      background: url(./img/play-hover.png);
+    #start-button:hover {
+      background: url(../../assets/img/play-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
     }
 
-    #skip-btn:hover {
-      background: url(./img/skip-hover.png);
+    #skip-button:hover {
+      background: url(../../assets/img/skip-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
     }
 
-    #pause-btn:hover {
-      background: url(./img/pause-hover.png);
+    #pause-button:hover {
+      background: url(../../assets/img/pause-hover.png);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;

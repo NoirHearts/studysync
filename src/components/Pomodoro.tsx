@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import dataService, { defaultSettings } from '../../../services/data';
-import { Settings } from '../../../types';
-import click from '../sounds/click.mp3';
-import ring from '../sounds/ring.mp3';
-
-// add sound effects import audio here
+import dataService from '../services/data';
+import { defaultSettings } from '../constants';
+import { Settings } from '../types';
+import click from '../assets/sounds/click.mp3';
+import ring from '../assets/sounds/ring.mp3';
 
 const Pomodoro: React.FC = () => {
   const [settings, setSettings] = useState<Settings['pomodoro']>(
@@ -29,18 +28,14 @@ const Pomodoro: React.FC = () => {
         setSettings({ ...(items.settings.pomodoro as Settings['pomodoro']) });
       });
 
-      // Add listener to update pomodoro whenever settings are changed
-      chrome.storage.onChanged.addListener((changes) => {
-        for (const [key] of Object.entries(changes)) {
-          if (key === 'settings') {
-            dataService.retrieve('settings', (items) => {
-              setSettings({
-                ...(items.settings.pomodoro as Settings['pomodoro']),
-              });
-            });
-          }
+      dataService.addListener(
+        'settings',
+        ([_keyChanged, { oldValue: _oldValue, newValue }]) => {
+          setSettings({
+            ...(newValue as Settings).pomodoro,
+          });
         }
-      });
+      );
     } catch (error) {
       console.error(error);
     }
@@ -55,7 +50,7 @@ const Pomodoro: React.FC = () => {
         return;
       }
       if (secondsLeftRef.current === 0) {
-        ringSound.play();
+        playSound(ringSound);
         setIsPaused(true);
         isPausedRef.current = true;
         return switchMode();
@@ -100,6 +95,11 @@ const Pomodoro: React.FC = () => {
     timerDiv.style.border = '4px solid #f1ece9';
   }
 
+  function playSound(sound: HTMLAudioElement) {
+    sound.volume = settings.volume / 100;
+    sound.play();
+  }
+
   let minutes: string = String(Math.floor(secondsLeft / 60));
   let seconds: string = String(secondsLeft % 60);
 
@@ -116,10 +116,10 @@ const Pomodoro: React.FC = () => {
       <div className="buttons">
         {isPaused ? (
           <button
-            id="start-btn"
+            id="start-button"
             className="pomodoro-button"
             onClick={() => {
-              clickSound.play();
+              playSound(clickSound);
               if (!isInitialized) setIsInitialized(true);
               setIsPaused(false);
               isPausedRef.current = false;
@@ -132,20 +132,20 @@ const Pomodoro: React.FC = () => {
           ></button>
         ) : (
           <button
-            id="pause-btn"
+            id="pause-button"
             className="pomodoro-button"
             onClick={() => {
-              clickSound.play();
+              playSound(clickSound);
               setIsPaused(true);
               isPausedRef.current = true;
             }}
           ></button>
         )}
         <button
-          id="skip-btn"
+          id="skip-button"
           className="pomodoro-button"
           onClick={() => {
-            clickSound.play();
+            playSound(clickSound);
             if (!isInitialized) return;
             setIsPaused(true);
             isPausedRef.current = true;

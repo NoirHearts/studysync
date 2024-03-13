@@ -123,7 +123,7 @@ var options = {
       {
         test: /\.mp3$/,
         loader: 'file-loader',
-      }
+      },
     ],
   },
   resolve: {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ExtensionData, Settings } from '../../types';
-import dataService, { defaultSettings } from '../../services/data';
+import dataService from '../../services/data';
+import { defaultSettings } from '../../constants';
 import './Options.css';
 
 interface Props {
@@ -170,6 +171,36 @@ const Options: React.FC<Props> = ({ title }: Props) => {
             })
           }
         ></input>
+      </div>
+      <div>
+        <label htmlFor="volume">Volume</label>
+        <input
+          type="range"
+          name="volume"
+          min="0"
+          max="100"
+          value={settings.pomodoro.volume}
+          onChange={(event) => {
+            setSettings({
+              ...settings,
+              pomodoro: {
+                ...settings.pomodoro,
+                volume: Number(event.target.value),
+              },
+            });
+            const outputElement = document.getElementById(
+              'volume-display-value'
+            ) as HTMLOutputElement;
+            outputElement.value = `${Number(event.target.value)}`;
+          }}
+        />
+        <output
+          name="volume-display-value"
+          id="volume-display-value"
+          htmlFor="volume"
+        >
+          0
+        </output>
       </div>
       <div className="error-message">{errorMessage}</div>
       <div className="status-message">{status}</div>
