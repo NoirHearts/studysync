@@ -6,11 +6,10 @@ chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error));
 
-chrome.storage.sync.get('initialized', ({ initialized }) => {
-  if (!initialized) {
+chrome.storage.sync.get('settings', ({ settings }) => {
+  if (!settings) {
     chrome.storage.sync.set({
       ...initialData,
-      initialized: true,
     });
   }
 });
