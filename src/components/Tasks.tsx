@@ -127,7 +127,7 @@ const Tasks: React.FC = () => {
     const [tString, tCompleted] = getNewTask();
     if (tString != '') {
       const tid: string = Date.now().toString()
-      let tid_offset: number = 0
+      let tid_offset = 0
       while (taskList[`${tid}+${tid_offset}`]) {
         tid_offset++;
       }
