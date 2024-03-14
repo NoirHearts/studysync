@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import deleteImage from '../assets/img/delete.png';
-// import './Tasks.css'
+import './Tasks.css'
 
 type TaskData = {
   taskString: string;
@@ -45,14 +45,19 @@ function clearTask() {
 
 function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderRef }: { taskListRef: any[]; taskListRenderRef: any[]; taskString: string; taskCompleted: boolean; taskKey: string }) {
 
-  const handleClick = () => {
-    delete taskListRef[0][taskKey]
+  const refresh = () => {
     taskListRef[1](taskListRef[0])
     refreshTaskListRender(taskListRef, taskListRenderRef)
   }
 
-  const handleOnChange = () => {
+  const handleClick = () => {
+    delete taskListRef[0][taskKey];
+    refresh();
+  }
 
+  const handleOnChange = (e: any) => {
+    taskListRef[0][taskKey].taskCompleted = e.target.checked
+    refresh();
   }
 
   return (
