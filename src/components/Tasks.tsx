@@ -47,6 +47,8 @@ function clearTask() {
 
 function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderRef }: { taskListRef: any[]; taskListRenderRef: any[]; taskString: string; taskCompleted: boolean; taskKey: string }) {
 
+  const [taskIsCompleted, setTaskIsCompleted] = useState(taskCompleted)
+
   const refresh = async () => {
     localStorage.setItem(tasksLocalStorageKey, JSON.stringify(taskListRef[0]))
     taskListRef[1](taskListRef[0])
@@ -59,6 +61,7 @@ function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderR
   }
 
   const handleOnChange = async (e: any) => {
+    setTaskIsCompleted(e.target.checked)
     taskListRef[0][taskKey].taskCompleted = e.target.checked
     await refresh();
   }
@@ -67,11 +70,7 @@ function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderR
 
   return (
     <div className="task-item">
-      {
-        taskCompleted
-          ? <input type="checkbox" className="task-completed" onChange={handleOnChange} checked></input>
-          : <input type="checkbox" className="task-completed" onChange={handleOnChange} ></input>
-      }
+      <input type="checkbox" className="task-completed" onChange={handleOnChange} checked={taskIsCompleted}></input>
       <span className={taskCompleted ? "task-name task-done" : "task-name"}>{taskString}</span>
       <button className="delete-task-button" onClick={handleClick}>{/* <img src={deleteImage} /> */}D</button>
     </div >
