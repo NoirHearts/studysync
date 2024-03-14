@@ -3,9 +3,8 @@ import deleteImage from '../assets/img/delete.png';
 // import './Tasks.css'
 
 type TaskData = {
-  taskName: string;
+  taskString: string;
   taskCompleted: boolean;
-  taskID: string;
 }
 
 // TODO: https://stackoverflow.com/questions/5364062/how-can-i-save-information-locally-in-my-chrome-extension
@@ -42,7 +41,7 @@ function clearTask() {
   }
 }
 
-function Task({ taskName, taskCompleted, taskListRef }: { taskName: string; taskCompleted: boolean; taskListRef: any }) {
+function Task({ taskString, taskCompleted, taskListRef }: { taskListRef: any; taskString: string; taskCompleted: boolean; taskKey: string }) {
 
   const handleClick = () => {
 
@@ -58,7 +57,7 @@ function Task({ taskName, taskCompleted, taskListRef }: { taskName: string; task
         taskCompleted
           ? <input type="checkbox" className="task-completed" onChange={handleOnChange} checked></input>
           : <input type="checkbox" className="task-completed" onChange={handleOnChange} ></input>}
-      <span className={taskCompleted ? "task-name task-done" : "task-name"}>{taskName}</span>
+      <span className={taskCompleted ? "task-name task-done" : "task-name"}>{taskString}</span>
       <button className="delete-task-button" onClick={handleClick}>{/* <img src={deleteImage} /> */}D</button>
     </div >
   )
@@ -67,24 +66,28 @@ function Task({ taskName, taskCompleted, taskListRef }: { taskName: string; task
 const Tasks: React.FC = () => {
 
   const inputFieldRef = useRef(null);
-  const [taskList, setTaskList] = useState<TaskData[]>([]);
+  const [taskList, setTaskList] = useState<{ [id: string]: TaskData }>({});
   const [taskListRender, setTaskListRender] = useState<JSX.Element[]>([])
 
   const handleClick = () => {
     let [tString, tCompleted] = getNewTask();
     if (tString != '') {
-      taskList.push({
-        taskName: tString,
-        taskCompleted: tCompleted,
-        taskID: "135"
-      });
+      let tid: String = Date.now().toString()
+      let tid_offset: number = 0
+      while (taskList[`${tid}+${tid_offset}`]) {
+        tid_offset++;
+      }
+      taskList[`${tid}+${tid_offset}`] = {
+        taskString: tString,
+        taskCompleted: tCompleted
+      }
       clearTask();
       setTaskList(taskList);
-      setTaskListRender(
-        taskList.map((task: TaskData) => {
-          return (<Task taskName={task.taskName} taskCompleted={task.taskCompleted} taskListRef={taskList} />)
-        })
-      )
+      let newTaskListRender = []
+      for (let taskKey in taskList) {
+        newTaskListRender.push(<Task taskListRef={taskList} taskKey={taskKey} taskString={taskList[taskKey].taskString} taskCompleted={taskList[taskKey].taskCompleted} />)
+      }
+      setTaskListRender(newTaskListRender)
     }
   };
 
