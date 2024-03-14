@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import deleteImage from '../assets/img/delete.png';
 import './Tasks.css'
 
+const localStorageKey = "studysync-tasks"
+
 type TaskData = {
   taskString: string;
   taskCompleted: boolean;
@@ -45,19 +47,20 @@ function clearTask() {
 
 function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderRef }: { taskListRef: any[]; taskListRenderRef: any[]; taskString: string; taskCompleted: boolean; taskKey: string }) {
 
-  const refresh = () => {
+  const refresh = async () => {
+    localStorage.setItem(localStorageKey, taskListRef[0])
     taskListRef[1](taskListRef[0])
     refreshTaskListRender(taskListRef, taskListRenderRef)
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     delete taskListRef[0][taskKey];
-    refresh();
+    await refresh();
   }
 
-  const handleOnChange = (e: any) => {
+  const handleOnChange = async (e: any) => {
     taskListRef[0][taskKey].taskCompleted = e.target.checked
-    refresh();
+    await refresh();
   }
 
   return (
@@ -65,7 +68,8 @@ function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderR
       {
         taskCompleted
           ? <input type="checkbox" className="task-completed" onChange={handleOnChange} checked></input>
-          : <input type="checkbox" className="task-completed" onChange={handleOnChange} ></input>}
+          : <input type="checkbox" className="task-completed" onChange={handleOnChange} ></input>
+      }
       <span className={taskCompleted ? "task-name task-done" : "task-name"}>{taskString}</span>
       <button className="delete-task-button" onClick={handleClick}>{/* <img src={deleteImage} /> */}D</button>
     </div >
@@ -80,6 +84,7 @@ function refreshTaskListRender(taskListRef: any[], taskListRenderRef: any[]) {
         taskListRef={taskListRef}
         taskListRenderRef={taskListRenderRef}
         taskKey={taskKey}
+        key={taskKey}
         taskString={taskListRef[0][taskKey].taskString}
         taskCompleted={taskListRef[0][taskKey].taskCompleted}
       />
@@ -89,10 +94,32 @@ function refreshTaskListRender(taskListRef: any[], taskListRenderRef: any[]) {
 }
 
 const Tasks: React.FC = () => {
-
   const inputFieldRef = useRef(null);
   const [taskList, setTaskList] = useState<{ [id: string]: TaskData }>({});
-  const [taskListRender, setTaskListRender] = useState<JSX.Element[]>([])
+  const [taskListRender, setTaskListRender] = useState<JSX.Element[]>([]);
+
+  // loads the task list
+  useEffect(() => {
+    let savedTaskList: string | null = localStorage.getItem(localStorageKey)
+    console.log(savedTaskList)
+    if (savedTaskList == null) {
+      let newSavedTaskList: { [id: string]: TaskData } = {}
+      localStorage.setItem("tasks", JSON.stringify(newSavedTaskList))
+    } else {
+      let loadedTaskList: { [id: string]: TaskData } = {}
+      try {
+        loadedTaskList = JSON.parse(savedTaskList)
+      } catch (err) {
+        console.log("ERROR: Failed to parse locally saved task list string. Purging.")
+        localStorage.clear()
+      }
+      setTaskList(loadedTaskList)
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshTaskListRender([taskList, setTaskList], [taskListRender, setTaskListRender])
+  }, [taskList]);
 
   const handleClick = () => {
     let [tString, tCompleted] = getNewTask();
@@ -107,8 +134,14 @@ const Tasks: React.FC = () => {
         taskCompleted: tCompleted
       }
       clearTask();
-      setTaskList(taskList);
 
+      if (tString == 'clear') {
+        localStorage.clear()
+      } else {
+        localStorage.setItem(localStorageKey, JSON.stringify(taskList))
+      }
+
+      setTaskList(taskList);
       refreshTaskListRender([taskList, setTaskList], [taskListRender, setTaskListRender])
     }
   };
