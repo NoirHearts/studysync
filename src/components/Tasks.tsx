@@ -48,7 +48,7 @@ function clearTask() {
 function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderRef }: { taskListRef: any[]; taskListRenderRef: any[]; taskString: string; taskCompleted: boolean; taskKey: string }) {
 
   const refresh = async () => {
-    localStorage.setItem(localStorageKey, taskListRef[0])
+    localStorage.setItem(localStorageKey, JSON.stringify(taskListRef[0]))
     taskListRef[1](taskListRef[0])
     refreshTaskListRender(taskListRef, taskListRenderRef)
   }
@@ -62,6 +62,8 @@ function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderR
     taskListRef[0][taskKey].taskCompleted = e.target.checked
     await refresh();
   }
+
+  // TODO: https://www.freecodecamp.org/news/reactjs-implement-drag-and-drop-feature-without-using-external-libraries-ad8994429f1a/
 
   return (
     <div className="task-item">
@@ -110,7 +112,8 @@ const Tasks: React.FC = () => {
       try {
         loadedTaskList = JSON.parse(savedTaskList)
       } catch (err) {
-        console.log("ERROR: Failed to parse locally saved task list string. Purging.")
+        console.log(err)
+        console.log(savedTaskList.toString())
         localStorage.clear()
       }
       setTaskList(loadedTaskList)
