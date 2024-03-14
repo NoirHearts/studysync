@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import deleteImage from '../assets/img/delete.png';
 import './Tasks.css'
 
-const localStorageKey = "studysync-tasks"
+const tasksLocalStorageKey = "studysync-tasks"
 
 type TaskData = {
   taskString: string;
@@ -48,7 +48,7 @@ function clearTask() {
 function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderRef }: { taskListRef: any[]; taskListRenderRef: any[]; taskString: string; taskCompleted: boolean; taskKey: string }) {
 
   const refresh = async () => {
-    localStorage.setItem(localStorageKey, JSON.stringify(taskListRef[0]))
+    localStorage.setItem(tasksLocalStorageKey, JSON.stringify(taskListRef[0]))
     taskListRef[1](taskListRef[0])
     refreshTaskListRender(taskListRef, taskListRenderRef)
   }
@@ -102,7 +102,7 @@ const Tasks: React.FC = () => {
 
   // loads the task list
   useEffect(() => {
-    let savedTaskList: string | null = localStorage.getItem(localStorageKey)
+    let savedTaskList: string | null = localStorage.getItem(tasksLocalStorageKey)
     console.log(savedTaskList)
     if (savedTaskList == null) {
       let newSavedTaskList: { [id: string]: TaskData } = {}
@@ -114,7 +114,7 @@ const Tasks: React.FC = () => {
       } catch (err) {
         console.log(err)
         console.log(savedTaskList.toString())
-        localStorage.clear()
+        localStorage.removeItem(tasksLocalStorageKey)
       }
       setTaskList(loadedTaskList)
     }
@@ -141,7 +141,7 @@ const Tasks: React.FC = () => {
       if (tString == 'clear') {
         localStorage.clear()
       } else {
-        localStorage.setItem(localStorageKey, JSON.stringify(taskList))
+        localStorage.setItem(tasksLocalStorageKey, JSON.stringify(taskList))
       }
 
       setTaskList(taskList);
