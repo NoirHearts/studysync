@@ -24,6 +24,7 @@ const Notes: React.FC = () => {
 
   const handleAddNote = async () => {
     try {
+      if (noteTitle === '' && noteContent === '') return;
       const createdNote = await noteService.create({
         title: noteTitle,
         content: noteContent,
