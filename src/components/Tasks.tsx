@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import deleteImage from '../assets/img/delete.png';
+// import deleteImage from '../assets/img/delete.png';
 import './Tasks.css'
 
 const tasksLocalStorageKey = "studysync-tasks"
@@ -18,12 +18,12 @@ function getNewTask(): [string, boolean] {
   const taskString = document.getElementById(
     'new-task-string'
   ) as HTMLInputElement;
-  let tString = taskString ? taskString.value : '';
+  const tString = taskString ? taskString.value : '';
 
   const taskCompleted = document.getElementById(
     'new-task-completed'
   ) as HTMLInputElement;
-  let tCompleted = taskCompleted ? taskCompleted.checked : false;
+  const tCompleted = taskCompleted ? taskCompleted.checked : false;
 
   return [tString, tCompleted];
 }
@@ -78,8 +78,8 @@ function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderR
 }
 
 function refreshTaskListRender(taskListRef: any[], taskListRenderRef: any[]) {
-  let newTaskListRender = []
-  for (let taskKey in taskListRef[0]) {
+  const newTaskListRender = []
+  for (const taskKey in taskListRef[0]) {
     newTaskListRender.push(
       <Task
         taskListRef={taskListRef}
@@ -101,10 +101,10 @@ const Tasks: React.FC = () => {
 
   // loads the task list
   useEffect(() => {
-    let savedTaskList: string | null = localStorage.getItem(tasksLocalStorageKey)
+    const savedTaskList: string | null = localStorage.getItem(tasksLocalStorageKey)
     console.log(savedTaskList)
     if (savedTaskList == null) {
-      let newSavedTaskList: { [id: string]: TaskData } = {}
+      const newSavedTaskList: { [id: string]: TaskData } = {}
       localStorage.setItem("tasks", JSON.stringify(newSavedTaskList))
     } else {
       let loadedTaskList: { [id: string]: TaskData } = {}
@@ -124,9 +124,9 @@ const Tasks: React.FC = () => {
   }, [taskList]);
 
   const handleClick = () => {
-    let [tString, tCompleted] = getNewTask();
+    const [tString, tCompleted] = getNewTask();
     if (tString != '') {
-      let tid: String = Date.now().toString()
+      const tid: string = Date.now().toString()
       let tid_offset: number = 0
       while (taskList[`${tid}+${tid_offset}`]) {
         tid_offset++;
