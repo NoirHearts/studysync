@@ -2,59 +2,60 @@ import { Note } from '../types';
 
 let notes: Note[] = [];
 
-const fetchNotes = () => {
-  chrome.storage.sync.get('notes', (items) => {
-    notes = items.notes || [];
-  });
+const fetchNotes = async () => {
+  const items = await chrome.storage.sync.get('notes');
+  notes = items.notes || [];
 };
 
-fetchNotes(); // Fetch notes initially when module is loaded
+try {
+  await fetchNotes(); // Fetch notes initially when module is loaded
+} catch (err) {
+  console.error(err);
+}
 
-const generateId = () => {
+const generateId = (): number => {
   const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
   return maxId + 1;
 };
 
-const getAll = (callback: (notes: Note[]) => void) => {
-  callback(notes);
+const getAll = async (): Promise<Note[]> => {
+  return notes;
 };
 
-const getById = (id: number, callback: (note: Note | null) => void) => {
+const getById = async (id: number): Promise<Note | null> => {
   const foundNote = notes.find((a) => a.id === id);
-  callback(foundNote ? foundNote : null);
+  return foundNote ? foundNote : null;
 };
 
-const create = (
-  newNote: { title: string; content: string },
-  callback: (note: Note) => void
-) => {
+const create = async (newNote: {
+  title: string;
+  content: string;
+}): Promise<Note> => {
   const createdNote = {
     id: generateId(),
     title: newNote.title,
     content: newNote.content,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-  };
+  } as Note;
 
   notes = [...notes, createdNote];
 
-  chrome.storage.sync.set({
+  await chrome.storage.sync.set({
     notes: notes,
   });
 
-  callback(createdNote);
+  return createdNote;
 };
 
-const update = (
+const update = async (
   id: number,
-  newNote: { title: string; content: string },
-  callback: (note: Note | null) => void
-) => {
+  newNote: { title: string; content: string }
+): Promise<Note | null> => {
   const foundNoteIndex = notes.findIndex((a) => a.id === id);
 
   if (foundNoteIndex === -1) {
-    callback(null);
-    return;
+    return null;
   }
 
   const updatedNote = {
@@ -62,20 +63,20 @@ const update = (
     title: newNote.title,
     content: newNote.content,
     updatedAt: new Date().toISOString(),
-  };
+  } as Note;
 
   notes[foundNoteIndex] = updatedNote;
 
-  chrome.storage.sync.set({
+  await chrome.storage.sync.set({
     notes: notes,
   });
 
-  callback(updatedNote);
+  return updatedNote;
 };
 
-const remove = (id: number) => {
+const remove = async (id: number) => {
   notes = notes.filter((note) => note.id !== id);
-  chrome.storage.sync.set({
+  await chrome.storage.sync.set({
     notes: notes,
   });
 };

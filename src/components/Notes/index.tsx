@@ -11,27 +11,29 @@ const Notes: React.FC = () => {
   const [noteContent, setNoteContent] = useState<string>('');
 
   useEffect(() => {
-    try {
-      noteService.getAll((items) => {
+    async function fetchData() {
+      try {
+        const items = await noteService.getAll();
         setNotes(items);
-      });
-    } catch (error) {
-      console.error(error);
+      } catch (e) {
+        console.error(e);
+      }
     }
+    fetchData();
   }, []);
 
-  const handleAddNote = () => {
-    noteService.create(
-      {
+  const handleAddNote = async () => {
+    try {
+      const createdNote = await noteService.create({
         title: noteTitle,
         content: noteContent,
-      },
-      (note) => {
-        setNotes([...notes, note]);
-        setNoteTitle('');
-        setNoteContent('');
-      }
-    );
+      });
+      setNotes([...notes, createdNote]);
+      setNoteTitle('');
+      setNoteContent('');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -71,9 +73,13 @@ const Notes: React.FC = () => {
             <NoteItem
               key={note.id}
               note={note}
-              handleDelete={() => {
-                noteService.remove(note.id);
-                setNotes(notes.filter((el) => el.id !== note.id));
+              handleDelete={async () => {
+                try {
+                  await noteService.remove(note.id);
+                  setNotes(notes.filter((el) => el.id !== note.id));
+                } catch (err) {
+                  console.error(err);
+                }
               }}
             ></NoteItem>
           ))
