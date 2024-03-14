@@ -11,6 +11,7 @@ type TaskData = {
 // Chrome storage: https://developer.chrome.com/docs/extensions/reference/api/storage
 // Firefox storage: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage
 
+// get the task string and check from the new task thingie
 function getNewTask(): [string, boolean] {
   const taskString = document.getElementById(
     'new-task-string'
@@ -25,6 +26,7 @@ function getNewTask(): [string, boolean] {
   return [tString, tCompleted];
 }
 
+// clear the new task thingie
 function clearTask() {
   const taskString = document.getElementById(
     'new-task-string'
@@ -41,10 +43,12 @@ function clearTask() {
   }
 }
 
-function Task({ taskString, taskCompleted, taskListRef }: { taskListRef: any; taskString: string; taskCompleted: boolean; taskKey: string }) {
+function Task({ taskString, taskCompleted, taskKey, taskListRef, taskListRenderRef }: { taskListRef: any[]; taskListRenderRef: any[]; taskString: string; taskCompleted: boolean; taskKey: string }) {
 
   const handleClick = () => {
-
+    delete taskListRef[0][taskKey]
+    taskListRef[1](taskListRef[0])
+    refreshTaskListRender(taskListRef, taskListRenderRef)
   }
 
   const handleOnChange = () => {
@@ -61,6 +65,22 @@ function Task({ taskString, taskCompleted, taskListRef }: { taskListRef: any; ta
       <button className="delete-task-button" onClick={handleClick}>{/* <img src={deleteImage} /> */}D</button>
     </div >
   )
+}
+
+function refreshTaskListRender(taskListRef: any[], taskListRenderRef: any[]) {
+  let newTaskListRender = []
+  for (let taskKey in taskListRef[0]) {
+    newTaskListRender.push(
+      <Task
+        taskListRef={taskListRef}
+        taskListRenderRef={taskListRenderRef}
+        taskKey={taskKey}
+        taskString={taskListRef[0][taskKey].taskString}
+        taskCompleted={taskListRef[0][taskKey].taskCompleted}
+      />
+    )
+  }
+  taskListRenderRef[1](newTaskListRender)
 }
 
 const Tasks: React.FC = () => {
@@ -83,11 +103,8 @@ const Tasks: React.FC = () => {
       }
       clearTask();
       setTaskList(taskList);
-      let newTaskListRender = []
-      for (let taskKey in taskList) {
-        newTaskListRender.push(<Task taskListRef={taskList} taskKey={taskKey} taskString={taskList[taskKey].taskString} taskCompleted={taskList[taskKey].taskCompleted} />)
-      }
-      setTaskListRender(newTaskListRender)
+
+      refreshTaskListRender([taskList, setTaskList], [taskListRender, setTaskListRender])
     }
   };
 
