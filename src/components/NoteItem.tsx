@@ -3,10 +3,10 @@ import { Note } from '../types';
 
 interface Props {
   note: Note;
-  handleDelete: (note: Note) => void;
+  handleOpen: () => void;
 }
 
-const NoteItem: React.FC<Props> = ({ note, handleDelete }) => {
+const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
   return (
     <div key={note.id} className="note-item">
       <h3>{note.title}</h3>
@@ -20,12 +20,12 @@ const NoteItem: React.FC<Props> = ({ note, handleDelete }) => {
       </p>
 
       <button
-        className="note-item-delete"
+        className="note-item-open"
         onClick={() => {
-          handleDelete(note);
+          handleOpen();
         }}
       >
-        Delete
+        `{'>'}`
       </button>
     </div>
   );

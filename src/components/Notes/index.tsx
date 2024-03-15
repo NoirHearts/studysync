@@ -6,88 +6,145 @@ import NoteItem from '../NoteItem';
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
+  const [noteEditorOpen, setNoteEditorOpen] = useState<boolean>(false);
   const [noteTitle, setNoteTitle] = useState<string>('');
   const [noteContent, setNoteContent] = useState<string>('');
+  const [currentNote, setCurrentNote] = useState<Note | null>(null);
+  const saveCooldown = 1000;
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         const items = await noteService.getAll();
         setNotes(items);
       } catch (e) {
         console.error(e);
       }
-    }
+    };
     fetchData();
   }, []);
 
-  const handleAddNote = async () => {
-    try {
-      if (noteTitle === '' && noteContent === '') return;
-      const createdNote = await noteService.create({
-        title: noteTitle,
-        content: noteContent,
-      });
-      setNotes([...notes, createdNote]);
-      setNoteTitle('');
-      setNoteContent('');
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  useEffect(() => {
+    if (!noteEditorOpen) return;
+
+    const saveNote = async () => {
+      try {
+        if (currentNote === null) {
+          if (noteTitle === '' && noteContent === '') return;
+
+          const createdNote = await noteService.create({
+            title: noteTitle,
+            content: noteContent,
+          });
+          setNotes([...notes, createdNote]);
+          setCurrentNote(createdNote);
+        } else {
+          const updatedNote = await noteService.update(currentNote.id, {
+            title: noteTitle,
+            content: noteContent,
+          });
+          if (updatedNote === null) throw new Error('Could not find note id.');
+          const updatedNotes = notes.map((n) =>
+            n.id === updatedNote.id ? updatedNote : n
+          );
+          setNotes(updatedNotes);
+          setCurrentNote(updatedNote);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const timeoutId = setTimeout(saveNote, saveCooldown);
+
+    return () => clearTimeout(timeoutId);
+  }, [noteTitle, noteContent]);
 
   return (
     <div>
-      <button
-        id="create-note"
-        onClick={() =>
-          createModalOpen ? setCreateModalOpen(false) : setCreateModalOpen(true)
-        }
-      >
-        Create note
-      </button>{' '}
-      <br />
-      {createModalOpen && (
-        <div className="create-note-form">
+      {noteEditorOpen ? (
+        <div className="note-editor-container">
           <input
-            id="create-note-title"
+            id="note-title-input"
             placeholder="Note title"
             value={noteTitle}
             onChange={(event) => setNoteTitle(event.target.value)}
           ></input>
           <textarea
-            id="create-note-content"
+            id="note-content-input"
             placeholder="Note content"
             value={noteContent}
             onChange={(event) => setNoteContent(event.target.value)}
           ></textarea>
-          <button id="create-note-button" onClick={handleAddNote}>
-            Add note
-          </button>
-        </div>
-      )}
-      <div className="note-list">
-        <h2>List of notes</h2>
-        {notes.length > 0 ? (
-          notes.map((note) => (
-            <NoteItem
-              key={note.id}
-              note={note}
-              handleDelete={async () => {
+          {currentNote !== null && (
+            <button
+              id="note-editor-delete"
+              onClick={async () => {
                 try {
-                  await noteService.remove(note.id);
-                  setNotes(notes.filter((el) => el.id !== note.id));
+                  await noteService.remove(currentNote.id);
+                  setNotes(notes.filter((el) => el.id !== currentNote.id));
+                  setNoteEditorOpen(false);
                 } catch (err) {
                   console.error(err);
                 }
               }}
-            ></NoteItem>
-          ))
-        ) : (
-          <p>No notes yet. Try creating one.</p>
-        )}
-      </div>
+            >
+              Delete
+            </button>
+          )}
+
+          <button
+            id="note-editor-back"
+            onClick={() => {
+              setCurrentNote(null);
+              setNoteEditorOpen(false);
+            }}
+          >
+            Back
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div className="search-note-container">
+            <input
+              className="search-note-input"
+              type="text"
+              placeholder="Search for a note..."
+            ></input>
+            <button className="search-note-button">🔎</button>
+          </div>
+          <br />
+          <div className="note-list-container">
+            {notes.length > 0 ? (
+              notes.map((note) => (
+                <NoteItem
+                  key={note.id}
+                  note={note}
+                  handleOpen={() => {
+                    setCurrentNote(note);
+                    setNoteTitle(note.title);
+                    setNoteContent(note.content);
+                    setNoteEditorOpen(true);
+                  }}
+                ></NoteItem>
+              ))
+            ) : (
+              <p>No notes yet. Try creating one.</p>
+            )}
+          </div>
+          <button
+            className="create-note-button"
+            onClick={() => {
+              setCurrentNote(null);
+              setNoteTitle('');
+              setNoteContent('');
+              setNoteEditorOpen(true);
+            }}
+          >
+            +
+          </button>
+        </div>
+      )}
     </div>
   );
 };
