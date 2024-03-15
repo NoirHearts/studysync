@@ -1,0 +1,75 @@
+:root {
+  font-family: 'Nunito', 'Open Sans', sans-serif;
+}
+
+.search-note-container {
+  width: 100%;
+}
+
+.note-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.note-list-container {
+  align-self: stretch;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.note-list-container * {
+  text-align: left;
+  margin: 0;
+}
+
+.note-item {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+.search-note-container {
+  width: 100%;
+}
+
+.search-note-input {
+  height: 1.2rem;
+  padding: 0.1rem;
+}
+
+.search-note-button {
+  min-height: 1.2rem;
+  padding: 0.1rem;
+}
+
+.note-editor-container * {
+  transition: none !important;
+}
+.note-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.2rem;
+}
+
+#note-editor-title-input {
+  font-size: 1.6rem;
+  height: 2rem;
+  max-width: 100%;
+  flex-grow: 1;
+}
+
+#note-editor-content-input {
+  resize: vertical;
+  width: 100%;
+}

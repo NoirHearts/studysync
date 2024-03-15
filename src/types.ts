@@ -12,10 +12,11 @@ export interface Settings {
 }
 
 export interface Note {
-  id: string;
+  id: number;
+  title: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // Tasks
