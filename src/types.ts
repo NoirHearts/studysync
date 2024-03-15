@@ -18,6 +18,15 @@ export interface Note {
   updatedAt: Date;
 }
 
+// Tasks
+
+export interface Task {
+  id: string;
+  completed: boolean;
+  task: string;
+  priority: number;
+}
+
 // Dictionary API
 
 export type DictionaryEntry = {
