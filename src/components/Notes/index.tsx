@@ -3,14 +3,12 @@ import './Notes.css';
 import noteService from '../../services/note';
 import { Note } from '../../types';
 import NoteItem from '../NoteItem';
+import NoteEditor from '../NoteEditor';
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [noteEditorOpen, setNoteEditorOpen] = useState<boolean>(false);
-  const [noteTitle, setNoteTitle] = useState<string>('');
-  const [noteContent, setNoteContent] = useState<string>('');
   const [currentNote, setCurrentNote] = useState<Note | null>(null);
-  const saveCooldown = 1000;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,85 +22,42 @@ const Notes: React.FC = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (!noteEditorOpen) return;
+  const createHandler = (createdNote: Note) => {
+    setCurrentNote(createdNote);
+    setNotes([...notes, createdNote]);
+  };
 
-    const saveNote = async () => {
-      try {
-        if (currentNote === null) {
-          if (noteTitle === '' && noteContent === '') return;
+  const updateHandler = (updatedNote: Note) => {
+    setCurrentNote(updatedNote);
+    setNotes(notes.map((n) => (n.id === updatedNote.id ? updatedNote : n)));
+  };
 
-          const createdNote = await noteService.create({
-            title: noteTitle,
-            content: noteContent,
-          });
-          setNotes([...notes, createdNote]);
-          setCurrentNote(createdNote);
-        } else {
-          const updatedNote = await noteService.update(currentNote.id, {
-            title: noteTitle,
-            content: noteContent,
-          });
-          if (updatedNote === null) throw new Error('Could not find note id.');
-          const updatedNotes = notes.map((n) =>
-            n.id === updatedNote.id ? updatedNote : n
-          );
-          setNotes(updatedNotes);
-          setCurrentNote(updatedNote);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const deleteHandler = (deletedNote: Note) => {
+    setCurrentNote(null);
+    setNotes(notes.filter((n) => n.id !== deletedNote.id));
+    setNoteEditorOpen(false);
+  };
 
-    const timeoutId = setTimeout(saveNote, saveCooldown);
+  const backHandler = () => {
+    setCurrentNote(null);
+    setNoteEditorOpen(false);
+  };
 
-    return () => clearTimeout(timeoutId);
-  }, [noteTitle, noteContent]);
+  const openNoteEditor = (note: Note | null) => {
+    setCurrentNote(note);
+    setNoteEditorOpen(true);
+  };
 
   return (
     <div>
       {noteEditorOpen ? (
-        <div className="note-editor-container">
-          <input
-            id="note-title-input"
-            placeholder="Note title"
-            value={noteTitle}
-            onChange={(event) => setNoteTitle(event.target.value)}
-          ></input>
-          <textarea
-            id="note-content-input"
-            placeholder="Note content"
-            value={noteContent}
-            onChange={(event) => setNoteContent(event.target.value)}
-          ></textarea>
-          {currentNote !== null && (
-            <button
-              id="note-editor-delete"
-              onClick={async () => {
-                try {
-                  await noteService.remove(currentNote.id);
-                  setNotes(notes.filter((el) => el.id !== currentNote.id));
-                  setNoteEditorOpen(false);
-                } catch (err) {
-                  console.error(err);
-                }
-              }}
-            >
-              Delete
-            </button>
-          )}
-
-          <button
-            id="note-editor-back"
-            onClick={() => {
-              setCurrentNote(null);
-              setNoteEditorOpen(false);
-            }}
-          >
-            Back
-          </button>
-        </div>
+        <NoteEditor
+          note={currentNote}
+          handleCreate={createHandler}
+          handleUpdate={updateHandler}
+          handleDelete={deleteHandler}
+          handleBack={backHandler}
+        />
       ) : (
         <div>
           <div className="search-note-container">
@@ -121,10 +76,7 @@ const Notes: React.FC = () => {
                   key={note.id}
                   note={note}
                   handleOpen={() => {
-                    setCurrentNote(note);
-                    setNoteTitle(note.title);
-                    setNoteContent(note.content);
-                    setNoteEditorOpen(true);
+                    openNoteEditor(note);
                   }}
                 ></NoteItem>
               ))
@@ -135,10 +87,7 @@ const Notes: React.FC = () => {
           <button
             className="create-note-button"
             onClick={() => {
-              setCurrentNote(null);
-              setNoteTitle('');
-              setNoteContent('');
-              setNoteEditorOpen(true);
+              openNoteEditor(null);
             }}
           >
             +

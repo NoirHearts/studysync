@@ -73,16 +73,16 @@ const create = async (newNote: {
  * Updates an existing note.
  * @param id - The ID of the note to update.
  * @param newNote - The updated note object containing new title and content.
- * @returns A promise that resolves with the updated note, or null if the note with the provided ID was not found.
+ * @returns A promise that resolves with the updated note.
  */
 const update = async (
   id: number,
   newNote: { title: string; content: string }
-): Promise<Note | null> => {
+): Promise<Note> => {
   const foundNoteIndex = notes.findIndex((a) => a.id === id);
 
   if (foundNoteIndex === -1) {
-    return null;
+    throw new Error('Cannot update non-existent note.');
   }
 
   const updatedNote = {
@@ -104,12 +104,21 @@ const update = async (
 /**
  * Removes a note.
  * @param id - The ID of the note to remove.
+ * @returns A promise that resolves with the removed note.
  */
-const remove = async (id: number): Promise<void> => {
+const remove = async (id: number): Promise<Note> => {
+  const noteToDelete = notes.find((a) => a.id === id) || null;
+
+  if (noteToDelete === null) {
+    throw new Error('Cannot remove non-existent note.');
+  }
+
   notes = notes.filter((note) => note.id !== id);
   await chrome.storage.sync.set({
     notes: notes,
   });
+
+  return noteToDelete;
 };
 
 export default {
