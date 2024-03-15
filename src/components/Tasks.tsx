@@ -11,22 +11,22 @@ import { Task } from '../types'
 const Tasks: React.FC = () => {
   const inputFieldRef = useRef(null);
   const [taskList, setTaskList] = useState<Task[]>([]);
-  const [triggerRender, setTriggerRender] = useState(false)
+  const [triggerRender, setTriggerRender] = useState(false);
 
   function TaskComponent({ task }: { task: Task }) {
 
-    const [taskCompleted, setTaskCompleted] = useState(task.completed)
+    const [taskCompleted, setTaskCompleted] = useState(task.completed);
 
     const handleClick = async () => {
-      await tasksService.deleteTask(task.id)
-      setTriggerRender(!triggerRender)
+      await tasksService.deleteTask(task.id);
+      setTriggerRender(!triggerRender);
     }
 
     const handleOnChange = async (e: any) => {
-      setTaskCompleted(e.target.checked)
-      task.completed = e.target.checked
-      await tasksService.editTask(task.id, task)
-      setTriggerRender(!triggerRender)
+      setTaskCompleted(e.target.checked);
+      task.completed = e.target.checked;
+      await tasksService.editTask(task.id, task);
+      setTriggerRender(!triggerRender);
     }
 
     // TODO: https://www.freecodecamp.org/news/reactjs-implement-drag-and-drop-feature-without-using-external-libraries-ad8994429f1a/
