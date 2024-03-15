@@ -19,8 +19,10 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     console.log(
       `Storage key "${key}" in namespace "${namespace}" changed.`,
       `Old value was "${JSON.stringify(
-        oldValue
-      )}", new value is "${JSON.stringify(newValue)}".`
+        oldValue,
+        null,
+        2
+      )}", new value is "${JSON.stringify(newValue, null, 2)}".`
     );
   }
 });
