@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 // import deleteImage from '../assets/img/delete.png';
 import './Tasks.css'
-import tasksService from '../services/tasks'
-import { Task } from '../types'
+import tasksService from '../../services/tasks'
+import { Task } from '../../types'
 
 // TODO: https://stackoverflow.com/questions/5364062/how-can-i-save-information-locally-in-my-chrome-extension
 // Chrome storage: https://developer.chrome.com/docs/extensions/reference/api/storage
