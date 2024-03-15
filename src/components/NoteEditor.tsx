@@ -61,42 +61,45 @@ const NoteEditor: React.FC<Props> = ({
 
   return (
     <div className="note-editor-container">
-      <input
-        id="note-title-input"
-        placeholder="Note title"
-        value={noteTitle}
-        onChange={(event) => setNoteTitle(event.target.value)}
-      ></input>
+      <div className="note-editor-header">
+        <input
+          id="note-editor-title-input"
+          placeholder="Note title"
+          value={noteTitle}
+          onChange={(event) => setNoteTitle(event.target.value)}
+        ></input>
+        {note !== null && (
+          <button
+            id="note-editor-delete"
+            onClick={async () => {
+              try {
+                const deletedNote = await noteService.remove(note.id);
+                handleDelete(deletedNote);
+              } catch (err) {
+                console.error(err);
+              }
+            }}
+          >
+            Delete
+          </button>
+        )}
+        <button
+          id="note-editor-back"
+          onClick={() => {
+            handleBack();
+          }}
+        >
+          Back
+        </button>
+      </div>
+      <hr />
+
       <textarea
-        id="note-content-input"
+        id="note-editor-content-input"
         placeholder="Note content"
         value={noteContent}
         onChange={(event) => setNoteContent(event.target.value)}
       ></textarea>
-      {note !== null && (
-        <button
-          id="note-editor-delete"
-          onClick={async () => {
-            try {
-              const deletedNote = await noteService.remove(note.id);
-              handleDelete(deletedNote);
-            } catch (err) {
-              console.error(err);
-            }
-          }}
-        >
-          Delete
-        </button>
-      )}
-
-      <button
-        id="note-editor-back"
-        onClick={() => {
-          handleBack();
-        }}
-      >
-        Back
-      </button>
     </div>
   );
 };

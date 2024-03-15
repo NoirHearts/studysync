@@ -68,30 +68,31 @@ const Notes: React.FC = () => {
             ></input>
             <button className="search-note-button">🔎</button>
           </div>
-          <br />
-          <div className="note-list-container">
-            {notes.length > 0 ? (
-              notes.map((note) => (
-                <NoteItem
-                  key={note.id}
-                  note={note}
-                  handleOpen={() => {
-                    openNoteEditor(note);
-                  }}
-                ></NoteItem>
-              ))
-            ) : (
-              <p>No notes yet. Try creating one.</p>
-            )}
+          <div className="note-content-container">
+            <div className="note-list-container">
+              {notes.length > 0 ? (
+                notes.map((note) => (
+                  <NoteItem
+                    key={note.id}
+                    note={note}
+                    handleOpen={() => {
+                      openNoteEditor(note);
+                    }}
+                  ></NoteItem>
+                ))
+              ) : (
+                <p>No notes yet. Try creating one.</p>
+              )}
+            </div>
+            <button
+              className="create-note-button"
+              onClick={() => {
+                openNoteEditor(null);
+              }}
+            >
+              +
+            </button>
           </div>
-          <button
-            className="create-note-button"
-            onClick={() => {
-              openNoteEditor(null);
-            }}
-          >
-            +
-          </button>
         </div>
       )}
     </div>

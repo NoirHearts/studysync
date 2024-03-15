@@ -1,31 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Nunito', 'Open Sans', sans-serif;
 }
 
-.create-note-form {
+.search-note-container {
+  width: 100%;
+}
+
+.note-content-container {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  border: 1px solid;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-
-  * {
-    transition: none !important;
-  }
-
-  textarea {
-    resize: vertical;
-    font-family: inherit;
-  }
-}
-
-button#create-note {
-  margin-bottom: 0.5rem;
+  align-items: center;
 }
 
 .note-list-container {
+  align-self: stretch;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -38,6 +26,9 @@ button#create-note {
 }
 
 .note-item {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
   border: 1px solid;
   border-radius: 0.5rem;
   padding: 0.5rem;
@@ -45,6 +36,10 @@ button#create-note {
 
 button {
   cursor: pointer;
+}
+
+.search-note-container {
+  width: 100%;
 }
 
 .search-note-input {
@@ -55,4 +50,26 @@ button {
 .search-note-button {
   min-height: 1.2rem;
   padding: 0.1rem;
+}
+
+.note-editor-container * {
+  transition: none !important;
+}
+.note-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.2rem;
+}
+
+#note-editor-title-input {
+  font-size: 1.6rem;
+  height: 2rem;
+  max-width: 100%;
+  flex-grow: 1;
+}
+
+#note-editor-content-input {
+  resize: vertical;
+  width: 100%;
 }

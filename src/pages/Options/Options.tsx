@@ -188,10 +188,6 @@ const Options: React.FC<Props> = ({ title }: Props) => {
                 volume: Number(event.target.value),
               },
             });
-            const outputElement = document.getElementById(
-              'volume-display-value'
-            ) as HTMLOutputElement;
-            outputElement.value = `${Number(event.target.value)}`;
           }}
         />
         <output
@@ -199,7 +195,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           id="volume-display-value"
           htmlFor="volume"
         >
-          0
+          {settings.pomodoro.volume}
         </output>
       </div>
       <div className="error-message">{errorMessage}</div>
