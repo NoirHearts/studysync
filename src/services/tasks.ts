@@ -24,7 +24,8 @@ const loadTasks = async () => {
 }
 
 const saveTasks = async (taskList=tasks) => {
-  localStorage.setItem(tasksLocalStorageKey, JSON.stringify(taskList ? taskList : tasks))
+  localStorage.setItem(tasksLocalStorageKey, JSON.stringify(taskList))
+  console.log("wgat")
 }
 
 const getAll = async (): Promise<Task[]> => {
