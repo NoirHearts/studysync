@@ -64,12 +64,17 @@ jobs:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
           fetch-depth: "0"
       - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: 'patch'
+      - name: Bump `package.json` version
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
         with:
-          tag-prefix: 'v'
           version-type: 'patch'
-          commit-message: 'ci: bump version to {{version}}'
+          skip-commit:  'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
