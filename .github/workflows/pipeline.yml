@@ -1,10 +1,9 @@
 name: CI-CD pipeline
 
 on:
-  push:
-    branches: [main, master]
   pull_request:
-    branches: [main, master]
+    branches: [main]
+    types: [opened, synchronize, closed]
   release:
     types: [published]
 
