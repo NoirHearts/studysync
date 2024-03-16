@@ -4,8 +4,6 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, closed]
-  release:
-    types: [published]
 
 jobs:
   CI:
@@ -56,7 +54,7 @@ jobs:
       always() &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
-      (github.event.pull_request.merged == true || github.event_name == 'release')
+      github.event.pull_request.merged == true
     needs: [CI]
     permissions:
       contents: write
@@ -66,8 +64,12 @@ jobs:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
           fetch-depth: "0"
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.67.0
+        id: version-bump
+        uses: 'phips28/gh-action-bump-version@master'
+        with:
+          tag-prefix: 'v'
+          version-type: 'patch'
+          commit-message: 'ci: bump version to {{version}}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DEFAULT_BUMP: ${{ github.event.pull_request.merged == true && 'patch' || 'minor' }}
+        
