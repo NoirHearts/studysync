@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "StudySync",
-  "description": "It is a student productivity extension w/ a Dictionary, a Pomodoro Timer, a To-Do List and a Note-taking feature in a sidebar panel.",
+  "description": "Maximize your productivity with this 4-in-1 extension. Includes a dictionary, to-do list, pomodoro timer and notes.",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
