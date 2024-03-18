@@ -85,7 +85,15 @@ const NoteEditor: React.FC<Props> = ({
         )}
         <button
           id="note-editor-back"
-          onClick={() => {
+          onClick={async () => {
+            if (note !== null && noteTitle === '' && noteContent === '') {
+              try {
+                const deletedNote = await noteService.remove(note.id);
+                handleDelete(deletedNote);
+              } catch (err) {
+                console.error(err);
+              }
+            }
             handleBack();
           }}
         >
