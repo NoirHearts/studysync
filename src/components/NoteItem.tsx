@@ -12,7 +12,7 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
       <div className="note-item-info"         onClick={() => {
           handleOpen();}}>
         <h3 className='note-item-title'>{note.title}</h3>
-        {/* <p> */}
+        <div className='note-item-content'>
           {note.content.split('\n').map((paragraph, index) => (
             <div key={index} className='note-item-content'>
               {paragraph}
