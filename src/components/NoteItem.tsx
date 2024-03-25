@@ -13,13 +13,13 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
           handleOpen();}}>
         <h3 className='note-item-title'>{note.title}</h3>
         <div className='note-item-content'>
-          {note.content.split('\n').map((paragraph, index) => (
-            <div key={index} className='note-item-content'>
+          {note.content.split('\n').map((paragraph) => (
+            <>
               {paragraph}
               <br />
-            </div>
+            </>
           ))}
-        {/* </p> */}
+        </div>
       </div>
       <button
         className="note-item-open"
