@@ -60,14 +60,14 @@ const Notes: React.FC = () => {
         />
       ) : (
         <div>
-          <div className="search-note-container">
+          {/* <div className="search-note-container">
             <input
               className="search-note-input"
               type="text"
               placeholder="Search for a note..."
             ></input>
             <button className="search-note-button">🔎</button>
-          </div>
+          </div> */}
           <div className="note-content-container">
             <div className="note-list-container">
               {notes.length > 0 ? (
@@ -90,7 +90,6 @@ const Notes: React.FC = () => {
                 openNoteEditor(null);
               }}
             >
-              +
             </button>
           </div>
         </div>

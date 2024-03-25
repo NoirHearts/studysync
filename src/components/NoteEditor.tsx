@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import noteService from '../services/note';
 import { Note } from '../types';
+import './Notes/Notes.css';
 
 interface Props {
   note: Note | null;
@@ -80,7 +81,6 @@ const NoteEditor: React.FC<Props> = ({
               }
             }}
           >
-            Delete
           </button>
         )}
         <button
@@ -97,17 +97,16 @@ const NoteEditor: React.FC<Props> = ({
             handleBack();
           }}
         >
-          Back
         </button>
       </div>
       <hr />
-
       <textarea
         id="note-editor-content-input"
         placeholder="Note content"
         value={noteContent}
         onChange={(event) => setNoteContent(event.target.value)}
       ></textarea>
+
     </div>
   );
 };
