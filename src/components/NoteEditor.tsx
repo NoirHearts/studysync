@@ -80,8 +80,7 @@ const NoteEditor: React.FC<Props> = ({
                 console.error(err);
               }
             }}
-          >
-          </button>
+          ></button>
         )}
         <button
           id="note-editor-back"
@@ -96,8 +95,7 @@ const NoteEditor: React.FC<Props> = ({
             }
             handleBack();
           }}
-        >
-        </button>
+        ></button>
       </div>
       <hr />
       <textarea
@@ -106,7 +104,6 @@ const NoteEditor: React.FC<Props> = ({
         value={noteContent}
         onChange={(event) => setNoteContent(event.target.value)}
       ></textarea>
-
     </div>
   );
 };

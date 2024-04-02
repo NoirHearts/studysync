@@ -89,8 +89,7 @@ const Notes: React.FC = () => {
               onClick={() => {
                 openNoteEditor(null);
               }}
-            >
-            </button>
+            ></button>
           </div>
         </div>
       )}

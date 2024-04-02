@@ -9,10 +9,14 @@ interface Props {
 const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
   return (
     <div key={note.id} className="note-item">
-      <div className="note-item-info"         onClick={() => {
-          handleOpen();}}>
-        <h3 className='note-item-title'>{note.title}</h3>
-        <div className='note-item-content'>
+      <div
+        className="note-item-info"
+        onClick={() => {
+          handleOpen();
+        }}
+      >
+        <h3 className="note-item-title">{note.title}</h3>
+        <div className="note-item-content">
           {note.content.split('\n').map((paragraph) => (
             <>
               {paragraph}
@@ -26,8 +30,7 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
         onClick={() => {
           handleOpen();
         }}
-      >
-      </button>
+      ></button>
     </div>
   );
 };
