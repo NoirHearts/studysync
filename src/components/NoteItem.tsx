@@ -28,7 +28,12 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
       <button
         className="note-item-open"
         onClick={() => {
-          handleOpen();
+          try {
+            handleOpen();
+          } catch (err) {
+            console.error(err);
+            alert('Error Opening Note');
+          }
         }}
       ></button>
     </div>
