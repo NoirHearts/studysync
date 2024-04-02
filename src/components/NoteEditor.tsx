@@ -66,6 +66,7 @@ const NoteEditor: React.FC<Props> = ({
         <input
           id="note-editor-title-input"
           placeholder="Note title"
+          spellCheck={false}
           value={noteTitle}
           onChange={(event) => setNoteTitle(event.target.value)}
         ></input>
@@ -101,6 +102,7 @@ const NoteEditor: React.FC<Props> = ({
       <textarea
         id="note-editor-content-input"
         placeholder="Note content"
+        spellCheck={false}
         value={noteContent}
         onChange={(event) => setNoteContent(event.target.value)}
       ></textarea>

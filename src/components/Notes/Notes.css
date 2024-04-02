@@ -39,10 +39,6 @@
   padding-left: 10px;
   padding-bottom: 12px;
   padding-top: 4px;
-  max-height: 30px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   cursor: pointer;
 }
 .note-item {
@@ -66,7 +62,7 @@
 
 .note-item-title {
   color: #202833;
-  padding-bottom: 4px;
+  margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   /* max-height: 100px; */
@@ -77,13 +73,11 @@
 .note-item-content {
   font-size: 12px;
   /* border: 1px solid black; */
-  padding-bottom: 10px;
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
-  line-height: 12px;
-  /* text-overflow: ellipsis; */
-  /* overflow-wrap: anywhere; */
+  text-overflow: ellipsis;
+  height: 1.4em;
 }
 
 button {
@@ -115,6 +109,7 @@ button {
 }
 
 #note-editor-title-input {
+  padding: 5px;
   font-size: 1.6rem;
   height: 2rem;
   max-width: 100%;
@@ -124,6 +119,8 @@ button {
 #note-editor-content-input {
   resize: vertical;
   width: 100%;
+  overflow: auto;
+  font-family: inherit;
 }
 
 .create-note-button {
