@@ -78,6 +78,14 @@ const Notes: React.FC = () => {
                     handleOpen={() => {
                       openNoteEditor(note);
                     }}
+                    handleDelete={async () => {
+                      try {
+                        const deletedNote = await noteService.remove(note.id);
+                        handleDelete(deletedNote);
+                      } catch (err) {
+                        console.error(err);
+                      }
+                    }}
                   ></NoteItem>
                 ))
               ) : (

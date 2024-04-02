@@ -4,9 +4,10 @@ import { Note } from '../types';
 interface Props {
   note: Note;
   handleOpen: () => void;
+  handleDelete: () => void;
 }
 
-const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
+const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
   return (
     <div key={note.id} className="note-item">
       <div
@@ -31,6 +32,11 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen }) => {
           handleOpen();
         }}
       ></button>
+            <button
+        className="note-item-delete"
+        onClick={() => {
+          handleDelete();
+        }}></button>
     </div>
   );
 };
