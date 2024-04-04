@@ -27,7 +27,7 @@
 .note-list-container * {
   text-align: left;
   margin: 0;
-  min-width: 260px;
+  /* min-width: 260px; */
   max-width: 95vw;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -39,12 +39,17 @@
   padding-left: 10px;
   padding-bottom: 12px;
   padding-top: 4px;
+  width: 96vw;
+  /* max-width: 100%; */
+  min-width: 250px;
   cursor: pointer;
 }
+
 .note-item {
   align-self: stretch;
   display: flex;
   justify-content: space-between;
+  /* max-width: 100%; */
   /* border-bottom: 1px solid #202833; */
 }
 
@@ -54,6 +59,8 @@
   background-size: 18px 18px;
   background-position: right;
   border: none;
+  /* border: 1px solid red; */
+  margin-left: 5px;
   height: 30px;
   min-width: 40px;
   /* height: 2%; */
@@ -123,7 +130,7 @@ button {
   font-family: inherit;
 }
 
-.create-note-button {
+#create-note-button {
   background: url(../../assets/img/add.png);
   background-repeat: no-repeat;
   background-size: contain;
