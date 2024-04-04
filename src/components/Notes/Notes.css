@@ -130,7 +130,7 @@ button {
   font-family: inherit;
 }
 
-.create-note-button {
+#create-note-button {
   background: url(../../assets/img/add.png);
   background-repeat: no-repeat;
   background-size: contain;
