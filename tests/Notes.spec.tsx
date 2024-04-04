@@ -15,20 +15,12 @@ test.describe('Notes', () => {
   // Add New Note
   test.describe('Add New Note', async () => {
     // click on new note button
-    test('Clicking on new note button opens editor interface...', async () => {
+    test('Note saves successfully', async () => {
       await component.locator('#create-note-button').click()
-    });
-
-    test('Adding title...', async () => {
       await component.locator('#note-editor-title-input').fill('Lorem Ipsum')
-    });
-
-    test('Adding text...', async () => {
       await component.locator('#note-editor-content-input').fill('Lorem Ipsum Dolor sit Amet')
-    });
-
-    test('Exiting interface...', async () => {
       await component.locator('#note-editor-back').click()
+      await expect(component).toContainText("Lorem Ipsum")
     });
     
   });
