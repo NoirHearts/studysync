@@ -30,36 +30,40 @@ const NoteEditor: React.FC<Props> = ({
   }, [note]);
 
   useEffect(() => {
-    const saveNote = async () => {
-      try {
-        if (note === null) {
-          if (noteTitle === '' && noteContent === '') return;
-
-          const createdNote = await noteService.create({
-            title: noteTitle,
-            content: noteContent,
-          });
-
-          handleCreate(createdNote);
-        } else {
-          const updatedNote = await noteService.update(note.id, {
-            title: noteTitle,
-            content: noteContent,
-          });
-          if (updatedNote === null) throw new Error('Could not find note id.');
-
-          handleUpdate(updatedNote);
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Error Saving Note');
-      }
-    };
-
     const timeoutId = setTimeout(saveNote, saveCooldown);
 
     return () => clearTimeout(timeoutId);
   }, [noteTitle, noteContent]);
+
+  const saveNote = async () => {
+    try {
+      if (note === null) {
+        if (noteTitle === '' && noteContent === '') return;
+
+        const createdNote = await noteService.create({
+          title: noteTitle,
+          content: noteContent,
+        });
+
+        handleCreate(createdNote);
+      } else if (note !== null && noteTitle === '' && noteContent === '') {
+        const deletedNote = await noteService.remove(note.id);
+
+        handleDelete(deletedNote);
+      } else {
+        const updatedNote = await noteService.update(note.id, {
+          title: noteTitle,
+          content: noteContent,
+        });
+        if (updatedNote === null) throw new Error('Could not find note id.');
+
+        handleUpdate(updatedNote);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error Saving Note');
+    }
+  };
 
   return (
     <div className="note-editor-container">
@@ -78,6 +82,7 @@ const NoteEditor: React.FC<Props> = ({
               try {
                 const deletedNote = await noteService.remove(note.id);
                 handleDelete(deletedNote);
+                handleBack();
               } catch (err) {
                 console.error(err);
                 alert('Error Deleting Note');
@@ -88,14 +93,7 @@ const NoteEditor: React.FC<Props> = ({
         <button
           id="note-editor-back"
           onClick={async () => {
-            if (note !== null && noteTitle === '' && noteContent === '') {
-              try {
-                const deletedNote = await noteService.remove(note.id);
-                handleDelete(deletedNote);
-              } catch (err) {
-                console.error(err);
-              }
-            }
+            await saveNote();
             handleBack();
           }}
         ></button>

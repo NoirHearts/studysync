@@ -35,7 +35,6 @@ const Notes: React.FC = () => {
   const deleteHandler = (deletedNote: Note) => {
     setCurrentNote(null);
     setNotes(notes.filter((n) => n.id !== deletedNote.id));
-    setNoteEditorOpen(false);
   };
 
   const backHandler = () => {
