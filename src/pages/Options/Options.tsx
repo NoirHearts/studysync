@@ -14,18 +14,21 @@ const Options: React.FC<Props> = ({ title }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
-    try {
-      dataService.retrieve('settings', (items) => {
+    const fetchData = async () => {
+      try {
+        const items = await dataService.retrieve('settings');
         setSettings({ ...(items.settings as Settings) });
-      });
-    } catch (error) {
-      console.error(error);
-      if (error instanceof Error) {
-        displayError(`Error: ${error.message}`, 5000);
-      } else {
-        displayError('Something went wrong.', 5000);
+      } catch (error) {
+        console.error(error);
+        if (error instanceof Error) {
+          displayError(`Error: ${error.message}`, 5000);
+        } else {
+          displayError('Something went wrong.', 5000);
+        }
       }
-    }
+    };
+
+    fetchData();
   }, []);
 
   const displayStatus = (message: string, ms: number) => {
@@ -44,16 +47,12 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     return () => clearTimeout(id);
   };
 
-  const saveSettings = () => {
+  const saveSettings = async () => {
     try {
-      dataService.update(
-        {
-          settings: settings,
-        },
-        () => {
-          displayStatus('Options saved.', 1000);
-        }
-      );
+      await dataService.update({
+        settings: settings,
+      });
+      displayStatus('Options saved.', 1000);
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
@@ -77,15 +76,14 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       const file = files[0];
       const reader = new FileReader();
 
-      reader.onload = function (e: ProgressEvent<FileReader>) {
+      reader.onload = async function (e: ProgressEvent<FileReader>) {
         const dataJSON = e.target?.result as string;
         const data = JSON.parse(dataJSON);
 
         try {
-          dataService.update(data, () => {
-            displayStatus('Data imported successfully.', 3000);
-            setSettings({ ...data.settings } as Settings);
-          });
+          await dataService.update(data);
+          displayStatus('Data imported successfully.', 3000);
+          setSettings({ ...data.settings } as Settings);
         } catch (error) {
           console.error(error);
           if (error instanceof Error) {
@@ -103,26 +101,25 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     fileInput.click();
   };
 
-  const exportData = () => {
+  const exportData = async () => {
     try {
-      dataService.retrieve(null, (items) => {
-        const data = items as ExtensionData;
-        const dataJSON = JSON.stringify(data, null, 2);
-        const blob = new Blob([dataJSON], { type: 'application/json' });
-        const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
-        const localISOTime = new Date(Date.now() - tzoffset)
-          .toISOString()
-          .slice(0, -1);
-        const timestamp = localISOTime.replace(/[:.TZ]/g, '-').slice(0, -4);
+      const items = await dataService.retrieve(null);
+      const data = items as ExtensionData;
+      const dataJSON = JSON.stringify(data, null, 2);
+      const blob = new Blob([dataJSON], { type: 'application/json' });
+      const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+      const localISOTime = new Date(Date.now() - tzoffset)
+        .toISOString()
+        .slice(0, -1);
+      const timestamp = localISOTime.replace(/[:.TZ]/g, '-').slice(0, -4);
 
-        const filename = `studysync_data_${timestamp}.json`;
+      const filename = `studysync_data_${timestamp}.json`;
 
-        const downloadLink = document.createElement('a');
-        downloadLink.download = filename;
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.click();
-        downloadLink.remove();
-      });
+      const downloadLink = document.createElement('a');
+      downloadLink.download = filename;
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.click();
+      downloadLink.remove();
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
