@@ -219,4 +219,28 @@ test.describe('Notes', () => {
     });
 
   });
+
+  test.describe('UI Interaction', async () => {
+    test('Click Notes Button while in OpenNotesUI', async ({ page }) => {
+
+      // open note editor
+      await page.locator('label[for=notes-button]').click();
+      await page.locator('#create-note-button').click();
+      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
+      
+      // close note pane
+      await page.locator('label[for=notes-button]').click();
+      // wait
+      await wait(1500);
+      // reopen note pane
+      await page.locator('label[for=notes-button]').click();
+      // wait
+      await wait(1500);
+      
+      // check if add note button is there
+      await expect(page.locator("#create-note-button")).toHaveCount(1);
+
+    });
+
+  });
 });
