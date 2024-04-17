@@ -10,7 +10,7 @@ test.describe('Notes', () => {
   // Add New Note
   test.describe('Note Editing', async () => {
 
-    test('Add, Edit, and Save New Note Successful', async ({ page }) => {
+    test('Add, Edit, and Save New Note', async ({ page }) => {
       // click on notes list
       await page.locator('label[for=notes-button]').click();
       
@@ -36,7 +36,7 @@ test.describe('Notes', () => {
       );
     });
 
-    test('Open Existing Note Successful', async ({ page }) => {
+    test('Open Existing Note', async ({ page }) => {
     
       // click on notes list
       await page.locator('label[for=notes-button]').click();
@@ -72,7 +72,7 @@ test.describe('Notes', () => {
 
     });
 
-    test('Edit Existing Note Successful', async ({ page }) => {
+    test('Edit and Save Existing Note', async ({ page }) => {
     
       // click on notes list
       await page.locator('label[for=notes-button]').click();
@@ -152,6 +152,47 @@ test.describe('Notes', () => {
         'RE: Lorem Ipsum Dolor sit Amet'
       );
 
+    });
+
+  });
+
+  
+  test.describe('Note Deleting', async () => {
+  
+    test('Delete existing note from NotesOpenUI', async ({ page }) => {
+      // click on notes list
+      await page.locator('label[for=notes-button]').click();
+
+      // click [+] button to create note
+      await page.locator('#create-note-button').click();
+
+      // write title
+      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
+      // write content
+      await page
+        .locator('#note-editor-content-input')
+        .fill('Lorem Ipsum Dolor sit Amet');
+      
+        // wait for autosave
+      await wait(1000);
+      
+      // close note
+      await page.locator('#note-editor-back').click();
+      
+      // assert: note title appears in list
+      await expect(page.locator('.note-item-title')).toContainText(
+        'Lorem Ipsum'
+      );
+
+      // click on notes item
+      await page.locator(".note-item", { has: page.getByText('Lorem Ipsum') }).click();
+      
+      // click on delete note button
+      await page.locator('#note-editor-delete').click();
+
+      // assert: no notes in list
+      await expect(page.locator(".note-item", { has: page.getByText('Lorem Ipsum') })).toHaveCount(0);
+      
     });
 
   });
