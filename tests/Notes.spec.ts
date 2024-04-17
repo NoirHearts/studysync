@@ -195,5 +195,28 @@ test.describe('Notes', () => {
       
     });
 
+    test('Delete existing note from NoteList', async ({ page }) => {
+
+      // create note to delete
+      await page.locator('label[for=notes-button]').click();
+      await page.locator('#create-note-button').click();
+      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
+      await page
+        .locator('#note-editor-content-input')
+        .fill('Lorem Ipsum Dolor sit Amet');
+      await wait(1000);
+      await page.locator('#note-editor-back').click();
+      await expect(page.locator('.note-item-title')).toContainText(
+        'Lorem Ipsum'
+      );
+
+      // click on delete note button
+      await page.locator(".note-item", { has: page.getByText('Lorem Ipsum') }).locator(".note-item-delete").click();
+      
+      // assert: no notes in list
+      await expect(page.locator(".note-item", { has: page.getByText('Lorem Ipsum') })).toHaveCount(0);
+      
+    });
+
   });
 });
