@@ -77,6 +77,7 @@ const Notes: React.FC = () => {
                     handleOpen={() => {
                       openNoteEditor(note);
                     }}
+                    handleDelete={deleteHandler}
                   ></NoteItem>
                 ))
               ) : (
