@@ -23,23 +23,25 @@ const Pomodoro: React.FC = () => {
   const ringSound = new Audio(ring);
 
   useEffect(() => {
-    try {
-      dataService.retrieve('settings', (items) => {
+    const fetchData = async () => {
+      try {
+        const items = await dataService.retrieve('settings');
         setSettings({ ...(items.settings.pomodoro as Settings['pomodoro']) });
-      });
 
-      dataService.addListener(
-        'settings',
-        ([_keyChanged, { oldValue: _oldValue, newValue }]) => {
-          setSettings({
-            ...(newValue as Settings).pomodoro,
-          });
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
+        dataService.addListener(
+          'settings',
+          ([_keyChanged, { oldValue: _oldValue, newValue }]) => {
+            setSettings({
+              ...(newValue as Settings).pomodoro,
+            });
+          }
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    fetchData();
     initTimer();
 
     secondsLeftRef.current = settings.workTime * 60;
