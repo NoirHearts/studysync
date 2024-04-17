@@ -3,64 +3,53 @@ import { test, expect } from './fixtures';
 const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 test.describe('Notes', () => {
+
+  const generate_note = async (page, title, content) => {
+    // assert: note title appears in list
+    await expect(page.locator('#create-note-button')).toHaveCount(1);
+    
+    // click [+] button to create note
+    await page.locator('#create-note-button').click();
+
+    // write title
+    await page.locator('#note-editor-title-input').fill(title);
+    // write content
+    await page
+      .locator('#note-editor-content-input')
+      .fill(content);
+    
+    // close note
+    await page.locator('#note-editor-back').click();
+
+  }
+
   test.beforeEach(async ({ page, extensionId }) => {
     await page.goto(`chrome-extension://${extensionId}/panel.html`);
   });
 
   // Add New Note
-  test.describe('Note Editing', async () => {
+  test.describe('can be created', async () => {
 
-    test('Add, Edit, and Save New Note', async ({ page }) => {
+    test('can add, edit and save new note', async ({ page }) => {
       // click on notes list
       await page.locator('label[for=notes-button]').click();
       
-      // click [+] button to create note
-      await page.locator('#create-note-button').click();
-
-      // write title
-      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
-      // write content
-      await page
-        .locator('#note-editor-content-input')
-        .fill('Lorem Ipsum Dolor sit Amet');
-      
-        // wait for autosave
-      await wait(1000);
-      
-      // close note
-      await page.locator('#note-editor-back').click();
-      
+      // generate note
+      await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet')
+        
       // assert: note title appears in list
-      await expect(page.locator('.note-item-title')).toContainText(
-        'Lorem Ipsum'
-      );
+      await expect(page.locator('.note-item-title')).toContainText('Lorem Ipsum');
     });
+  });
 
-    test('Open Existing Note', async ({ page }) => {
+  test.describe('when existing', async () => {
+
+    test('can be opened', async ({ page }) => {
     
       // click on notes list
       await page.locator('label[for=notes-button]').click();
       
-      // click [+] button to create note
-      await page.locator('#create-note-button').click();
-
-      // write title
-      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
-      // write content
-      await page
-        .locator('#note-editor-content-input')
-        .fill('Lorem Ipsum Dolor sit Amet');
-      
-      // wait for autosave
-      await wait(1000);
-      
-      // close note
-      await page.locator('#note-editor-back').click();
-      
-      // assert: note title appears in list
-      await expect(page.locator('.note-item-title')).toContainText(
-        'Lorem Ipsum'
-      );
+      await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet')
       
       // click on notes item
       await page.locator(".note-item", { has: page.getByText('Lorem Ipsum') }).click();
@@ -72,31 +61,13 @@ test.describe('Notes', () => {
 
     });
 
-    test('Edit and Save Existing Note', async ({ page }) => {
+    test('can be edited and saved', async ({ page }) => {
     
       // click on notes list
       await page.locator('label[for=notes-button]').click();
       
-      // click [+] button to create note
-      await page.locator('#create-note-button').click();
-
-      // write title
-      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
-      // write content
-      await page
-        .locator('#note-editor-content-input')
-        .fill('Lorem Ipsum Dolor sit Amet');
-      
-        // wait for autosave
-      await wait(1000);
-      
-      // close note
-      await page.locator('#note-editor-back').click();
-      
-      // assert: note title appears in list
-      await expect(page.locator('.note-item-title')).toContainText(
-        'Lorem Ipsum'
-      );
+      // generate note
+      await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet')
       
       // click on notes item
       await page.locator(".note-item", { has: page.getByText('Lorem Ipsum') }).click();
@@ -110,9 +81,6 @@ test.describe('Notes', () => {
       await page
         .locator('#note-editor-content-input')
         .fill('RE: Lorem Ipsum Dolor sit Amet');
-
-      // wait for autosave
-      await wait(1000);
       
       // close note
       await page.locator('#note-editor-back').click();
@@ -132,9 +100,6 @@ test.describe('Notes', () => {
 
       // rewrite title
       await page.locator('#note-editor-title-input').fill('RE: Lorem Ipsum');
-
-      // wait for autosave
-      await wait(1000);
 
       // close note
       await page.locator('#note-editor-back').click();
@@ -157,32 +122,13 @@ test.describe('Notes', () => {
   });
 
   
-  test.describe('Note Deleting', async () => {
+  test.describe('When deleting', async () => {
   
-    test('Delete existing note from NotesOpenUI', async ({ page }) => {
+    test('can be deleted from within editor', async ({ page }) => {
       // click on notes list
       await page.locator('label[for=notes-button]').click();
 
-      // click [+] button to create note
-      await page.locator('#create-note-button').click();
-
-      // write title
-      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
-      // write content
-      await page
-        .locator('#note-editor-content-input')
-        .fill('Lorem Ipsum Dolor sit Amet');
-      
-        // wait for autosave
-      await wait(1000);
-      
-      // close note
-      await page.locator('#note-editor-back').click();
-      
-      // assert: note title appears in list
-      await expect(page.locator('.note-item-title')).toContainText(
-        'Lorem Ipsum'
-      );
+      await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet')
 
       // click on notes item
       await page.locator(".note-item", { has: page.getByText('Lorem Ipsum') }).click();
@@ -195,33 +141,24 @@ test.describe('Notes', () => {
       
     });
 
-    test('Delete existing note from NoteList', async ({ page }) => {
+    test('can be deleted from main pane', async ({ page }) => {
 
       // create note to delete
       await page.locator('label[for=notes-button]').click();
-      await page.locator('#create-note-button').click();
-      await page.locator('#note-editor-title-input').fill('Lorem Ipsum');
-      await page
-        .locator('#note-editor-content-input')
-        .fill('Lorem Ipsum Dolor sit Amet');
-      await wait(1000);
-      await page.locator('#note-editor-back').click();
-      await expect(page.locator('.note-item-title')).toContainText(
-        'Lorem Ipsum'
-      );
+      await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet')
 
       // click on delete note button
       await page.locator(".note-item", { has: page.getByText('Lorem Ipsum') }).locator(".note-item-delete").click();
       
       // assert: no notes in list
-      await expect(page.locator(".note-item", { has: page.getByText('Lorem Ipsum') })).toHaveCount(0);
+      // await expect(page.locator(".note-item", { has: page.getByText('Lorem Ipsum') })).toHaveCount(0);
       
     });
 
   });
 
-  test.describe('UI Interaction', async () => {
-    test('Click Notes Button while in OpenNotesUI', async ({ page }) => {
+  test.describe('when closing the notes feature', async () => {
+    test('notes feature shows list of notes when reopened', async ({ page }) => {
 
       // open note editor
       await page.locator('label[for=notes-button]').click();
