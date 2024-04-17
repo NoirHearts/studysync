@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "StudySync",
+  "name": "StudySync (alpha)",
   "description": "Maximize your productivity with this 4-in-1 extension. Includes a dictionary, to-do list, pomodoro timer and notes.",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },

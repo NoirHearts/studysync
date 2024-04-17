@@ -27,6 +27,7 @@
 .note-list-container * {
   text-align: left;
   margin: 0;
+
   min-width: 200px;
   max-width: 100vw;
   text-overflow: ellipsis;
@@ -44,6 +45,7 @@
   min-width: 200px;
   cursor: pointer;
 }
+
 .note-item {
   align-self: stretch;
   display: flex;
