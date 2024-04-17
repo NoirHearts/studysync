@@ -44,6 +44,7 @@
   min-width: 200px;
   cursor: pointer;
 }
+
 .note-item {
   align-self: stretch;
   display: flex;
