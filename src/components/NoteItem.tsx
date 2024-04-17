@@ -1,10 +1,11 @@
 import React from 'react';
 import { Note } from '../types';
+import noteService from '../services/note';
 
 interface Props {
   note: Note;
   handleOpen: () => void;
-  handleDelete: () => void;
+  handleDelete: (note: Note) => void;
 }
 
 const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
@@ -32,11 +33,17 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
           handleOpen();
         }}
       ></button>
-            <button
+      <button
         className="note-item-delete"
-        onClick={() => {
-          handleDelete();
-        }}></button>
+        onClick={async () => {
+          try {
+            const deletedNote = await noteService.remove(note.id);
+            handleDelete(deletedNote);
+          } catch (err) {
+            console.error(err);
+          }
+        }}
+      ></button>
     </div>
   );
 };
