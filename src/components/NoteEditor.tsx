@@ -52,6 +52,7 @@ const NoteEditor: React.FC<Props> = ({
         }
       } catch (err) {
         console.error(err);
+        alert('Error Saving Note');
       }
     };
 
@@ -79,6 +80,7 @@ const NoteEditor: React.FC<Props> = ({
                 handleDelete(deletedNote);
               } catch (err) {
                 console.error(err);
+                alert('Error Deleting Note');
               }
             }}
           ></button>

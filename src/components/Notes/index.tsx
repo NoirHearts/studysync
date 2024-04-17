@@ -86,7 +86,7 @@ const Notes: React.FC = () => {
               )}
             </div>
             <button
-              className="create-note-button"
+              id="create-note-button"
               onClick={() => {
                 openNoteEditor(null);
               }}
