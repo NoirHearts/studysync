@@ -75,6 +75,13 @@ const NoteEditor: React.FC<Props> = ({
           value={noteTitle}
           onChange={(event) => setNoteTitle(event.target.value)}
         ></input>
+        <button
+          id="note-editor-back"
+          onClick={async () => {
+            await saveNote();
+            handleBack();
+          }}
+        ></button>
         {note !== null && (
           <button
             id="note-editor-delete"
@@ -90,13 +97,6 @@ const NoteEditor: React.FC<Props> = ({
             }}
           ></button>
         )}
-        <button
-          id="note-editor-back"
-          onClick={async () => {
-            await saveNote();
-            handleBack();
-          }}
-        ></button>
       </div>
       <hr />
       <textarea
