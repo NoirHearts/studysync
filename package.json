@@ -11,7 +11,7 @@
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
-    "test": "npx playwright test -c playwright-ct.config.ts",
+    "test": "xvfb-run npx playwright test -c playwright-ct.config.ts",
     "lint": "npx eslint .",
     "type-check": "tsc --noEmit",
     "prep": "npm run lint && npm run type-check && npm run format && npm run build && npm run test && npm run start"
