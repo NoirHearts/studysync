@@ -17,6 +17,9 @@ test.describe('Notes', () => {
     await page
       .locator('#note-editor-content-input')
       .fill(content);
+
+    // wait for autosave
+    await wait(1000);
     
     // close note
     await page.locator('#note-editor-back').click();
@@ -82,6 +85,9 @@ test.describe('Notes', () => {
         .locator('#note-editor-content-input')
         .fill('RE: Lorem Ipsum Dolor sit Amet');
       
+      // wait for autosave
+      await wait(1000);
+      
       // close note
       await page.locator('#note-editor-back').click();
 
@@ -100,6 +106,9 @@ test.describe('Notes', () => {
 
       // rewrite title
       await page.locator('#note-editor-title-input').fill('RE: Lorem Ipsum');
+
+      // wait for autosave
+      await wait(1000);
 
       // close note
       await page.locator('#note-editor-back').click();

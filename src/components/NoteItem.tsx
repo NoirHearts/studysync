@@ -14,7 +14,12 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
       <div
         className="note-item-info"
         onClick={() => {
-          handleOpen();
+          try {
+            handleOpen();
+          } catch (err) {
+            console.error(err);
+            alert('Error Opening Note');
+          }
         }}
       >
         <h3 className="note-item-title">{note.title}</h3>
@@ -46,6 +51,7 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
             handleDelete(deletedNote);
           } catch (err) {
             console.error(err);
+            alert('Error Deleting Note');
           }
         }}
       ></button>
