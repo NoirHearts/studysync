@@ -2,30 +2,44 @@ import React from 'react';
 import { Note } from '../types';
 import NoteEditor from './NoteEditor';
 
-export const NoteEditorTest: React.FC = () => {
+interface Props {
+  noteId?: number;
+  noteTitle?: string;
+  noteContent?: string;
+  noteCreated?: string;
+  noteUpdated?: string;
+  handleCreate?: (note: Note) => void;
+  handleUpdate?: (note: Note) => void;
+  handleDelete?: (note: Note) => void;
+  handleBack?: () => void;
+}
+
+export const NoteEditorTest: React.FC<Props> = ({
+  noteId,
+  noteTitle,
+  noteContent,
+  noteCreated,
+  noteUpdated,
+  handleCreate = () => {},
+  handleUpdate = () => {},
+  handleDelete = () => {},
+  handleBack = () => {},
+}) => {
   const testNote: Note = {
-    id: 12345,
-    title: 'Lorem Ipsum',
-    content: 'Lorem ipsum dolor sit amet',
-    createdAt: '12345',
-    updatedAt: '12345',
+    id: noteId || 0,
+    title: noteTitle || 'Lorem ipsum',
+    content: noteContent || '',
+    createdAt: noteCreated || '2024-04-18T12:00:00.000Z',
+    updatedAt: noteUpdated || '2024-04-18T12:00:00.000Z',
   };
 
   return (
     <NoteEditor
       note={testNote}
-      handleCreate={() => {
-        throw new Error();
-      }}
-      handleUpdate={() => {
-        throw new Error();
-      }}
-      handleDelete={() => {
-        throw new Error();
-      }}
-      handleBack={() => {
-        throw new Error();
-      }}
+      handleCreate={handleCreate}
+      handleUpdate={handleUpdate}
+      handleDelete={handleDelete}
+      handleBack={handleBack}
     />
   );
 };

@@ -2,24 +2,38 @@ import React from 'react';
 import { Note } from '../types';
 import NoteItem from './NoteItem';
 
-export const NoteItemTest: React.FC = () => {
+interface Props {
+  noteId?: number;
+  noteTitle?: string;
+  noteContent?: string;
+  noteCreated?: string;
+  noteUpdated?: string;
+  handleOpen?: () => void;
+  handleDelete?: (note: Note) => void;
+}
+
+export const NoteItemTest: React.FC<Props> = ({
+  noteId,
+  noteTitle,
+  noteContent,
+  noteCreated,
+  noteUpdated,
+  handleOpen = () => {},
+  handleDelete = () => {},
+}) => {
   const testNote: Note = {
-    id: 12345,
-    title: 'Lorem Ipsum',
-    content: 'Lorem ipsum dolor sit amet',
-    createdAt: '12345',
-    updatedAt: '12345',
+    id: noteId || 0,
+    title: noteTitle || 'Lorem ipsum',
+    content: noteContent || '',
+    createdAt: noteCreated || '2024-04-18T12:00:00.000Z',
+    updatedAt: noteUpdated || '2024-04-18T12:00:00.000Z',
   };
 
   return (
     <NoteItem
       note={testNote}
-      handleOpen={() => {
-        throw new Error();
-      }}
-      handleDelete={() => {
-        throw new Error();
-      }}
+      handleOpen={handleOpen}
+      handleDelete={handleDelete}
     />
   );
 };
