@@ -35,7 +35,6 @@ const Notes: React.FC = () => {
   const deleteHandler = (deletedNote: Note) => {
     setCurrentNote(null);
     setNotes(notes.filter((n) => n.id !== deletedNote.id));
-    setNoteEditorOpen(false);
   };
 
   const backHandler = () => {
@@ -60,14 +59,14 @@ const Notes: React.FC = () => {
         />
       ) : (
         <div>
-          <div className="search-note-container">
+          {/* <div className="search-note-container">
             <input
               className="search-note-input"
               type="text"
               placeholder="Search for a note..."
             ></input>
             <button className="search-note-button">🔎</button>
-          </div>
+          </div> */}
           <div className="note-content-container">
             <div className="note-list-container">
               {notes.length > 0 ? (
@@ -78,6 +77,7 @@ const Notes: React.FC = () => {
                     handleOpen={() => {
                       openNoteEditor(note);
                     }}
+                    handleDelete={deleteHandler}
                   ></NoteItem>
                 ))
               ) : (
@@ -85,13 +85,11 @@ const Notes: React.FC = () => {
               )}
             </div>
             <button
-              className="create-note-button"
+              id="create-note-button"
               onClick={() => {
                 openNoteEditor(null);
               }}
-            >
-              +
-            </button>
+            ></button>
           </div>
         </div>
       )}

@@ -23,18 +23,20 @@ function isValidKey(
  * Retrieves data from storage.
  *
  * @param {string | string[] | null} keys - The key(s) of the data to retrieve.
- * @param {(items: { [key: string]: any }) => void} callback - Callback function to handle retrieved data.
+ * @returns {Promise<{ [key: string]: any }>} A promise that resolves with the retrieved data.
  */
 const retrieve = (
-  keys: string | string[] | null,
-  callback: (items: { [key: string]: any }) => void
-) => {
-  if (keys !== null && !isValidKey(keys)) {
-    throw new Error(`Invalid key(s): ${keys}`);
-  }
+  keys: string | string[] | null
+): Promise<{ [key: string]: any }> => {
+  return new Promise((resolve, reject) => {
+    if (keys !== null && !isValidKey(keys)) {
+      reject(new Error(`Invalid key(s): ${keys}`));
+      return;
+    }
 
-  chrome.storage.sync.get(keys, (items) => {
-    callback(items);
+    chrome.storage.sync.get(keys, (items) => {
+      resolve(items);
+    });
   });
 };
 
@@ -42,21 +44,19 @@ const retrieve = (
  * Updates data in storage.
  *
  * @param {Object.<string, any>} items - New data to be saved.
- * @param {() => void} callback - Callback function to be called after data is updated.
+ * @returns {Promise<void>} A promise that resolves after data is updated.
  */
-const update = (items: { [key: string]: any }, callback: () => void) => {
-  if (!isValidKey(Object.keys(items))) {
-    throw new Error(`Invalid key(s): ${Object.keys(items)}`);
-  }
-
-  chrome.storage.sync.set(
-    {
-      ...items,
-    },
-    () => {
-      callback();
+const update = (items: { [key: string]: any }): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (!isValidKey(Object.keys(items))) {
+      reject(new Error(`Invalid key(s): ${Object.keys(items)}`));
+      return;
     }
-  );
+
+    chrome.storage.sync.set(items, () => {
+      resolve();
+    });
+  });
 };
 
 /**
