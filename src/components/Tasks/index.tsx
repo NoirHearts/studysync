@@ -118,14 +118,14 @@ const Tasks: React.FC = () => {
   }
 
   return (
-    <div>
+    <div id="tasklist">
       {taskList.map((task: Task) => {
         return <TaskItem task={task} key={task.id} handleChecked={handleChecked} handleDelete={handleDelete} handleText={handleText} />;
       })}
-      <div className="task-item">
-        <input type="checkbox" id="new-task-completed"></input>
-        <input id="new-task-string" placeholder='New Task...' ref={inputFieldRef}></input>
-        <button id="add-task" onClick={handleClick}>
+      <div className="task-item" id="new-task">
+        <input className='task-item-checkbox' type="checkbox" id="new-task-completed"></input>
+        <input className='task-item-text' id="new-task-string" placeholder='New Task...' ref={inputFieldRef}></input>
+        <button className='task-item-rbutton' id="add-task" onClick={handleClick}>
           +
         </button>
       </div>

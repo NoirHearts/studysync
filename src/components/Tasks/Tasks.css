@@ -1,3 +1,52 @@
-.task-done {
-  text-decoration: line-through;
+#tasklist{
+  display: flex;
+  flex-direction: column;
+  * {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .task-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: stretch;
+    
+    .task-item-rbutton, .task-item-checkbox{
+      width: 20px;
+      height: 20px;
+      margin: 3px;
+    }
+    .task-item-rbutton:hover{
+      background: darkslateblue;
+      color: white;
+    }
+    .task-item-delete:hover{
+      background: darkred;
+      color: white;
+    }
+    .task-item-rbutton:active{
+      background: black;
+      color: white;
+    }
+  }
+  
+  #new-task{
+    background: white;
+  }
+
+  /* Make text boxes look discreet */
+  input{
+    background: rgba(0, 0, 0, 0);
+    outline: none;
+    overflow:visible;
+    overflow-wrap: normal;
+  }
+
+  .task-done {
+    text-decoration: line-through;
+    font-style: italic;
+  }
 }

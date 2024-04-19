@@ -16,7 +16,7 @@ const TaskItem: React.FC<Props> = ({ task, handleChecked, handleText, handleDele
     <div className="task-item">
     <input
       type="checkbox"
-      className="task-completed"
+      className="task-item-checkbox"
       onChange={async (e) => {
         try{
           handleChecked(task, e.target.checked);
@@ -27,7 +27,7 @@ const TaskItem: React.FC<Props> = ({ task, handleChecked, handleText, handleDele
       checked={task.completed}
     ></input>
     <input
-      className={task.completed ? 'task-name task-done' : 'task-name'}
+      className={task.completed ? 'task-item-text task-done' : 'task-item-text'}
       value={taskString}
       onChange={async (e) => {
         setTaskString(e.target.value);
@@ -45,7 +45,7 @@ const TaskItem: React.FC<Props> = ({ task, handleChecked, handleText, handleDele
         }
       }}
     />
-    <button className="delete-task-button" onClick={
+    <button className="task-item-rbutton task-item-delete" onClick={
       async () => {
         try{
           handleDelete(task);
