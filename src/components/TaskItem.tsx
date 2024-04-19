@@ -13,7 +13,7 @@ const TaskItem: React.FC<Props> = ({ task, handleChecked, handleText, handleDele
   const [taskString, setTaskString] = useState<string>(task.taskString);
 
   return (
-    <div className="task-item">
+    <div className={taskString == '' ? "task-item task-deleting" : "task-item"}>
     <input
       type="checkbox"
       className="task-item-checkbox"

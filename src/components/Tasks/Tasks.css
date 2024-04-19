@@ -1,6 +1,10 @@
 #tasklist{
   display: flex;
   flex-direction: column;
+  height: 25vh;
+  overflow-y: scroll;
+  padding-right: 5px;
+
   * {
     border: none;
     padding: 0;
@@ -13,14 +17,32 @@
     justify-content: space-between;
     align-items: stretch;
     align-content: stretch;
-    
-    .task-item-rbutton, .task-item-checkbox{
+    border-radius: 5px;
+    margin: 2px 0;
+    padding: 2px;
+
+    .task-item-rbutton{
       width: 20px;
       height: 20px;
-      margin: 3px;
+      border-radius: 3px;
+      margin-left: 3px;
+      font-size: 1em;
     }
+    .task-item-checkbox{
+      width: 15px;
+      height: 15px;
+      margin: 2.5px;
+    }
+    .hidden-checkbox{
+      visibility: hidden;
+    } 
     .task-item-rbutton:hover{
-      background: darkslateblue;
+      background: #202833;
+      color: white;
+    }
+    
+    .task-item-delete{
+      background: #e17d7d;
       color: white;
     }
     .task-item-delete:hover{
@@ -28,13 +50,36 @@
       color: white;
     }
     .task-item-rbutton:active{
+      transition: none;
       background: black;
+      color: white;
+    }
+  }
+
+  .task-deleting{
+    background: #e17d7d;
+    .task-item-delete{
+      background: darkred;
       color: white;
     }
   }
   
   #new-task{
-    background: white;
+  
+    background: #cdc3bd;
+    transition: 0s;
+    .task-item-rbutton{
+      background: rgba(0,0,0,0);
+    }
+    .task-item-rbutton:hover{
+      background: #202833;
+      color: white;
+    }
+    .task-item-rbutton:active{
+      transition: none;
+      background: #f1ece9;
+      color: black;
+    }
   }
 
   /* Make text boxes look discreet */
@@ -49,4 +94,20 @@
     text-decoration: line-through;
     font-style: italic;
   }
+}
+
+#tasklist::-webkit-scrollbar {
+  width: 5px;
+}
+
+#tasklist::-webkit-scrollbar-thumb {
+  background: #202833;
+  width: 10px;
+  border-radius: 2px;
+}
+
+#tasklist::-webkit-scrollbar-track {
+  background: #cdc3bd;
+  width: 10px;
+  border-radius: 2px;
 }

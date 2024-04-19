@@ -8,6 +8,7 @@ const Tasks: React.FC = () => {
   const inputFieldRef = useRef(null);
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [triggerRender, setTriggerRender] = useState(false);
+  const [newTaskString, setNewTaskString] = useState<string>('')
 
   // retrieve tasks on first render
   useEffect(() => {
@@ -29,8 +30,10 @@ const Tasks: React.FC = () => {
 
   // saves new task to storage and renders it
   const handleClick = async () => {
+    
+    setNewTaskString('');
     // get the task string and check from the new task thingie
-    async function retrieveInput(): Promise<Task> {
+    async function retrieveInput(): Promise<void> {
       const taskString = document.getElementById(
         'new-task-string'
       ) as HTMLInputElement;
@@ -40,12 +43,12 @@ const Tasks: React.FC = () => {
         'new-task-completed'
       ) as HTMLInputElement;
       const tCompleted = taskCompleted ? taskCompleted.checked : false;
-
-      const newTask: Task = await tasksService.create({
-        taskString: tString,
-        taskCompleted: tCompleted,
-      });
-      return newTask;
+      if (tString != '') {
+        await tasksService.create({
+          taskString: tString,
+          taskCompleted: tCompleted,
+        });
+      }
     }
 
     // clear the new task thingie
@@ -122,10 +125,13 @@ const Tasks: React.FC = () => {
       {taskList.map((task: Task) => {
         return <TaskItem task={task} key={task.id} handleChecked={handleChecked} handleDelete={handleDelete} handleText={handleText} />;
       })}
-      <div className="task-item" id="new-task">
-        <input className='task-item-checkbox' type="checkbox" id="new-task-completed"></input>
-        <input className='task-item-text' id="new-task-string" placeholder='New Task...' ref={inputFieldRef}></input>
-        <button className='task-item-rbutton' id="add-task" onClick={handleClick}>
+      <div className="task-item" id={newTaskString == '' ? "new-task-empty" : "new-task"}>
+        <input className={newTaskString == '' ? 'task-item-checkbox hidden-checkbox':'task-item-checkbox'} type="checkbox" id="new-task-completed"></input>
+        <input className='task-item-text' id="new-task-string" placeholder='New Task...' ref={inputFieldRef} onChange={async (e) => {setNewTaskString(e.target.value)}}></input>
+        <button
+          // className={newTaskString == '' ? 'task-item-rbutton hidden-checkbox' : 'task-item-rbutton'}
+          className='task-item-rbutton'
+          id="add-task" onClick={handleClick}>
           +
         </button>
       </div>
