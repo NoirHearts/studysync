@@ -5,7 +5,7 @@ import notesImg from '../../assets/img/notes.png';
 import tasksImg from '../../assets/img/tasks.png';
 
 import Dictionary from '../../components/Dictionary';
-import Tasks from '../../components/Tasks/Tasks';
+import Tasks from '../../components/Tasks';
 import Notes from '../../components/Notes';
 import Pomodoro from '../../components/Pomodoro';
 import FeatureContainer from '../../components/FeatureContainer';

@@ -1,91 +1,132 @@
-import { Task } from '../types'
-
-const tasksLocalStorageKey = "studysync-tasks"
+import { Task } from '../types';
 
 let tasks: Task[] = [];
 
-const loadTasks = async () => {
+/**
+ * Fetches notes from Chrome storage and updates the task array.
+ */
+const fetchTasks = async (): Promise<void> => {
+  const items = await chrome.storage.sync.get('tasks');
+  tasks = items.tasks || [];
+};
 
-  const savedTaskList: string | null = localStorage.getItem(tasksLocalStorageKey);
-
-  if (savedTaskList == null) {
-    tasks = [];
-  } else {
-
-    try {
-      const parsed: Task[] = JSON.parse(savedTaskList);
-      tasks = parsed;
-    } catch (err) {
-      console.log(err);
-      localStorage.removeItem(tasksLocalStorageKey);
-      tasks = [];
-    }
-  }
+try {
+  await fetchTasks(); // Fetch task initially when module is loaded
+} catch (err) {
+  console.error(err);
 }
 
-const saveTasks = async (taskList=tasks) => {
-  localStorage.setItem(tasksLocalStorageKey, JSON.stringify(taskList))
-  console.log("wgat")
-}
+/**
+ * Generates a unique ID for a new task based on the maximum ID in the current task array.
+ * @returns The generated ID.
+ */
+const generateId = (): number => {
+  const maxId = tasks.length > 0 ? Math.max(...tasks.map((n) => n.id)) : 0;
+  return maxId + 1;
+};
 
+/**
+ * Retrieves all task.
+ * @returns A promise that resolves with an array of all task.
+ */
 const getAll = async (): Promise<Task[]> => {
   return tasks;
-}
+};
 
-const createTask = async(task: string, completed: boolean, taskList=tasks): Promise<Task> => {
-  const timestamp: string = Date.now().toString();
-  let offset = 0;
-  let id = `${timestamp}+${offset}`;
-  while(tasks.find((a) => a.id == id)){
-    offset++;
-    id = `${timestamp}+${offset}`;
+/**
+ * Retrieves a task by its ID.
+ * @param id - The ID of the task to retrieve.
+ * @returns A promise that resolves with the task corresponding to the provided ID, or null if not found.
+ */
+const getById = async (id: number): Promise<Task | null> => {
+  const foundNote = tasks.find((a) => a.id === id);
+  return foundNote ? foundNote : null;
+};
+
+/**
+ * Creates a new task.
+ * @param newNote - The new task object containing task string and completed status.
+ * @returns A promise that resolves with the created task.
+ */
+const create = async (newTask: {
+  taskString: string;
+  taskCompleted: boolean;
+}): Promise<Task> => {
+  const createdTask = {
+    id: generateId(),
+    completed: newTask.taskCompleted,
+    taskString: newTask.taskString,
+    priority: 0, // unused property
+  } as Task;
+
+  tasks = [...tasks, createdTask];
+
+  await chrome.storage.sync.set({
+    tasks: tasks,
+  });
+
+  return createdTask;
+};
+
+/**
+ * Updates an existing task.
+ * @param id - The ID of the task to update.
+ * @param newTask - The updated task object containing new task string and completed status.
+ * @returns A promise that resolves with the updated task.
+ */
+const update = async (
+  id: number,
+  newTask: { 
+    taskString: string;
+    taskCompleted: boolean;
+   }
+): Promise<Task> => {
+  const foundTaskIndex = tasks.findIndex((a) => a.id === id);
+
+  if (foundTaskIndex === -1) {
+    throw new Error('Cannot update non-existent note.');
   }
 
-  const newTask = {
-    task: task,
-    completed: completed,
-    id: id,
+  const updatedTask = {
+    ...tasks[foundTaskIndex],
+    title: newTask.taskString,
+    completed: newTask.taskCompleted,
     priority: 0
+  } as Task;
+
+  tasks[foundTaskIndex] = updatedTask;
+
+  await chrome.storage.sync.set({
+    tasks: tasks,
+  });
+
+  return updatedTask;
+};
+
+/**
+ * Removes a task.
+ * @param id - The ID of the task to remove.
+ * @returns A promise that resolves with the removed task.
+ */
+const remove = async (id: number): Promise<Task> => {
+  const taskToDelete = tasks.find((a) => a.id === id) || null;
+
+  if (taskToDelete === null) {
+    throw new Error('Cannot remove non-existent note.');
   }
 
-  if(taskList == tasks){
-    tasks = [...tasks, newTask];
-  }else{
-    taskList.push(newTask)
-  }
-  
-  await saveTasks();
+  tasks = tasks.filter((task) => task.id !== id);
+  await chrome.storage.sync.set({
+    tasks: tasks,
+  });
 
-  return newTask
-}
+  return taskToDelete;
+};
 
-const findTask = async (id: string, taskList=tasks): Promise<Task | null> => {
-  const foundTask = taskList.find((a) => a.id == id);
-  return foundTask ? foundTask : null;
-}
-
-const deleteTask = async(id: string, taskList=tasks) => {
-  const i = taskList.findIndex((a) => a.id == id);
-  taskList.splice(i, 1);
-  if(taskList == tasks){
-    await saveTasks();
-  }
-}
-
-const editTask = async(id: string, updated: Task, taskList=tasks) => {
-  const i = taskList.findIndex((a) => a.id == id);
-  taskList[i] = updated;
-  if(taskList == tasks){
-    await saveTasks();
-  }
-}
-
-export  default {
-  loadTasks,
-  saveTasks,
+export default {
   getAll,
-  createTask,
-  findTask,
-  editTask,
-  deleteTask
-}
+  getById,
+  create,
+  update,
+  remove,
+};

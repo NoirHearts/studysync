@@ -22,9 +22,9 @@ export interface Note {
 // Tasks
 
 export interface Task {
-  id: string;
+  id: number;
   completed: boolean;
-  task: string;
+  taskString: string;
   priority: number;
 }
 
