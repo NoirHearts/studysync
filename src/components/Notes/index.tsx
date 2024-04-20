@@ -11,7 +11,7 @@ const Notes: React.FC = () => {
   const [currentNote, setCurrentNote] = useState<Note | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const retrieveTasks = async () => {
       try {
         const items = await noteService.getAll();
         setNotes(items);
@@ -19,7 +19,7 @@ const Notes: React.FC = () => {
         console.error(e);
       }
     };
-    fetchData();
+    retrieveTasks();
   }, []);
 
   const createHandler = (createdNote: Note) => {

@@ -55,7 +55,7 @@ const create = async (newTask: {
   const createdTask = {
     id: generateId(),
     completed: newTask.taskCompleted,
-    taskString: newTask.taskString,
+    description: newTask.taskString,
     priority: 0, // unused property
   } as Task;
 
@@ -71,27 +71,26 @@ const create = async (newTask: {
 /**
  * Updates an existing task.
  * @param id - The ID of the task to update.
- * @param newTask - The updated task object containing new task string and completed status.
+ * @param newTask - The updated task object containing new description and completed status.
  * @returns A promise that resolves with the updated task.
  */
 const update = async (
   id: number,
   newTask: {
-    taskString: string;
-    taskCompleted: boolean;
+    description?: string;
+    completed?: boolean;
   }
 ): Promise<Task> => {
   const foundTaskIndex = tasks.findIndex((a) => a.id === id);
 
   if (foundTaskIndex === -1) {
-    throw new Error('Cannot update non-existent note.');
+    throw new Error('Cannot update non-existent task.');
   }
 
   const updatedTask = {
     ...tasks[foundTaskIndex],
-    title: newTask.taskString,
-    completed: newTask.taskCompleted,
-    priority: 0,
+    description: newTask.description ?? tasks[foundTaskIndex].description,
+    completed: newTask.completed ?? tasks[foundTaskIndex].completed,
   } as Task;
 
   tasks[foundTaskIndex] = updatedTask;

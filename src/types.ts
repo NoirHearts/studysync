@@ -23,7 +23,7 @@ export interface Note {
 export interface Task {
   id: number;
   completed: boolean;
-  taskString: string;
+  description: string;
   priority: number;
 }
 

@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 // import deleteImage from '../assets/img/delete.png';
+import taskService from '../services/tasks';
 import { Task } from '../types';
 
 interface Props {
   task: Task;
-  handleChecked: (task: Task, checked: boolean) => void;
-  handleText: (task: Task, newString: string) => void;
+  handleUpdate: (task: Task) => void;
   handleDelete: (task: Task) => void;
 }
 
-const TaskItem: React.FC<Props> = ({
-  task,
-  handleChecked,
-  handleText,
-  handleDelete,
-}) => {
-  const [taskString, setTaskString] = useState<string>(task.taskString);
+const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
+  const [taskDescription, setTaskDescription] = useState<string>(
+    task.description
+  );
 
   return (
-    <div className={taskString == '' ? 'task-item task-deleting' : 'task-item'}>
+    <div
+      className={
+        taskDescription == '' ? 'task-item task-deleting' : 'task-item'
+      }
+    >
       <input
         type="checkbox"
         className="task-item-checkbox"
         onChange={async (e) => {
           try {
-            handleChecked(task, e.target.checked);
+            const updatedTask = await taskService.update(task.id, {
+              completed: e.target.checked,
+            });
+            handleUpdate(updatedTask);
           } catch (err) {
             console.log(err);
           }
@@ -35,17 +39,21 @@ const TaskItem: React.FC<Props> = ({
         className={
           task.completed ? 'task-item-text task-done' : 'task-item-text'
         }
-        value={taskString}
+        value={taskDescription}
         onChange={async (e) => {
-          setTaskString(e.target.value);
+          setTaskDescription(e.target.value);
         }}
         onBlur={async (_) => {
           try {
-            if (taskString != '') {
-              task.taskString = taskString;
-              handleText(task, taskString);
+            if (taskDescription != '') {
+              task.description = taskDescription;
+              const updatedTask = await taskService.update(task.id, {
+                description: taskDescription,
+              });
+              handleUpdate(updatedTask);
             } else {
-              handleDelete(task);
+              const deletedTask = await taskService.remove(task.id);
+              handleDelete(deletedTask);
             }
           } catch (err) {
             console.log(err);
@@ -56,7 +64,8 @@ const TaskItem: React.FC<Props> = ({
         className="task-item-rbutton task-item-delete"
         onClick={async () => {
           try {
-            handleDelete(task);
+            const deletedTask = await taskService.remove(task.id);
+            handleDelete(deletedTask);
           } catch (err) {
             console.log(err);
           }

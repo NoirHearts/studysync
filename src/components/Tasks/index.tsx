@@ -1,32 +1,25 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Tasks.css';
-import tasksService from '../../services/tasks';
+import taskService from '../../services/tasks';
 import { Task } from '../../types';
 import TaskItem from '../TaskItem';
 
 const Tasks: React.FC = () => {
   const inputFieldRef = useRef(null);
   const [taskList, setTaskList] = useState<Task[]>([]);
-  const [triggerRender, setTriggerRender] = useState(false);
   const [newTaskString, setNewTaskString] = useState<string>('');
 
-  // retrieve tasks on first render
   useEffect(() => {
-    async function retrieveTasks() {
-      const tasks: Task[] = await tasksService.getAll();
-      setTaskList(tasks);
-    }
+    const retrieveTasks = async () => {
+      try {
+        const tasks = await taskService.getAll();
+        setTaskList(tasks);
+      } catch (e) {
+        console.error(e);
+      }
+    };
     retrieveTasks();
   }, []);
-
-  // re-retrieve tasks when task is deleted
-  useEffect(() => {
-    async function retrieveTasks() {
-      const tasks: Task[] = await tasksService.getAll();
-      setTaskList(tasks);
-    }
-    retrieveTasks();
-  }, [triggerRender]);
 
   // saves new task to storage and renders it
   const handleClick = async () => {
@@ -43,7 +36,7 @@ const Tasks: React.FC = () => {
       ) as HTMLInputElement;
       const tCompleted = taskCompleted ? taskCompleted.checked : false;
       if (tString != '') {
-        await tasksService.create({
+        await taskService.create({
           taskString: tString,
           taskCompleted: tCompleted,
         });
@@ -69,7 +62,7 @@ const Tasks: React.FC = () => {
 
     await retrieveInput();
     clearInput();
-    setTaskList(await tasksService.getAll());
+    setTaskList(await taskService.getAll());
   };
 
   // Triggers add task on press enter while empty task in focus
@@ -90,38 +83,14 @@ const Tasks: React.FC = () => {
     };
   }, []);
 
-  const handleChecked = async (task: Task, checked: boolean) => {
-    try {
-      await tasksService.update(task.id, {
-        taskString: task.taskString,
-        taskCompleted: checked,
-      });
-      setTriggerRender(!triggerRender);
-    } catch (err) {
-      console.log(err);
-    }
+  const updateHandler = async (updatedTask: Task) => {
+    setTaskList(
+      taskList.map((t) => (t.id === updatedTask.id ? updatedTask : t))
+    );
   };
 
-  const handleText = async (task: Task, newString: string) => {
-    try {
-      await tasksService.update(task.id, {
-        taskString: newString,
-        taskCompleted: task.completed,
-      });
-      setTriggerRender(!triggerRender);
-    } catch (err) {
-      alert('shit');
-      console.log(err);
-    }
-  };
-
-  const handleDelete = async (task: Task) => {
-    try {
-      await tasksService.remove(task.id);
-      setTriggerRender(!triggerRender);
-    } catch (err) {
-      console.log(err);
-    }
+  const deleteHandler = async (deletedTask: Task) => {
+    setTaskList(taskList.filter((t) => t.id !== deletedTask.id));
   };
 
   return (
@@ -131,9 +100,8 @@ const Tasks: React.FC = () => {
           <TaskItem
             task={task}
             key={task.id}
-            handleChecked={handleChecked}
-            handleDelete={handleDelete}
-            handleText={handleText}
+            handleUpdate={updateHandler}
+            handleDelete={deleteHandler}
           />
         );
       })}
