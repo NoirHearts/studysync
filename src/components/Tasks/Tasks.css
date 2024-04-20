@@ -1,4 +1,4 @@
-#tasklist{
+#tasklist {
   display: flex;
   flex-direction: column;
   height: 25vh;
@@ -11,7 +11,7 @@
     margin: 0;
   }
 
-  .task-item{
+  .task-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,61 +21,60 @@
     margin: 2px 0;
     padding: 2px;
 
-    .task-item-rbutton{
+    .task-item-rbutton {
       width: 20px;
       height: 20px;
       border-radius: 3px;
       margin-left: 3px;
       font-size: 1em;
     }
-    .task-item-checkbox{
+    .task-item-checkbox {
       width: 15px;
       height: 15px;
       margin: 2.5px;
     }
-    .hidden-checkbox{
+    .hidden-checkbox {
       visibility: hidden;
-    } 
-    .task-item-rbutton:hover{
+    }
+    .task-item-rbutton:hover {
       background: #202833;
       color: white;
     }
-    
-    .task-item-delete{
+
+    .task-item-delete {
       background: #e17d7d;
       color: white;
     }
-    .task-item-delete:hover{
+    .task-item-delete:hover {
       background: darkred;
       color: white;
     }
-    .task-item-rbutton:active{
+    .task-item-rbutton:active {
       transition: none;
       background: black;
       color: white;
     }
   }
 
-  .task-deleting{
+  .task-deleting {
     background: #e17d7d;
-    .task-item-delete{
+    .task-item-delete {
       background: darkred;
       color: white;
     }
   }
-  
-  #new-task{
-  
+
+  #new-task {
     background: #cdc3bd;
     transition: 0s;
-    .task-item-rbutton{
-      background: rgba(0,0,0,0);
+    .task-item-rbutton {
+      background: rgba(0, 0, 0, 0);
     }
-    .task-item-rbutton:hover{
+    .task-item-rbutton:hover {
       background: #202833;
       color: white;
     }
-    .task-item-rbutton:active{
+    .task-item-rbutton:active {
       transition: none;
       background: #f1ece9;
       color: black;
@@ -83,10 +82,10 @@
   }
 
   /* Make text boxes look discreet */
-  input{
+  input {
     background: rgba(0, 0, 0, 0);
     outline: none;
-    overflow:visible;
+    overflow: visible;
     overflow-wrap: normal;
   }
 

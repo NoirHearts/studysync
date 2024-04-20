@@ -76,10 +76,10 @@ const create = async (newTask: {
  */
 const update = async (
   id: number,
-  newTask: { 
+  newTask: {
     taskString: string;
     taskCompleted: boolean;
-   }
+  }
 ): Promise<Task> => {
   const foundTaskIndex = tasks.findIndex((a) => a.id === id);
 
@@ -91,7 +91,7 @@ const update = async (
     ...tasks[foundTaskIndex],
     title: newTask.taskString,
     completed: newTask.taskCompleted,
-    priority: 0
+    priority: 0,
   } as Task;
 
   tasks[foundTaskIndex] = updatedTask;

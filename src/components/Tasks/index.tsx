@@ -8,7 +8,7 @@ const Tasks: React.FC = () => {
   const inputFieldRef = useRef(null);
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [triggerRender, setTriggerRender] = useState(false);
-  const [newTaskString, setNewTaskString] = useState<string>('')
+  const [newTaskString, setNewTaskString] = useState<string>('');
 
   // retrieve tasks on first render
   useEffect(() => {
@@ -30,7 +30,6 @@ const Tasks: React.FC = () => {
 
   // saves new task to storage and renders it
   const handleClick = async () => {
-    
     setNewTaskString('');
     // get the task string and check from the new task thingie
     async function retrieveInput(): Promise<void> {
@@ -91,47 +90,81 @@ const Tasks: React.FC = () => {
     };
   }, []);
 
-
   const handleChecked = async (task: Task, checked: boolean) => {
-    try{
-      await tasksService.update(task.id, {taskString: task.taskString, taskCompleted: checked});
+    try {
+      await tasksService.update(task.id, {
+        taskString: task.taskString,
+        taskCompleted: checked,
+      });
       setTriggerRender(!triggerRender);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const handleText = async (task: Task, newString: string) => {
-    try{
-      await tasksService.update(task.id, {taskString: newString, taskCompleted: task.completed});
+    try {
+      await tasksService.update(task.id, {
+        taskString: newString,
+        taskCompleted: task.completed,
+      });
       setTriggerRender(!triggerRender);
-    }catch(err){
+    } catch (err) {
       alert('shit');
       console.log(err);
     }
-  }
+  };
 
   const handleDelete = async (task: Task) => {
-    try{
+    try {
       await tasksService.remove(task.id);
       setTriggerRender(!triggerRender);
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   return (
     <div id="tasklist">
       {taskList.map((task: Task) => {
-        return <TaskItem task={task} key={task.id} handleChecked={handleChecked} handleDelete={handleDelete} handleText={handleText} />;
+        return (
+          <TaskItem
+            task={task}
+            key={task.id}
+            handleChecked={handleChecked}
+            handleDelete={handleDelete}
+            handleText={handleText}
+          />
+        );
       })}
-      <div className="task-item" id={newTaskString == '' ? "new-task-empty" : "new-task"}>
-        <input className={newTaskString == '' ? 'task-item-checkbox hidden-checkbox':'task-item-checkbox'} type="checkbox" id="new-task-completed"></input>
-        <input className='task-item-text' id="new-task-string" placeholder='New Task...' ref={inputFieldRef} onChange={async (e) => {setNewTaskString(e.target.value)}}></input>
+      <div
+        className="task-item"
+        id={newTaskString == '' ? 'new-task-empty' : 'new-task'}
+      >
+        <input
+          className={
+            newTaskString == ''
+              ? 'task-item-checkbox hidden-checkbox'
+              : 'task-item-checkbox'
+          }
+          type="checkbox"
+          id="new-task-completed"
+        ></input>
+        <input
+          className="task-item-text"
+          id="new-task-string"
+          placeholder="New Task..."
+          ref={inputFieldRef}
+          onChange={async (e) => {
+            setNewTaskString(e.target.value);
+          }}
+        ></input>
         <button
           // className={newTaskString == '' ? 'task-item-rbutton hidden-checkbox' : 'task-item-rbutton'}
-          className='task-item-rbutton'
-          id="add-task" onClick={handleClick}>
+          className="task-item-rbutton"
+          id="add-task"
+          onClick={handleClick}
+        >
           +
         </button>
       </div>

@@ -12,19 +12,13 @@
   "side_panel": {
     "default_path": "panel.html"
   },
-  "permissions": [
-    "sidePanel",
-    "storage"
-  ],
+  "permissions": ["sidePanel", "storage"],
   "icons": {
     "128": "icon-128.png"
   },
   "web_accessible_resources": [
     {
-      "resources": [
-        "icon-128.png",
-        "icon-32.png"
-      ],
+      "resources": ["icon-128.png", "icon-32.png"],
       "matches": []
     }
   ]
