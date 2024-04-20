@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import taskService from '../services/task';
 import { Task } from '../types';
+import { saveCooldown } from '../constants';
 
 interface Props {
   task: Task;
@@ -11,6 +12,7 @@ interface Props {
 const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
   const [taskDescription, setTaskDescription] = useState('');
   const [taskCompleted, setTaskCompleted] = useState(false);
+  const descriptionField = useRef(null);
 
   useEffect(() => {
     if (task !== null) {
@@ -18,6 +20,12 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
       setTaskCompleted(task.completed);
     }
   }, [task]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(saveTask, saveCooldown);
+
+    return () => clearTimeout(timeoutId);
+  }, [taskDescription, taskCompleted]);
 
   const saveTask = async () => {
     try {
@@ -27,7 +35,7 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
           description: taskDescription,
         });
         handleUpdate(updatedTask);
-      } else {
+      } else if (document.activeElement !== descriptionField.current) {
         const deletedTask = await taskService.remove(task.id);
         handleDelete(deletedTask);
       }
@@ -47,7 +55,6 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
         className="task-item-checkbox"
         onChange={async (e) => {
           setTaskCompleted(e.target.checked);
-          await saveTask();
         }}
         checked={taskCompleted}
       ></input>
@@ -56,6 +63,7 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
         className={
           taskCompleted ? 'task-item-text task-done' : 'task-item-text'
         }
+        ref={descriptionField}
         value={taskDescription}
         onChange={(e) => {
           setTaskDescription(e.target.value);

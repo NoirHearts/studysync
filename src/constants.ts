@@ -16,5 +16,7 @@ export const initialData: ExtensionData = {
   tasks: [],
 };
 
+export const saveCooldown = 300;
+
 export const dictionaryApiUrl =
   'https://api.dictionaryapi.dev/api/v2/entries/en/';

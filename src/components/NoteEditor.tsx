@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import noteService from '../services/note';
 import { Note } from '../types';
 import './Notes/Notes.css';
+import { saveCooldown } from '../constants';
 
 interface Props {
   note: Note | null;
@@ -20,7 +21,6 @@ const NoteEditor: React.FC<Props> = ({
 }) => {
   const [noteTitle, setNoteTitle] = useState<string>('');
   const [noteContent, setNoteContent] = useState<string>('');
-  const saveCooldown = 1000;
 
   useEffect(() => {
     if (note !== null) {
