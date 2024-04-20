@@ -24,11 +24,11 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
       >
         <h3 className="note-item-title">{note.title}</h3>
         <div className="note-item-content">
-          {note.content.split('\n').map((paragraph) => (
-            <>
+          {note.content.split('\n').map((paragraph, index) => (
+            <React.Fragment key={index}>
               {paragraph}
               <br />
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>

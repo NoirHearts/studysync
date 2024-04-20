@@ -1,6 +1,7 @@
 export interface ExtensionData {
   settings: Settings;
   notes: Note[];
+  tasks: Task[];
 }
 
 export interface Settings {
@@ -17,6 +18,13 @@ export interface Note {
   content: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Task {
+  id: number;
+  completed: boolean;
+  description: string;
+  priority: number;
 }
 
 // Dictionary API
