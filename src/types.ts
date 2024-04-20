@@ -1,6 +1,7 @@
 export interface ExtensionData {
   settings: Settings;
   notes: Note[];
+  tasks: Task[];
 }
 
 export interface Settings {
@@ -18,8 +19,6 @@ export interface Note {
   createdAt: string;
   updatedAt: string;
 }
-
-// Tasks
 
 export interface Task {
   id: number;

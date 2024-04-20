@@ -13,6 +13,7 @@ export const initialData: ExtensionData = {
     ...defaultSettings,
   },
   notes: [],
+  tasks: [],
 };
 
 export const dictionaryApiUrl =
