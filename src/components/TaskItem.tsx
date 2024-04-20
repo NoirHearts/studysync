@@ -52,6 +52,7 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
         checked={taskCompleted}
       ></input>
       <input
+        autoFocus={task.description === ''}
         className={
           taskCompleted ? 'task-item-text task-done' : 'task-item-text'
         }
