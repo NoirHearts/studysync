@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   height: 25vh;
-  overflow-y: scroll;
   padding-right: 5px;
 
   * {
@@ -91,7 +90,6 @@
 
   .task-done {
     text-decoration: line-through;
-    font-style: italic;
   }
 }
 
@@ -109,4 +107,17 @@
   background: #cdc3bd;
   width: 10px;
   border-radius: 2px;
+}
+
+#create-task-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  font-size: 1em;
+  margin: 0 auto;
+}
+
+#create-task-button:hover {
+  background: #202833;
+  color: white;
 }

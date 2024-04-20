@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-// import deleteImage from '../assets/img/delete.png';
-import taskService from '../services/tasks';
+import React, { useEffect, useState } from 'react';
+import taskService from '../services/task';
 import { Task } from '../types';
 
 interface Props {
@@ -10,54 +9,58 @@ interface Props {
 }
 
 const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
-  const [taskDescription, setTaskDescription] = useState<string>(
-    task.description
-  );
+  const [taskDescription, setTaskDescription] = useState('');
+  const [taskCompleted, setTaskCompleted] = useState(false);
+
+  useEffect(() => {
+    if (task !== null) {
+      setTaskDescription(task.description);
+      setTaskCompleted(task.completed);
+    }
+  }, [task]);
+
+  const saveTask = async () => {
+    try {
+      if (taskDescription !== '') {
+        const updatedTask = await taskService.update(task.id, {
+          completed: taskCompleted,
+          description: taskDescription,
+        });
+        handleUpdate(updatedTask);
+      } else {
+        const deletedTask = await taskService.remove(task.id);
+        handleDelete(deletedTask);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div
       className={
-        taskDescription == '' ? 'task-item task-deleting' : 'task-item'
+        taskDescription === '' ? 'task-item task-deleting' : 'task-item'
       }
     >
       <input
         type="checkbox"
         className="task-item-checkbox"
         onChange={async (e) => {
-          try {
-            const updatedTask = await taskService.update(task.id, {
-              completed: e.target.checked,
-            });
-            handleUpdate(updatedTask);
-          } catch (err) {
-            console.log(err);
-          }
+          setTaskCompleted(e.target.checked);
+          await saveTask();
         }}
-        checked={task.completed}
+        checked={taskCompleted}
       ></input>
       <input
         className={
-          task.completed ? 'task-item-text task-done' : 'task-item-text'
+          taskCompleted ? 'task-item-text task-done' : 'task-item-text'
         }
         value={taskDescription}
-        onChange={async (e) => {
+        onChange={(e) => {
           setTaskDescription(e.target.value);
         }}
         onBlur={async (_) => {
-          try {
-            if (taskDescription != '') {
-              task.description = taskDescription;
-              const updatedTask = await taskService.update(task.id, {
-                description: taskDescription,
-              });
-              handleUpdate(updatedTask);
-            } else {
-              const deletedTask = await taskService.remove(task.id);
-              handleDelete(deletedTask);
-            }
-          } catch (err) {
-            console.log(err);
-          }
+          await saveTask();
         }}
       />
       <button

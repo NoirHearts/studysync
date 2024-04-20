@@ -48,14 +48,11 @@ const getById = async (id: number): Promise<Task | null> => {
  * @param newNote - The new task object containing task string and completed status.
  * @returns A promise that resolves with the created task.
  */
-const create = async (newTask: {
-  taskString: string;
-  taskCompleted: boolean;
-}): Promise<Task> => {
+const create = async (newTask: { description: string }): Promise<Task> => {
   const createdTask = {
     id: generateId(),
-    completed: newTask.taskCompleted,
-    description: newTask.taskString,
+    description: newTask.description,
+    completed: false,
     priority: 0, // unused property
   } as Task;
 
