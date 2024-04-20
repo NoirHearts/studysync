@@ -36,16 +36,20 @@ const Tasks: React.FC = () => {
 
   return (
     <div id="tasklist">
-      {tasks.map((task: Task) => {
-        return (
-          <TaskItem
-            task={task}
-            key={task.id}
-            handleUpdate={updateHandler}
-            handleDelete={deleteHandler}
-          />
-        );
-      })}
+      {tasks.length > 0 ? (
+        tasks.map((task: Task) => {
+          return (
+            <TaskItem
+              task={task}
+              key={task.id}
+              handleUpdate={updateHandler}
+              handleDelete={deleteHandler}
+            />
+          );
+        })
+      ) : (
+        <p>No tasks yet. Try creating one.</p>
+      )}
       <button
         id="create-task-button"
         onClick={() => {
