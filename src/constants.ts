@@ -13,7 +13,10 @@ export const initialData: ExtensionData = {
     ...defaultSettings,
   },
   notes: [],
+  tasks: [],
 };
+
+export const saveCooldown = 300;
 
 export const dictionaryApiUrl =
   'https://api.dictionaryapi.dev/api/v2/entries/en/';

@@ -1,0 +1,123 @@
+#tasklist {
+  display: flex;
+  flex-direction: column;
+  height: 25vh;
+  padding-right: 5px;
+
+  * {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .task-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: stretch;
+    border-radius: 5px;
+    margin: 2px 0;
+    padding: 2px;
+
+    .task-item-rbutton {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      margin-left: 3px;
+      font-size: 1em;
+    }
+    .task-item-checkbox {
+      width: 15px;
+      height: 15px;
+      margin: 2.5px;
+    }
+    .hidden-checkbox {
+      visibility: hidden;
+    }
+    .task-item-rbutton:hover {
+      background: #202833;
+      color: white;
+    }
+
+    .task-item-delete {
+      background: #e17d7d;
+      color: white;
+    }
+    .task-item-delete:hover {
+      background: darkred;
+      color: white;
+    }
+    .task-item-rbutton:active {
+      transition: none;
+      background: black;
+      color: white;
+    }
+  }
+
+  .task-deleting {
+    background: #e17d7d;
+    .task-item-delete {
+      background: darkred;
+      color: white;
+    }
+  }
+
+  #new-task {
+    background: #cdc3bd;
+    transition: 0s;
+    .task-item-rbutton {
+      background: rgba(0, 0, 0, 0);
+    }
+    .task-item-rbutton:hover {
+      background: #202833;
+      color: white;
+    }
+    .task-item-rbutton:active {
+      transition: none;
+      background: #f1ece9;
+      color: black;
+    }
+  }
+
+  /* Make text boxes look discreet */
+  input {
+    background: rgba(0, 0, 0, 0);
+    outline: none;
+    overflow: visible;
+    overflow-wrap: normal;
+  }
+
+  .task-done {
+    text-decoration: line-through;
+  }
+}
+
+#tasklist::-webkit-scrollbar {
+  width: 5px;
+}
+
+#tasklist::-webkit-scrollbar-thumb {
+  background: #202833;
+  width: 10px;
+  border-radius: 2px;
+}
+
+#tasklist::-webkit-scrollbar-track {
+  background: #cdc3bd;
+  width: 10px;
+  border-radius: 2px;
+}
+
+#create-task-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  font-size: 1em;
+  margin: 0 auto;
+}
+
+#create-task-button:hover {
+  background: #202833;
+  color: white;
+}
