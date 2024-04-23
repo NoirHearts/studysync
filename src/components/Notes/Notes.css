@@ -148,7 +148,7 @@ button {
 }
 
 .note-editor-container * {
-  /* transition: none !important; */
+  transition: none !important;
 }
 .note-editor-header {
   display: flex;
