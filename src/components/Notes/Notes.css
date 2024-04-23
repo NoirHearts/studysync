@@ -68,6 +68,20 @@
   border-radius: 5px;
 }
 
+.note-item-delete:hover {
+  background: url(../../assets/img/trash-hover.png);
+  background-color: #202833;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: center;
+  border: none;
+  margin-left: 10px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
 .note-item-open {
   background: url(../../assets/img/arrow-right.png);
   background-repeat: no-repeat;
@@ -80,6 +94,19 @@
   min-width: 20px;
   /* height: 2%; */
   /* padding: 10px; */
+}
+
+.note-item-open:hover {
+  background: url(../../assets/img/arrow-right-hover.png);
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  /* background-color: #ccd4df; */
+  background-position: center;
+  border: none;
+  margin-left: 5px;
+  height: 30px;
+  min-width: 20px;
+  transition: all 0.3s ease;
 }
 
 .note-item-title {
@@ -99,7 +126,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 1.4em;
+  height: 1.3em;
 }
 
 button {
@@ -121,19 +148,21 @@ button {
 }
 
 .note-editor-container * {
-  transition: none !important;
+  /* transition: none !important; */
 }
 .note-editor-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.2rem;
+  /* border: solid 2px black; */
+  margin-top: -10px;
 }
 
 #note-editor-title-input {
   padding: 5px;
-  font-size: 1.6rem;
-  height: 2rem;
+  font-size: 1.2rem;
+  height: 1.4rem;
   max-width: 100%;
   flex-grow: 1;
 }
@@ -155,6 +184,17 @@ button {
   height: 30px;
 }
 
+#create-note-button:hover {
+  background: url(../../assets/img/add-hover-1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  /* border: 5px gray solid;
+  width: 30px;
+  height: 30px; */
+  transition: all 0.3s ease;
+}
+
 #note-editor-delete {
   background: url(../../assets/img/trash.png);
   background-repeat: no-repeat;
@@ -169,6 +209,16 @@ button {
   margin-bottom: 10px;
 }
 
+#note-editor-delete:hover {
+  background: url(../../assets/img/trash-hover.png);
+  background-repeat: no-repeat;
+  background-size: 72%;
+  background-position: center;
+  background-color: #202833;
+  border: none;
+  transition: all 0.3s ease;
+}
+
 #note-editor-back {
   background: url(../../assets/img/arrow-left.png);
   background-repeat: no-repeat;
@@ -181,6 +231,15 @@ button {
   width: 28px;
   height: 28px;
   margin-bottom: 10px;
+}
+
+#note-editor-back:hover {
+  background: url(../../assets/img/arrow-left-hover.png);
+  background-repeat: no-repeat;
+  background-size: 72%;
+  background-position: center;
+  background-color: #202833;
+  transition: all 0.3s ease;
 }
 
 button {
