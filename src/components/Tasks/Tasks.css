@@ -1,8 +1,15 @@
+.task-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #tasklist {
   display: flex;
   flex-direction: column;
-  height: 25vh;
+  /* min-height: 10vh; */
   padding-right: 5px;
+  width: 100%;
 
   * {
     border: none;
@@ -14,23 +21,26 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: stretch;
+    /* align-items: stretch; */
+    align-self: stretch;
     align-content: stretch;
     border-radius: 5px;
     margin: 2px 0;
-    padding: 2px;
+    padding: 0 6px;
+    height: 30px;
+    align-items: center;
+    /* border-bottom: 2px solid #202833; */
 
     .task-item-rbutton {
-      width: 20px;
+      min-width: 20px;
       height: 20px;
       border-radius: 3px;
       margin-left: 3px;
       font-size: 1em;
     }
     .task-item-checkbox {
-      width: 15px;
-      height: 15px;
-      margin: 2.5px;
+      width: 18px;
+      height: 18px;
     }
     .hidden-checkbox {
       visibility: hidden;
@@ -84,8 +94,15 @@
   input {
     background: rgba(0, 0, 0, 0);
     outline: none;
-    overflow: visible;
-    overflow-wrap: normal;
+    overflow: hidden;
+    white-space: nowrap;
+    /* border: 2px solid; */
+    /* text-overflow: ellipsis; */
+    min-height: 1.5em;
+    width: 100%;
+    flex-grow: 1;
+    padding: 0 10px;
+    color: #202833;
   }
 
   .task-done {
@@ -110,14 +127,24 @@
 }
 
 #create-task-button {
-  width: 20px;
-  height: 20px;
-  border-radius: 3px;
-  font-size: 1em;
-  margin: 0 auto;
+  background: url(../../assets/img/add.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  border: none;
+  width: 30px;
+  height: 30px;
 }
 
 #create-task-button:hover {
-  background: #202833;
-  color: white;
+  background: url(../../assets/img/add-hover-1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  transition: all 0.3s ease;
+}
+
+p {
+  /* border: 2px solid; */
+  text-align: center !important;
 }

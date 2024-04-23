@@ -35,6 +35,7 @@ const Tasks: React.FC = () => {
   };
 
   return (
+    <div className="task-content-container">
     <div id="tasklist">
       {tasks.length > 0 ? (
         tasks.map((task: Task) => {
@@ -50,13 +51,13 @@ const Tasks: React.FC = () => {
       ) : (
         <p>No tasks yet. Try creating one.</p>
       )}
+      </div>
       <button
         id="create-task-button"
         onClick={() => {
           createTask();
         }}
       >
-        +
       </button>
     </div>
   );
