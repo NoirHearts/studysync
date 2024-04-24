@@ -143,8 +143,3 @@
   background-position: center;
   transition: all 0.3s ease;
 }
-
-p {
-  /* border: 2px solid; */
-  text-align: center !important;
-}

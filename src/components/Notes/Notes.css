@@ -270,3 +270,7 @@ textarea {
   padding: 5px;
   border: none;
 }
+
+.notes-no-message {
+  text-align: center !important;
+}
