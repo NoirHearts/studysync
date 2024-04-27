@@ -259,7 +259,7 @@ button {
   margin-bottom: -5px;
 }
 
-textarea {
+#note-editor-content-input {
   margin-top: 5px;
   box-sizing: border-box;
   white-space: normal;

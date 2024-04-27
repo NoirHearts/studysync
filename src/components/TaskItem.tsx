@@ -58,7 +58,7 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
         }}
         checked={taskCompleted}
       ></input>
-      <input
+      <textarea rows={1} id="task-input"
         autoFocus={task.description === ''}
         className={
           taskCompleted ? 'task-item-text task-done' : 'task-item-text'
@@ -85,6 +85,7 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
       >
         ×
       </button>
+
     </div>
   );
 };
