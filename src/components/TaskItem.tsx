@@ -60,7 +60,7 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
       if (event.target === descriptionField.current) {
         if (event.key === 'Enter') {
           event.preventDefault();
-          handleCreateTask();
+          // handleCreateTask(task, task);
         }
       }
     };
