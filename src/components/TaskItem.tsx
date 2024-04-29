@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import taskService from '../services/task';
 import { Task } from '../types';
 import { saveCooldown } from '../constants';
+import { handleCreateTask } from './taskHandlers';
+
 
 interface Props {
   task: Task;
@@ -51,7 +53,25 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
       el.style.height = 'auto';
       el.style.height = el.scrollHeight + 'px';
     }
-  };
+  }
+  
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.target === descriptionField.current) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          handleCreateTask();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+  ;
 
   return (
     <div

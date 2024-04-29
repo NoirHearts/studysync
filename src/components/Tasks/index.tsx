@@ -3,6 +3,7 @@ import './Tasks.css';
 import taskService from '../../services/task';
 import { Task } from '../../types';
 import TaskItem from '../TaskItem';
+import { handleCreateTask } from '../taskHandlers';
 
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -19,11 +20,8 @@ const Tasks: React.FC = () => {
     retrieveTasks();
   }, []);
 
-  const createTask = async () => {
-    const createdTask = await taskService.create({
-      description: '',
-    });
-    setTasks([...tasks, createdTask]);
+  const createNewTask = async () => {
+    await handleCreateTask(tasks, setTasks);
   };
 
   const updateHandler = async (updatedTask: Task) => {
@@ -54,9 +52,10 @@ const Tasks: React.FC = () => {
       </div>
       <button
         id="create-task-button"
-        onClick={() => {
-          createTask();
-        }}
+        // onClick={() => {
+        //   createTask();
+        // }}
+        onClick={createNewTask}
       ></button>
     </div>
   );
