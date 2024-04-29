@@ -22,12 +22,12 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  /* border: 1px solid black; */
 }
 
 .note-list-container * {
   text-align: left;
   margin: 0;
-
   min-width: 200px;
   max-width: 100vw;
   text-overflow: ellipsis;
@@ -259,7 +259,7 @@ button {
   margin-bottom: -5px;
 }
 
-textarea {
+#note-editor-content-input {
   margin-top: 5px;
   box-sizing: border-box;
   white-space: normal;
@@ -269,4 +269,8 @@ textarea {
   background-color: #f1ece9;
   padding: 5px;
   border: none;
+}
+
+.notes-no-message {
+  text-align: center !important;
 }

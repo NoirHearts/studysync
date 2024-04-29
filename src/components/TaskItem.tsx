@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import taskService from '../services/task';
 import { Task } from '../types';
 import { saveCooldown } from '../constants';
+import { handleCreateTask } from './taskHandlers';
+
 
 interface Props {
   task: Task;
@@ -12,13 +14,14 @@ interface Props {
 const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
   const [taskDescription, setTaskDescription] = useState('');
   const [taskCompleted, setTaskCompleted] = useState(false);
-  const descriptionField = useRef(null);
+  const descriptionField = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (task !== null) {
       setTaskDescription(task.description);
       setTaskCompleted(task.completed);
     }
+    resizeHeight();
   }, [task]);
 
   useEffect(() => {
@@ -44,11 +47,35 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
     }
   };
 
+  const resizeHeight = () => {
+    const el = descriptionField.current;
+    if (el !== null && el instanceof HTMLTextAreaElement) {
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+    }
+  }
+  
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.target === descriptionField.current) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          // handleCreateTask(task, task);
+        }
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+  ;
+
   return (
     <div
-      className={
-        taskDescription === '' ? 'task-item task-deleting' : 'task-item'
-      }
+      className={`task-item ${taskDescription === '' ? 'task-deleting' : ''}`}
     >
       <input
         type="checkbox"
@@ -58,15 +85,15 @@ const TaskItem: React.FC<Props> = ({ task, handleUpdate, handleDelete }) => {
         }}
         checked={taskCompleted}
       ></input>
-      <input
+      <textarea
+        rows={1}
         autoFocus={task.description === ''}
-        className={
-          taskCompleted ? 'task-item-text task-done' : 'task-item-text'
-        }
+        className={`task-item-text ${taskCompleted ? 'task-done' : ''}`}
         ref={descriptionField}
         value={taskDescription}
         onChange={(e) => {
           setTaskDescription(e.target.value);
+          resizeHeight();
         }}
         onBlur={async (_) => {
           await saveTask();

@@ -3,6 +3,7 @@ import './Tasks.css';
 import taskService from '../../services/task';
 import { Task } from '../../types';
 import TaskItem from '../TaskItem';
+import { handleCreateTask } from '../taskHandlers';
 
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -19,11 +20,8 @@ const Tasks: React.FC = () => {
     retrieveTasks();
   }, []);
 
-  const createTask = async () => {
-    const createdTask = await taskService.create({
-      description: '',
-    });
-    setTasks([...tasks, createdTask]);
+  const createNewTask = async () => {
+    await handleCreateTask(tasks, setTasks);
   };
 
   const updateHandler = async (updatedTask: Task) => {
@@ -35,29 +33,30 @@ const Tasks: React.FC = () => {
   };
 
   return (
-    <div id="tasklist">
-      {tasks.length > 0 ? (
-        tasks.map((task: Task) => {
-          return (
-            <TaskItem
-              task={task}
-              key={task.id}
-              handleUpdate={updateHandler}
-              handleDelete={deleteHandler}
-            />
-          );
-        })
-      ) : (
-        <p>No tasks yet. Try creating one.</p>
-      )}
+    <div className="task-content-container">
+      <div id="tasklist">
+        {tasks.length > 0 ? (
+          tasks.map((task: Task) => {
+            return (
+              <TaskItem
+                task={task}
+                key={task.id}
+                handleUpdate={updateHandler}
+                handleDelete={deleteHandler}
+              />
+            );
+          })
+        ) : (
+          <p>No tasks yet. Try creating one.</p>
+        )}
+      </div>
       <button
         id="create-task-button"
-        onClick={() => {
-          createTask();
-        }}
-      >
-        +
-      </button>
+        // onClick={() => {
+        //   createTask();
+        // }}
+        onClick={createNewTask}
+      ></button>
     </div>
   );
 };

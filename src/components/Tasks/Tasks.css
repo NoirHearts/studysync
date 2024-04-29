@@ -1,8 +1,16 @@
+.task-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #tasklist {
   display: flex;
   flex-direction: column;
-  height: 25vh;
+  /* min-height: 10vh; */
   padding-right: 5px;
+  width: 100%;
+  /* border: 4px solid pink; */
 
   * {
     border: none;
@@ -14,23 +22,30 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: stretch;
+    /* align-items: stretch; */
+    align-self: stretch;
     align-content: stretch;
     border-radius: 5px;
     margin: 2px 0;
-    padding: 2px;
+    padding: 0 6px;
+    /* min-height: 1.5rem; */
+    /* height: auto; */
+    /* resize: vertical; */
+    align-items: center;
+    /* border: 2px solid; */
+    min-width: 98%;
 
     .task-item-rbutton {
-      width: 20px;
+      min-width: 20px;
       height: 20px;
       border-radius: 3px;
-      margin-left: 3px;
+      /* margin-left: 3px; */
       font-size: 1em;
     }
     .task-item-checkbox {
-      width: 15px;
-      height: 15px;
-      margin: 2.5px;
+      width: 18px;
+      height: 18px;
+      margin-left: -4px;
     }
     .hidden-checkbox {
       visibility: hidden;
@@ -81,11 +96,18 @@
   }
 
   /* Make text boxes look discreet */
-  input {
+  .task-item textarea {
     background: rgba(0, 0, 0, 0);
     outline: none;
-    overflow: visible;
-    overflow-wrap: normal;
+    /* border: 2px solid pink; */
+    /* height: 1.2rem; */
+    /* height: fit-content; */
+    resize: none;
+    display: block;
+    width: 100%;
+    padding: 0px 10px;
+    font-family: 'Nunito', 'Open Sans', sans-serif;
+    color: #202833;
   }
 
   .task-done {
@@ -110,14 +132,19 @@
 }
 
 #create-task-button {
-  width: 20px;
-  height: 20px;
-  border-radius: 3px;
-  font-size: 1em;
-  margin: 0 auto;
+  background: url(../../assets/img/add.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  border: none;
+  width: 30px;
+  height: 30px;
 }
 
 #create-task-button:hover {
-  background: #202833;
-  color: white;
+  background: url(../../assets/img/add-hover-1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  transition: all 0.3s ease;
 }
