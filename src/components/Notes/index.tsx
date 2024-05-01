@@ -81,7 +81,9 @@ const Notes: React.FC = () => {
                   ></NoteItem>
                 ))
               ) : (
-                <p className="notes-no-message">No notes yet. Try creating one.</p>
+                <p className="notes-no-message">
+                  No notes yet. Try creating one.
+                </p>
               )}
             </div>
             <button
