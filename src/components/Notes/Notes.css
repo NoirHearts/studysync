@@ -263,7 +263,6 @@ button {
   margin-top: 5px;
   box-sizing: border-box;
   white-space: normal;
-  overflow: scroll;
   overflow-wrap: anywhere;
   min-height: 130px;
   background-color: #f1ece9;
