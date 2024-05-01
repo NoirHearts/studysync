@@ -1,6 +1,6 @@
 {
   "name": "studysync",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "StudySync is a student productivity browser extension that helps students maximize their productivity on their browsers. The extension has four main features, namely a Dictionary, a Pomodoro Timer, a To-Do List, and a Note-taking feature. This extension has a sidebar interface/panel for ease of use.",
   "license": "MIT",
   "repository": {
