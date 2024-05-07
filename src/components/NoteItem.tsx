@@ -4,11 +4,23 @@ import noteService from '../services/note';
 
 interface Props {
   note: Note;
+  searchString: string;
   handleOpen: () => void;
   handleDelete: (note: Note) => void;
 }
 
-const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
+const NoteItem: React.FC<Props> = ({
+  note,
+  searchString,
+  handleOpen,
+  handleDelete,
+}) => {
+  const highlightMatch = (text: string) => {
+    if (searchString === '') return text;
+    const regex = new RegExp(`(${searchString})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+  };
+
   return (
     <div key={note.id} className="note-item">
       <div
@@ -22,11 +34,20 @@ const NoteItem: React.FC<Props> = ({ note, handleOpen, handleDelete }) => {
           }
         }}
       >
-        <h3 className="note-item-title">{note.title}</h3>
+        <h3
+          className="note-item-title"
+          dangerouslySetInnerHTML={{ __html: highlightMatch(note.title) }}
+        />
         <div className="note-item-content">
           {note.content.split('\n').map((paragraph, index) => (
             <React.Fragment key={index}>
-              {paragraph}
+              {
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: highlightMatch(paragraph),
+                  }}
+                />
+              }
               <br />
             </React.Fragment>
           ))}
