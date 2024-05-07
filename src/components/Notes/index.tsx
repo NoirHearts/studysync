@@ -9,6 +9,7 @@ const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [noteEditorOpen, setNoteEditorOpen] = useState<boolean>(false);
   const [currentNote, setCurrentNote] = useState<Note | null>(null);
+  const [searchString, setSearchString] = useState<string>('');
 
   useEffect(() => {
     const retrieveNotes = async () => {
@@ -59,18 +60,24 @@ const Notes: React.FC = () => {
         />
       ) : (
         <div>
-          {/* <div className="search-note-container">
+          <div className="search-note-container">
             <input
               className="search-note-input"
               type="text"
               placeholder="Search for a note..."
+              onChange={(event) => setSearchString(event.target.value)}
             ></input>
             <button className="search-note-button">🔎</button>
-          </div> */}
+          </div>
           <div className="note-content-container">
             <div className="note-list-container">
               {notes.length > 0 ? (
                 notes
+                  .filter(
+                    (note) =>
+                      note.title.includes(searchString) ||
+                      note.content.includes(searchString)
+                  )
                   .sort(
                     (a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt)
                   )

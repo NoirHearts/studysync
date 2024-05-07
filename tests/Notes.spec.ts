@@ -73,6 +73,32 @@ test.describe('Notes', () => {
     ).toContainText('RE: Lorem Ipsum Dolor sit Amet');
   });
 
+  test('notes can be filtered by search string', async ({ page }) => {
+    await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet');
+    await generate_note(page, 'Integer et', 'Integer et pellentesque dui');
+
+    await expect(page.locator('.note-item')).toHaveCount(2);
+
+    await page.locator('.search-note-input').fill('Ipsum');
+
+    await expect(page.locator('.note-item')).toHaveCount(1);
+
+    await expect(
+      page.locator('.note-item').locator('.note-item-title')
+    ).toContainText('Lorem Ipsum');
+
+    await page.locator('.search-note-input').fill('Integer');
+
+    await expect(page.locator('.note-item')).toHaveCount(1);
+
+    await expect(
+      page.locator('.note-item').locator('.note-item-title')
+    ).toContainText('Integer et');
+
+    await page.locator('.search-note-input').fill('Nonexisting string');
+    await expect(page.locator('.note-item')).toHaveCount(0);
+  });
+
   test.describe('when existing', async () => {
     test.beforeEach(async ({ page }) => {
       await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet');
