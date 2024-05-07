@@ -4,6 +4,7 @@ import noteService from '../../services/note';
 import { Note } from '../../types';
 import NoteItem from '../NoteItem';
 import NoteEditor from '../NoteEditor';
+import searchImg from '../../assets/img/search.png';
 
 const Notes: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -67,7 +68,9 @@ const Notes: React.FC = () => {
               placeholder="Search for a note..."
               onChange={(event) => setSearchString(event.target.value)}
             ></input>
-            <button className="search-note-button">🔎</button>
+            <button className="search-note-button">
+            <img className="icons" src={searchImg} />
+            </button>
           </div>
           <div className="note-content-container">
             <div className="note-list-container">

@@ -5,10 +5,6 @@
   font-family: 'Nunito', 'Open Sans', sans-serif;
 }
 
-.search-note-container {
-  width: 100%;
-}
-
 .note-content-container {
   display: flex;
   flex-direction: column;
@@ -135,16 +131,32 @@ button {
 
 .search-note-container {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* padding-bottom: 2px; */
+  margin-bottom: 12px;
+  background-color: #202833;
 }
 
 .search-note-input {
-  height: 1.2rem;
-  padding: 0.1rem;
+  padding: 10px 10px;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background-color: #202833;
+  color: #ccd4df;
 }
 
 .search-note-button {
-  min-height: 1.2rem;
-  padding: 0.1rem;
+  /* padding-right: 10px;
+  padding-top: -10px; */
+  width: 50px;
+  background-color: #202833;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 2px !important;
 }
 
 .note-editor-container * {
