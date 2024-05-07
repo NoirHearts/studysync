@@ -85,6 +85,7 @@ const Notes: React.FC = () => {
                     <NoteItem
                       key={note.id}
                       note={note}
+                      searchString={searchString}
                       handleOpen={() => {
                         openNoteEditor(note);
                       }}

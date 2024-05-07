@@ -32,6 +32,7 @@ export const NoteItemTest: React.FC<Props> = ({
   return (
     <NoteItem
       note={testNote}
+      searchString=""
       handleOpen={handleOpen}
       handleDelete={handleDelete}
     />
