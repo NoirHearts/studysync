@@ -25,22 +25,22 @@ test.describe('Dictionary', () => {
     await expect(component.locator('.word')).toContainText('dictionary');
   });
 
+  test('search succeeds for entries with n > 1 words', async () => {
+    await component
+      .getByPlaceholder('Type a word to search...')
+      .fill('state of emergency');
+    await component.locator('#search-button').click();
+    await expect(component.locator('.word')).toContainText(
+      'state of emergency'
+    );
+  });
+
   test.describe('search fails with proper error message', () => {
     test('if word is invalid', async () => {
       await component.getByPlaceholder('Type a word to search...').fill('morb');
       await component.locator('#search-button').click();
       await expect(component.locator('.error-msg')).toContainText(
         'Word does not have a dictionary entry'
-      );
-    });
-
-    test('if searching more than one word at once', async () => {
-      await component
-        .getByPlaceholder('Type a word to search...')
-        .fill('hello world');
-      await component.locator('#search-button').click();
-      await expect(component.locator('.error-msg')).toContainText(
-        'Please only search one word at a time'
       );
     });
 

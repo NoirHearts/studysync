@@ -9,10 +9,6 @@ import { DictionaryEntry } from '../types';
  *
  */
 const search = async (query: string): Promise<DictionaryEntry> => {
-  if (query.includes(' ')) {
-    throw new Error(`Please only search one word at a time.`);
-  }
-
   const response = await fetch(dictionaryApiUrl + query);
   if (!response.ok) {
     if (response.status == 404) {
