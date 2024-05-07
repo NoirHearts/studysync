@@ -45,6 +45,34 @@ test.describe('Notes', () => {
     );
   });
 
+  test('notes are sorted by editing time', async ({ page }) => {
+    await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet');
+    await generate_note(page, 'Integer et', 'Integer et pellentesque dui');
+
+    await expect(
+      page.locator('.note-item').first().locator('.note-item-title')
+    ).toContainText('Integer et');
+    await expect(
+      page.locator('.note-item').first().locator('.note-item-content')
+    ).toContainText('Integer et pellentesque dui');
+
+    await page
+      .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+      .click();
+    await page.locator('#note-editor-title-input').fill('RE: Lorem Ipsum');
+    await page
+      .locator('#note-editor-content-input')
+      .fill('RE: Lorem Ipsum Dolor sit Amet');
+    await page.locator('#note-editor-back').click();
+
+    await expect(
+      page.locator('.note-item').first().locator('.note-item-title')
+    ).toContainText('RE: Lorem Ipsum');
+    await expect(
+      page.locator('.note-item').first().locator('.note-item-content')
+    ).toContainText('RE: Lorem Ipsum Dolor sit Amet');
+  });
+
   test.describe('when existing', async () => {
     test.beforeEach(async ({ page }) => {
       await generate_note(page, 'Lorem Ipsum', 'Lorem Ipsum Dolor sit Amet');

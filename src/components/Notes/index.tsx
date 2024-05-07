@@ -70,16 +70,20 @@ const Notes: React.FC = () => {
           <div className="note-content-container">
             <div className="note-list-container">
               {notes.length > 0 ? (
-                notes.map((note) => (
-                  <NoteItem
-                    key={note.id}
-                    note={note}
-                    handleOpen={() => {
-                      openNoteEditor(note);
-                    }}
-                    handleDelete={deleteHandler}
-                  ></NoteItem>
-                ))
+                notes
+                  .sort(
+                    (a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt)
+                  )
+                  .map((note) => (
+                    <NoteItem
+                      key={note.id}
+                      note={note}
+                      handleOpen={() => {
+                        openNoteEditor(note);
+                      }}
+                      handleDelete={deleteHandler}
+                    ></NoteItem>
+                  ))
               ) : (
                 <p className="notes-no-message">
                   No notes yet. Try creating one.
