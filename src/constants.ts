@@ -5,6 +5,8 @@ export const defaultSettings: Settings = {
     workTime: 25,
     breakTime: 5,
     volume: 100,
+    autoPlay: false,
+    longBreak: false
   },
 };
 

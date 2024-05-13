@@ -1,4 +1,5 @@
 import React from 'react';
+// import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import dataService from '../services/data';
 import { defaultSettings } from '../constants';
@@ -53,12 +54,16 @@ const Pomodoro: React.FC = () => {
       }
       if (secondsLeftRef.current === 0) {
         playSound(ringSound);
-        setIsPaused(true);
-        isPausedRef.current = true;
+        if (!settings.autoPlay){
+          console.log("pumasok here")
+          setIsPaused(true);
+          isPausedRef.current = true;
+        }
+        
         return switchMode();
       }
       tick();
-    }, 1000);
+    }, 150);
 
     return () => clearInterval(interval);
   }, []);
@@ -89,12 +94,19 @@ const Pomodoro: React.FC = () => {
     setMode(nextMode);
     modeRef.current = nextMode;
 
+    console.log(`Next is ${nextSeconds}`)
     setSecondsLeft(nextSeconds);
     secondsLeftRef.current = nextSeconds;
 
     //change color of timer circle to default
     const timerDiv = document.querySelector('.timer') as HTMLDivElement;
-    timerDiv.style.border = '4px solid #f1ece9';
+    if (!settings.autoPlay){
+      timerDiv.style.border = '4px solid #f1ece9';
+    }
+    else{
+      timerDiv.style.border = modeRef.current === 'work' ? '4px solid #e63946' : '4px solid #2a9d8f';
+    }
+    
   }
 
   function playSound(sound: HTMLAudioElement) {
@@ -108,13 +120,22 @@ const Pomodoro: React.FC = () => {
   if (Number(minutes) < 10) minutes = '0' + minutes;
   if (Number(seconds) < 10) seconds = '0' + seconds;
 
+  function gotoSetting(){
+
+  }
+
   return (
     <div className="timer-container">
       <div className="timer">
         <div className="timer-header">
           {minutes}:{seconds}
-        </div>
+        </div>      
       </div>
+
+      <div className="pomodoro-settings">
+        <button onClick={() => {chrome.runtime.openOptionsPage()}} id="settings-button" className="pomodoro-button"></button>
+      </div>
+
       <div className="buttons">
         {isPaused ? (
           <button
@@ -149,8 +170,13 @@ const Pomodoro: React.FC = () => {
           onClick={() => {
             playSound(clickSound);
             if (!isInitialized) return;
-            setIsPaused(true);
-            isPausedRef.current = true;
+            
+            if (!settings.autoPlay){
+              setIsPaused(true);
+              isPausedRef.current = true;
+            }
+            // setIsPaused(true);
+            // isPausedRef.current = true;
             switchMode();
             console.log(`Timer reset to ${secondsLeftRef.current}`);
           }}

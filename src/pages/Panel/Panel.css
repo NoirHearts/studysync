@@ -13,6 +13,26 @@
   padding-bottom: 30px;
 }
 
+.pomodoro-settings {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+
+  #settings-button {
+    background: url(../../assets/img/settings.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+  }
+
+  .pomodoro-button {
+    border: none;
+    width: 12.5px;
+    height: 12.5px;
+  }
+}
+
 .timer-container {
   background-color: #202833;
   width: 100%;
