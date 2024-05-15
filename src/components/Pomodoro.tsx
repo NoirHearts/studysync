@@ -68,7 +68,7 @@ const Pomodoro: React.FC = () => {
         return switchMode();
       }
       tick();
-    }, 150);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
