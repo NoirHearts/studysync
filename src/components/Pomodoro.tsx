@@ -125,10 +125,6 @@ const Pomodoro: React.FC = () => {
   if (Number(minutes) < 10) minutes = '0' + minutes;
   if (Number(seconds) < 10) seconds = '0' + seconds;
 
-  function gotoSetting(){
-
-  }
-
   return (
     <div className="timer-container">
       <div className="timer">
