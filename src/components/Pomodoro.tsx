@@ -19,9 +19,14 @@ const Pomodoro: React.FC = () => {
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef(mode);
   const secondsLeftRef = useRef(secondsLeft);
+  const settingsRef = useRef(settings);
 
   const clickSound = new Audio(click);
   const ringSound = new Audio(ring);
+
+  useEffect(() => {
+    settingsRef.current = settings;
+  }, [settings]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +59,7 @@ const Pomodoro: React.FC = () => {
       }
       if (secondsLeftRef.current === 0) {
         playSound(ringSound);
-        if (!settings.autoPlay){
+        if (!settingsRef.current.autoPlay){
           console.log("pumasok here")
           setIsPaused(true);
           isPausedRef.current = true;
@@ -89,7 +94,7 @@ const Pomodoro: React.FC = () => {
   function switchMode() {
     const nextMode: string = modeRef.current === 'work' ? 'break' : 'work';
     const nextSeconds: number =
-      (nextMode === 'work' ? settings.workTime : settings.breakTime) * 60;
+      (nextMode === 'work' ? settingsRef.current.workTime : settingsRef.current.breakTime) * 60;
 
     setMode(nextMode);
     modeRef.current = nextMode;
@@ -100,7 +105,7 @@ const Pomodoro: React.FC = () => {
 
     //change color of timer circle to default
     const timerDiv = document.querySelector('.timer') as HTMLDivElement;
-    if (!settings.autoPlay){
+    if (!settingsRef.current.autoPlay){
       timerDiv.style.border = '4px solid #f1ece9';
     }
     else{
@@ -171,7 +176,7 @@ const Pomodoro: React.FC = () => {
             playSound(clickSound);
             if (!isInitialized) return;
             
-            if (!settings.autoPlay){
+            if (!settingsRef.current.autoPlay){
               setIsPaused(true);
               isPausedRef.current = true;
             }
