@@ -24,8 +24,8 @@ test.describe('Pomodoro', () => {
       });
 
       test('will play when time runs out', async () => {
-        test.setTimeout(65000);
-        await wait(62000);
+        test.setTimeout(10000);
+        await wait(8000);
         await autoplayComponent.locator('#pause-button').click();
         await expect(autoplayComponent).toContainText('04:59');
       });

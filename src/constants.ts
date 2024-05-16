@@ -12,7 +12,7 @@ export const defaultSettings: Settings = {
 
 export const autoplayEnabledSettings: Settings = {
   pomodoro: {
-    workTime: 1,
+    workTime: 0.1,
     breakTime: 5,
     volume: 100,
     autoPlay: true,
