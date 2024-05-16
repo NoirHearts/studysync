@@ -12,6 +12,10 @@ const Notes: React.FC = () => {
   const [currentNote, setCurrentNote] = useState<Note | null>(null);
   const [searchString, setSearchString] = useState<string>('');
 
+  const searchInput: HTMLInputElement | null =
+    document.body.querySelector('.search-note-input');
+  const searchInputValue = searchInput ? searchInput.value : '';
+
   useEffect(() => {
     const retrieveNotes = async () => {
       try {
@@ -23,6 +27,10 @@ const Notes: React.FC = () => {
     };
     retrieveNotes();
   }, []);
+
+  useEffect(() => {
+    setSearchString(searchInputValue);
+  }, [searchInputValue]);
 
   const createHandler = (createdNote: Note) => {
     setCurrentNote(createdNote);
