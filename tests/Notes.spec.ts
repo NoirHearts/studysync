@@ -146,9 +146,27 @@ test.describe('Notes', () => {
 
       await page.locator('#note-editor-delete').click();
 
+      // if this fails, the prompt did not show
+      await page.locator('#confirm-delete-button').click();
+
       await expect(
         page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
       ).toHaveCount(0);
+    });
+
+    test('can abort note deletion from editor', async ({ page }) => {
+      await page
+        .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+        .click();
+
+      await page.locator('#note-editor-delete').click();
+
+      // if this fails, the prompt did not show
+      await page.locator('#abort-delete-button').click();
+      
+      await expect(page.locator('#note-editor-content-input')).toHaveValue(
+        'Lorem Ipsum Dolor sit Amet'
+      );
     });
 
     test('can be deleted from main pane', async ({ page }) => {
@@ -157,10 +175,28 @@ test.describe('Notes', () => {
         .locator('.note-item-delete')
         .click();
 
+      // if this fails, the prompt did not show
+      await page.locator('#confirm-delete-button').click();
+
       await expect(
         page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
       ).toHaveCount(0);
     });
+
+    test('can abort deletion from main pane', async ({ page }) => {
+      await page
+        .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+        .locator('.note-item-delete')
+        .click();
+
+      // if this fails, the prompt did not show
+      await page.locator('#abort-delete-button').click();
+
+      await expect(
+        page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+      ).toHaveCount(1);
+    });
+    
   });
 
   test.describe('when closing the notes feature', async () => {
