@@ -174,8 +174,6 @@ const Pomodoro: React.FC = () => {
               setIsPaused(true);
               isPausedRef.current = true;
             }
-            // setIsPaused(true);
-            // isPausedRef.current = true;
             switchMode();
             console.log(`Timer reset to ${secondsLeftRef.current}`);
           }}
