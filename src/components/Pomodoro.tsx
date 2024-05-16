@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import dataService from '../services/data';
 import { defaultSettings } from '../constants';
