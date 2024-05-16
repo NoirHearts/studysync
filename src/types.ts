@@ -9,6 +9,8 @@ export interface Settings {
     workTime: number;
     breakTime: number;
     volume: number;
+    autoPlay: boolean;
+    longBreak: boolean;
   };
 }
 
