@@ -195,26 +195,24 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           {settings.pomodoro.volume}
         </output>
       </div>
-      
+
       <div>
         <input
           type="checkbox"
           id="autoplay"
-          checked = {settings.pomodoro.autoPlay}
-          onClick = {() => {
-              setSettings({
-                ...settings,
-                pomodoro: {
-                  ...settings.pomodoro,
-                  autoPlay: !settings.pomodoro.autoPlay,
-                },
-              })
-            }
-          }
+          checked={settings.pomodoro.autoPlay}
+          onClick={() => {
+            setSettings({
+              ...settings,
+              pomodoro: {
+                ...settings.pomodoro,
+                autoPlay: !settings.pomodoro.autoPlay,
+              },
+            });
+          }}
         />
         <label htmlFor="autoplay">Enable Autoplay</label>
       </div>
-      
 
       <div className="error-message">{errorMessage}</div>
       <div className="status-message">{status}</div>

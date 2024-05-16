@@ -58,11 +58,11 @@ const Pomodoro: React.FC = () => {
       }
       if (secondsLeftRef.current === 0) {
         playSound(ringSound);
-        if (!settingsRef.current.autoPlay){
+        if (!settingsRef.current.autoPlay) {
           setIsPaused(true);
           isPausedRef.current = true;
         }
-        
+
         return switchMode();
       }
       tick();
@@ -92,24 +92,25 @@ const Pomodoro: React.FC = () => {
   function switchMode() {
     const nextMode: string = modeRef.current === 'work' ? 'break' : 'work';
     const nextSeconds: number =
-      (nextMode === 'work' ? settingsRef.current.workTime : settingsRef.current.breakTime) * 60;
+      (nextMode === 'work'
+        ? settingsRef.current.workTime
+        : settingsRef.current.breakTime) * 60;
 
     setMode(nextMode);
     modeRef.current = nextMode;
 
-    console.log(`Next is ${nextSeconds}`)
+    console.log(`Next is ${nextSeconds}`);
     setSecondsLeft(nextSeconds);
     secondsLeftRef.current = nextSeconds;
 
     //change color of timer circle to default
     const timerDiv = document.querySelector('.timer') as HTMLDivElement;
-    if (!settingsRef.current.autoPlay){
+    if (!settingsRef.current.autoPlay) {
       timerDiv.style.border = '4px solid #f1ece9';
+    } else {
+      timerDiv.style.border =
+        modeRef.current === 'work' ? '4px solid #e63946' : '4px solid #2a9d8f';
     }
-    else{
-      timerDiv.style.border = modeRef.current === 'work' ? '4px solid #e63946' : '4px solid #2a9d8f';
-    }
-    
   }
 
   function playSound(sound: HTMLAudioElement) {
@@ -128,11 +129,17 @@ const Pomodoro: React.FC = () => {
       <div className="timer">
         <div className="timer-header">
           {minutes}:{seconds}
-        </div>      
+        </div>
       </div>
 
       <div className="pomodoro-settings">
-        <button onClick={() => {chrome.runtime.openOptionsPage()}} id="settings-button" className="pomodoro-button"></button>
+        <button
+          onClick={() => {
+            chrome.runtime.openOptionsPage();
+          }}
+          id="settings-button"
+          className="pomodoro-button"
+        ></button>
       </div>
 
       <div className="buttons">
@@ -169,8 +176,8 @@ const Pomodoro: React.FC = () => {
           onClick={() => {
             playSound(clickSound);
             if (!isInitialized) return;
-            
-            if (!settingsRef.current.autoPlay){
+
+            if (!settingsRef.current.autoPlay) {
               setIsPaused(true);
               isPausedRef.current = true;
             }
