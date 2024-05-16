@@ -67,12 +67,14 @@ const NoteItem: React.FC<Props> = ({
       <button
         className="note-item-delete"
         onClick={async () => {
-          try {
-            const deletedNote = await noteService.remove(note.id);
-            handleDelete(deletedNote);
-          } catch (err) {
-            console.error(err);
-            alert('Error Deleting Note');
+          if (window.confirm('Are you sure you want to delete this note?')) {
+            try {
+              const deletedNote = await noteService.remove(note.id);
+              handleDelete(deletedNote);
+            } catch (err) {
+              console.error(err);
+              alert('Error Deleting Note');
+            }
           }
         }}
       ></button>
