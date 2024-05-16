@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { test, expect } from './fixtures';
+import assert from 'assert';
 
 const generate_note = async (page: Page, title: string, content: string) => {
   await expect(page.locator('#create-note-button')).toHaveCount(1);
@@ -139,70 +140,106 @@ test.describe('Notes', () => {
       );
     });
 
-    test('can be deleted from within editor', async ({ page }) => {
-      await page
-        .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
-        .click();
+    test.describe('when deleting from within editor', async () => {
+      test('shows confirm deletion prompt', async ({ page }) => {
+        page.on('dialog', async (dialog) => {
+          assert(dialog.type() === 'confirm');
+          expect(dialog.message()).toContain(
+            'Are you sure you want to delete this note?'
+          );
+          await dialog.dismiss();
+        });
 
-      await page.locator('#note-editor-delete').click();
+        await page
+          .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+          .click();
 
-      // if this fails, the prompt did not show
-      await page.locator('#confirm-delete-button').click();
-
-      await expect(
-        page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
-      ).toHaveCount(0);
-    });
-
-    test('can abort note deletion from editor', async ({ page }) => {
-      await page
-        .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
-        .click();
-
-      await page.locator('#note-editor-delete').click();
-
-      // if this fails, the prompt did not show
-      await page.locator('#abort-delete-button').click();
-      
-      await expect(page.locator('#note-editor-content-input')).toHaveValue(
-        'Lorem Ipsum Dolor sit Amet'
-      );
-    });
-
-    test('can be deleted from main pane', async ({ page }) => {
-      page.on('dialog', async (dialog) => {
-        if (dialog.type() === 'confirm') {
-          await dialog.accept();
-        }
+        await page.locator('#note-editor-delete').click();
       });
 
-      await page
-        .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
-        .locator('.note-item-delete')
-        .click();
+      test('can be aborted when confirmation is declined', async ({ page }) => {
+        page.on('dialog', async (dialog) => {
+          assert(dialog.type() === 'confirm');
+          await dialog.dismiss();
+        });
 
-      // if this fails, the prompt did not show
-      await page.locator('#confirm-delete-button').click();
+        await page
+          .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+          .click();
 
-      await expect(
-        page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
-      ).toHaveCount(0);
+        await page.locator('#note-editor-delete').click();
+        await page.locator('#note-editor-back').click();
+
+        await expect(
+          page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+        ).toHaveCount(1);
+      });
+
+      test('can be deleted when confirmation is accepted', async ({ page }) => {
+        page.on('dialog', async (dialog) => {
+          assert(dialog.type() === 'confirm');
+          await dialog.accept();
+        });
+        await page
+          .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+          .click();
+
+        await page.locator('#note-editor-delete').click();
+
+        await expect(
+          page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+        ).toHaveCount(0);
+      });
     });
 
-    test('can abort deletion from main pane', async ({ page }) => {
-      await page
-        .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
-        .locator('.note-item-delete')
-        .click();
+    test.describe('when deleting from main pane', async () => {
+      test('shows confirm deletion prompt', async ({ page }) => {
+        page.on('dialog', async (dialog) => {
+          assert(dialog.type() === 'confirm');
+          expect(dialog.message()).toContain(
+            'Are you sure you want to delete this note?'
+          );
+          await dialog.dismiss();
+        });
 
-      // if this fails, the prompt did not show
-      await page.locator('#abort-delete-button').click();
+        await page
+          .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+          .locator('.note-item-delete')
+          .click();
+      });
 
-      await expect(
-        page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
-      ).toHaveCount(1);
+      test('can be aborted when confirmation is declined', async ({ page }) => {
+        page.on('dialog', async (dialog) => {
+          assert(dialog.type() === 'confirm');
+          await dialog.dismiss();
+        });
+
+        await page
+          .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+          .locator('.note-item-delete')
+          .click();
+
+        await expect(
+          page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+        ).toHaveCount(1);
+      });
+
+      test('can be deleted when confirmation is accepted', async ({ page }) => {
+        page.on('dialog', async (dialog) => {
+          assert(dialog.type() === 'confirm');
+          await dialog.accept();
+        });
+
+        await page
+          .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+          .locator('.note-item-delete')
+          .click();
+
+        await expect(
+          page.locator('.note-item', { has: page.getByText('Lorem Ipsum') })
+        ).toHaveCount(0);
+      });
     });
-    
   });
 
   test.describe('when closing the notes feature', async () => {
