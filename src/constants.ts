@@ -16,7 +16,7 @@ export const autoplayEnabledSettings: Settings = {
     breakTime: 5,
     volume: 100,
     autoPlay: true,
-    longBreak: false
+    longBreak: false,
   },
 };
 
