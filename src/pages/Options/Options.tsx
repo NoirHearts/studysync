@@ -202,7 +202,6 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           id="autoplay"
           checked = {settings.pomodoro.autoPlay}
           onClick = {() => {
-              //console.log(`before it was ${settings.pomodoro.autoPlay}`)
               setSettings({
                 ...settings,
                 pomodoro: {
