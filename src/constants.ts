@@ -6,7 +6,7 @@ export const defaultSettings: Settings = {
     breakTime: 5,
     volume: 100,
     autoPlay: false,
-    longBreak: false
+    longBreak: false,
   },
 };
 
