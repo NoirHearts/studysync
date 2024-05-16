@@ -59,7 +59,6 @@ const Pomodoro: React.FC = () => {
       if (secondsLeftRef.current === 0) {
         playSound(ringSound);
         if (!settingsRef.current.autoPlay){
-          console.log("pumasok here")
           setIsPaused(true);
           isPausedRef.current = true;
         }
