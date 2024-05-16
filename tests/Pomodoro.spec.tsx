@@ -28,6 +28,7 @@ test.describe('Pomodoro', () => {
       await expect(component).toContainText('24:59');
     });
   });
+
   test.describe('while initialized', () => {
     test.beforeEach(async () => {
       await component.locator('#start-button').click();

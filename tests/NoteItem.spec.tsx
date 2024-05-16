@@ -31,8 +31,12 @@ test.describe('NoteItem', () => {
 
     test('shows proper error message on deleting', async ({ page }) => {
       page.on('dialog', async (dialog) => {
-        expect(dialog.message()).toContain('Error Deleting Note');
-        await dialog.dismiss();
+        if (dialog.type() === 'alert') {
+          expect(dialog.message()).toContain('Error Deleting Note');
+          await dialog.dismiss();
+        } else if (dialog.type() === 'confirm') {
+          await dialog.accept();
+        }
       });
       await component.locator('.note-item-delete').click();
     });

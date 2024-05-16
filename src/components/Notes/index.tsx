@@ -12,6 +12,10 @@ const Notes: React.FC = () => {
   const [currentNote, setCurrentNote] = useState<Note | null>(null);
   const [searchString, setSearchString] = useState<string>('');
 
+  const searchInput: HTMLInputElement | null =
+    document.body.querySelector('.search-note-input');
+  const searchInputValue = searchInput ? searchInput.value : '';
+
   useEffect(() => {
     const retrieveNotes = async () => {
       try {
@@ -23,6 +27,10 @@ const Notes: React.FC = () => {
     };
     retrieveNotes();
   }, []);
+
+  useEffect(() => {
+    setSearchString(searchInputValue);
+  }, [searchInputValue]);
 
   const createHandler = (createdNote: Note) => {
     setCurrentNote(createdNote);
@@ -69,7 +77,7 @@ const Notes: React.FC = () => {
               onChange={(event) => setSearchString(event.target.value)}
             ></input>
             <button className="search-note-button">
-            <img className="icons" src={searchImg} />
+              <img className="icons" src={searchImg} />
             </button>
           </div>
           <div className="note-content-container">

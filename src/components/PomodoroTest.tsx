@@ -1,14 +1,14 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import dataService from '../services/data';
-import { defaultSettings } from '../constants';
+import { autoplayEnabledSettings } from '../constants';
 import { Settings } from '../types';
 import click from '../assets/sounds/click.mp3';
 import ring from '../assets/sounds/ring.mp3';
 
-const Pomodoro: React.FC = () => {
+const PomodoroTest: React.FC = () => {
   const [settings, setSettings] = useState<Settings['pomodoro']>(
-    defaultSettings.pomodoro
+    autoplayEnabledSettings.pomodoro
   );
   const [isInitialized, setIsInitialized] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
@@ -190,4 +190,4 @@ const Pomodoro: React.FC = () => {
   );
 };
 
-export default Pomodoro;
+export default PomodoroTest;

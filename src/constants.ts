@@ -6,6 +6,16 @@ export const defaultSettings: Settings = {
     breakTime: 5,
     volume: 100,
     autoPlay: false,
+    longBreak: false,
+  },
+};
+
+export const autoplayEnabledSettings: Settings = {
+  pomodoro: {
+    workTime: 0.1,
+    breakTime: 5,
+    volume: 100,
+    autoPlay: true,
     longBreak: false
   },
 };
