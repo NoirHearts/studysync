@@ -69,7 +69,7 @@ const Notes: React.FC = () => {
               onChange={(event) => setSearchString(event.target.value)}
             ></input>
             <button className="search-note-button">
-            <img className="icons" src={searchImg} />
+              <img className="icons" src={searchImg} />
             </button>
           </div>
           <div className="note-content-container">

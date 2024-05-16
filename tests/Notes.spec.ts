@@ -152,6 +152,12 @@ test.describe('Notes', () => {
     });
 
     test('can be deleted from main pane', async ({ page }) => {
+      page.on('dialog', async (dialog) => {
+        if (dialog.type() === 'confirm') {
+          await dialog.accept();
+        }
+      });
+
       await page
         .locator('.note-item', { has: page.getByText('Lorem Ipsum') })
         .locator('.note-item-delete')
